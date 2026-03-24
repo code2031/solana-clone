@@ -2,74 +2,144 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## What This Is
+## Overview
 
-SolClone is a complete Solana blockchain fork — a monorepo containing the validator (Rust), CLI wallet (TypeScript), Flutter GUI wallet (Dart), block explorer (Next.js), web3.js SDK, SPL programs, wallet adapter, DApp scaffold, and production ops tooling. Each of the 7 forked components also has its own GitHub repo under `code2031/solclone-*`.
+SolClone is a complete Solana blockchain fork. This monorepo contains the validator (Rust), CLI wallet (TypeScript), Flutter GUI wallet (Dart), block explorer (Next.js), web3.js SDK, SPL programs, wallet adapter, DApp scaffold, and production operations tooling. The 7 forked upstream components each have their own split repo under `code2031/solclone-*`.
 
-## Build Commands
+## Build & Run
 
-The root `Makefile` is the primary entry point. All paths assume you're in the repo root.
+The root `Makefile` is the primary entry point. All paths below assume repo root.
 
 ```bash
-# Validator (Rust) — takes 10-30 minutes
-make validator                    # Full release build
-make cli                          # Just the CLI (faster)
+make validator         # Build validator (Rust, release, ~30 min)
+make cli               # Build just the Solana CLI (faster)
+make programs          # Build all SPL programs (Rust)
+make token-program     # Build just SPL Token
+make setup             # npm/pnpm install for all JS projects
+make sdk               # Build web3.js SDK (rollup)
+make status            # Show what's built and running
+make clean             # Remove all build artifacts
+```
 
-# Local testnet
-make testnet-bg                   # Start in background (RPC on :8899)
-make stop-testnet                 # Stop it
-make status                       # Check what's built/running
+### Local Testnet
+
+```bash
+make testnet-bg        # Start test validator in background (RPC :8899, WS :8900)
+make stop-testnet      # Kill it
+./scripts/airdrop.sh 100   # Fund yourself on localnet
+```
+
+### Per-Component Dev Servers
+
+```bash
+make explorer          # Block explorer on :3000 (pnpm dev)
+make dapp              # DApp scaffold on :3000 (npm run dev)
+make wallet            # Backpack wallet (yarn start)
+```
+
+### CLI Wallet
+
+```bash
+cd cli-wallet
+npm install && npm run build   # Compiles to dist/ (tsc)
+npx solclone keygen            # Generate Ed25519 keypair
+npx solclone config use devnet # Switch network
+npx solclone balance           # Check SOL balance
+npx solclone transfer <addr> 1 # Send SOL
+npx solclone token create-mint # Create SPL token
+npx solclone stake delegate <validator> 10  # Stake
+```
+
+TypeScript targeting ES2020/CommonJS. Config at `~/.solclone/config.yml`, keypairs at `~/.solclone/id.json`.
+
+### Flutter Wallet
+
+```bash
+cd flutter-wallet
+flutter run -d chrome          # Web
+flutter run -d linux           # Desktop
+flutter run                    # Android (connected device)
+```
+
+Uses Provider for state management. Flutter 3.41+ required. Key deps: `bip39`, `ed25519_hd_key`, `pinenacl`, `qr_flutter`, `flutter_secure_storage`.
+
+### Docker Multi-Network
+
+```bash
+docker compose --profile devnet up    # Validator + explorer + faucet
+docker compose --profile testnet up
+docker compose --profile full up      # All three networks simultaneously
+```
+
+## Testing
+
+```bash
+# Validator (Rust)
+cd validator && cargo test --release --lib
 
 # SPL programs
-make programs                     # All SPL programs
-make token-program                # Just SPL Token
+cd program-library && cargo test --release
 
-# JS/TS projects
-make setup                        # npm/pnpm install for all JS projects
-make explorer                     # Block explorer on :3000 (pnpm)
-make dapp                         # DApp scaffold on :3000 (npm)
-make sdk                          # Build web3.js SDK
-make wallet                       # Backpack wallet (yarn)
+# Explorer
+cd explorer && pnpm test              # vitest unit tests
+cd explorer && pnpm test:e2e          # playwright E2E
 
-# CLI wallet
-cd cli-wallet && npm install && npm run build
-npx solclone keygen               # Generate keypair
-npx solclone balance              # Check balance
-npx solclone config use devnet    # Switch network
-
-# Flutter wallet
-cd flutter-wallet && flutter run -d chrome   # Web
-cd flutter-wallet && flutter run -d linux    # Desktop
-
-# Docker — multi-network
-docker compose --profile devnet up     # Validator + explorer + faucet
-docker compose --profile testnet up
-docker compose --profile full up       # All networks
+# DApp scaffold
+cd dapp-scaffold && npm test
 ```
+
+The CLI wallet and Flutter wallet have no test suites currently.
 
 ## Architecture
 
-All clients (CLI wallet, Flutter wallet, explorer, DApps) communicate with the validator via Solana-compatible JSON-RPC on port 8899. The validator runs Proof of History + Tower BFT consensus and executes on-chain programs through the Sealevel runtime.
+All clients communicate with the validator via **Solana-compatible JSON-RPC** (default port 8899). The validator runs Proof of History + Tower BFT consensus and processes transactions through the Sealevel parallel runtime.
 
-**Component boundaries:**
-- `validator/` is a Rust workspace with 100+ crates. Key crates: `cli/`, `core/`, `runtime/`, `rpc/`, `gossip/`, `ledger/`. Forked from `anza-xyz/agave`.
-- `cli-wallet/` is a standalone TypeScript CLI (commander + tweetnacl + bs58). It builds its own JSON-RPC client — does NOT depend on `@solana/web3.js`. Commands live in `src/commands/`, lib layer in `src/lib/`.
-- `flutter-wallet/` uses Provider for state management. Screens in `lib/screens/`, services (RPC, wallet, price) in `lib/services/`, state in `lib/providers/`.
-- `explorer/` is a Next.js app using pnpm and shadcn/ui.
-- `program-library/` is a Rust workspace with SPL programs (token, governance, stake-pool, etc.). Forked from `solana-labs/solana-program-library`.
-- `web3js-sdk/` is the TypeScript SDK. Forked from `solana-labs/solana-web3.js`. Uses rollup.
-- `wallet-adapter/` and `wallet-gui/` are forked ecosystem tools — wallet-adapter uses pnpm, wallet-gui (Backpack) uses yarn + turborepo.
+### Component Boundaries
 
-**Networks** are configured in `networks/{devnet,testnet,mainnet}/genesis.json`. Devnet faucet allows 5 SOL/request, testnet 1 SOL, mainnet has no faucet. Docker profiles correspond to network names.
+- **`validator/`** — Rust workspace (100+ crates). Forked from `anza-xyz/agave`. Key crates: `cli/`, `core/` (consensus), `runtime/` (tx processing), `rpc/` (JSON-RPC server), `gossip/` (P2P), `ledger/` (storage). Build: `cargo build --release`.
 
-**Ops** tooling lives in `ops/`: Terraform (AWS r6a.8xlarge validator provisioning), Ansible (server config), Prometheus + Grafana monitoring, systemd service files, backup scripts, and network bootstrap/genesis ceremony scripts.
+- **`cli-wallet/`** — Standalone TypeScript CLI. Uses `commander`, `tweetnacl`, `bs58`. Builds its own raw JSON-RPC client in `src/lib/rpc-client.ts` — does **not** depend on `@solana/web3.js`. Commands in `src/commands/`, shared logic in `src/lib/`.
+
+- **`flutter-wallet/`** — Cross-platform Dart app. State in `lib/providers/` (ChangeNotifier + Provider), network calls in `lib/services/rpc_service.dart`, screens in `lib/screens/`, reusable widgets in `lib/widgets/`. BIP39 mnemonics, Ed25519 HD derivation (m/44'/501'/0'/0').
+
+- **`explorer/`** — Next.js app, pnpm, shadcn/ui. Forked from `solana-foundation/explorer`.
+
+- **`program-library/`** — Rust workspace with SPL programs (token, governance, stake-pool, memo, etc.). Forked from `solana-labs/solana-program-library`.
+
+- **`web3js-sdk/`** — TypeScript SDK using rollup. Forked from `solana-labs/solana-web3.js`.
+
+- **`wallet-adapter/`** — React hooks/UI for DApp wallet integration (pnpm). `wallet-gui/` is Backpack wallet (yarn + turborepo).
+
+### Networks
+
+Genesis configs live in `networks/{devnet,testnet,mainnet}/genesis.json`.
+
+| Network | RPC Port | WS Port | Faucet Port | Faucet Limit |
+|---------|----------|---------|-------------|--------------|
+| Devnet | 8899 | 8900 | 9900 | 5 SOL/req |
+| Testnet | 8799 | 8800 | 9800 | 1 SOL/req |
+| Mainnet | 8699 | 8700 | — | None |
+
+### Production Ops (`ops/`)
+
+- `ops/terraform/` — AWS provisioning (r6a.8xlarge, 2TB NVMe, security groups)
+- `ops/ansible/` — Server configuration playbook
+- `ops/validator/` — systemd service file, launch config, setup script
+- `ops/monitoring/` — Prometheus + Grafana stack with validator dashboard and alerting rules
+- `ops/network/` — `bootstrap-network.sh`, `add-validator.sh`, `genesis-ceremony.sh`
+- `ops/security/` — UFW firewall script, hardening guide
+- `ops/backup/` — S3 snapshot backup script
+- `ops/runbooks/` — Incident response and upgrade procedures
 
 ## Split Repos
 
-Components are also pushed to individual repos via `scripts/update-split-repos.sh`:
-- `code2031/solclone-validator`, `solclone-web3js`, `solclone-programs`, `solclone-explorer`, `solclone-wallet-adapter`, `solclone-backpack`, `solclone-dapp-scaffold`
+After modifying a forked component, sync to its split repo:
 
-After modifying a forked component, run the update script to sync changes to the split repo.
+```bash
+./scripts/update-split-repos.sh
+```
+
+Split repos: `code2031/solclone-validator`, `solclone-web3js`, `solclone-programs`, `solclone-explorer`, `solclone-wallet-adapter`, `solclone-backpack`, `solclone-dapp-scaffold`.
 
 ## Related Projects
 
