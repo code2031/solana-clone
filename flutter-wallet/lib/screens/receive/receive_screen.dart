@@ -56,11 +56,11 @@ class ReceiveScreen extends StatelessWidget {
                             size: 200,
                             backgroundColor: Colors.white,
                             eyeStyle: const QrEyeStyle(
-                              eyeShape: QrEyeShape.roundedRect,
+                              eyeShape: QrEyeShape.square,
                               color: Color(0xFF1A1A3E),
                             ),
                             dataModuleStyle: const QrDataModuleStyle(
-                              dataModuleShape: QrDataModuleShape.roundedRect,
+                              dataModuleShape: QrDataModuleShape.square,
                               color: Color(0xFF1A1A3E),
                             ),
                           ),

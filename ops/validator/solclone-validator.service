@@ -1,0 +1,62 @@
+[Unit]
+Description=SolClone Validator Node
+Documentation=https://github.com/solclone/solclone
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=solclone
+Group=solclone
+WorkingDirectory=/home/solclone
+
+EnvironmentFile=/etc/solclone/validator.env
+ExecStart=/home/solclone/.local/share/solclone/install/active_release/bin/solclone-validator.sh
+ExecReload=/bin/kill -USR1 $MAINPID
+ExecStop=/bin/kill -INT $MAINPID
+TimeoutStopSec=120
+
+# Restart policies
+Restart=on-failure
+RestartSec=10
+
+# Resource limits
+LimitNOFILE=1000000
+LimitNPROC=65535
+LimitMEMLOCK=infinity
+LimitSTACK=67108864
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=solclone-validator
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+MemoryDenyWriteExecute=false
+
+# Allow write access to required directories
+ReadWritePaths=/home/solclone/validator-ledger
+ReadWritePaths=/home/solclone/validator-accounts
+ReadWritePaths=/home/solclone/validator-snapshots
+ReadWritePaths=/var/log/solclone
+
+# CPU and memory accounting
+CPUAccounting=true
+MemoryAccounting=true
+IOAccounting=true
+
+[Install]
+WantedBy=multi-user.target

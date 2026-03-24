@@ -1,0 +1,162 @@
+# =============================================================================
+# SolClone Validator — Prometheus Alerting Rules
+# =============================================================================
+
+groups:
+
+  # -------------------------------------------------------------------------
+  # Validator health
+  # -------------------------------------------------------------------------
+  - name: solclone_validator_health
+    interval: 30s
+    rules:
+
+      - alert: ValidatorDown
+        expr: up{job="solclone-validator"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "SolClone validator is unreachable"
+          description: >-
+            The validator metrics endpoint has been unreachable for more than
+            2 minutes. Check if the process is running and the RPC port is
+            accessible.
+
+      - alert: ValidatorDelinquent
+        expr: solana_validator_is_delinquent == 1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Validator is delinquent"
+          description: >-
+            The validator has been marked delinquent for over 5 minutes.
+            It is not voting and may be losing stake.
+
+      - alert: HighSkipRate
+        expr: >
+          (
+            rate(solana_validator_skipped_slots_total[10m])
+            /
+            clamp_min(rate(solana_validator_leader_slots_total[10m]), 1)
+          ) > 0.10
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Validator skip rate exceeds 10%"
+          description: >-
+            Skip rate is {{ $value | humanizePercentage }} over the last
+            10 minutes. Investigate network, hardware, or clock issues.
+
+      - alert: LowVoteCredits
+        expr: >
+          rate(solana_validator_vote_credits_total[1h]) < 100
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Validator earning very few vote credits"
+          description: >-
+            Vote credit accumulation has dropped below 100/hr for 30 minutes.
+            This will impact staking rewards.
+
+      - alert: SlotLagBehindCluster
+        expr: >
+          (solana_cluster_slot_height - solana_validator_slot_height) > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Validator is lagging behind the cluster"
+          description: >-
+            The validator is {{ $value }} slots behind the cluster tip.
+            This may indicate performance or network issues.
+
+      - alert: SlotLagCritical
+        expr: >
+          (solana_cluster_slot_height - solana_validator_slot_height) > 500
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Validator critically behind the cluster"
+          description: >-
+            The validator is {{ $value }} slots behind the cluster. It may
+            need a fresh snapshot to catch up.
+
+  # -------------------------------------------------------------------------
+  # System resources
+  # -------------------------------------------------------------------------
+  - name: solclone_system_resources
+    interval: 30s
+    rules:
+
+      - alert: DiskSpaceLow
+        expr: >
+          (
+            node_filesystem_avail_bytes{mountpoint="/"}
+            / node_filesystem_size_bytes{mountpoint="/"}
+          ) < 0.10
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Disk space critically low (< 10%)"
+          description: >-
+            Available disk space on root filesystem is
+            {{ $value | humanizePercentage }}. The validator may halt if
+            ledger or accounts cannot be written.
+
+      - alert: DiskSpaceWarning
+        expr: >
+          (
+            node_filesystem_avail_bytes{mountpoint="/"}
+            / node_filesystem_size_bytes{mountpoint="/"}
+          ) < 0.20
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Disk space running low (< 20%)"
+          description: >-
+            Available disk space on root filesystem is
+            {{ $value | humanizePercentage }}. Consider pruning snapshots
+            or expanding storage.
+
+      - alert: HighMemoryUsage
+        expr: >
+          (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) > 0.90
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Memory usage exceeds 90%"
+          description: >-
+            System memory usage is {{ $value | humanizePercentage }}.
+            The validator may start thrashing or be OOM-killed.
+
+      - alert: HighCPUUsage
+        expr: >
+          (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m]))) > 0.90
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU usage exceeds 90%"
+          description: >-
+            Sustained high CPU usage may cause the validator to fall behind
+            on block processing.
+
+      - alert: RPCLatencyHigh
+        expr: >
+          histogram_quantile(0.99, rate(solana_rpc_request_duration_seconds_bucket[5m])) > 1.0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RPC p99 latency exceeds 1 second"
+          description: >-
+            RPC request latency (p99) is {{ $value }}s. Downstream services
+            relying on this RPC endpoint may be impacted.
