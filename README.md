@@ -52,6 +52,25 @@ A high-performance Layer 1 blockchain forked from [Solana](https://github.com/an
 | `ops/` | Production ops — Terraform, Ansible, Prometheus, Grafana, systemd | IaC |
 | `docs/` | Tokenomics, API reference, validator guide, developer guide | Markdown |
 | `branding/` | Logo, brand guidelines, color palette | SVG/Markdown |
+| `metaplex/` | Metaplex Token Metadata — NFT standard | Rust |
+| `anchor/` | Anchor framework — easiest way to build programs | Rust |
+| `examples/` | Example scripts: create token, create NFT, deploy program, run DApp | Bash |
+
+## What You Can Do
+
+```bash
+# Create a fungible token
+./examples/create-token.sh MyToken 9
+
+# Create an NFT (supply=1, immutable)
+./examples/create-nft.sh MyNFT
+
+# Deploy a custom program
+./examples/deploy-program.sh <program.so>
+
+# Quick-start: network + explorer + DApp in one command
+./examples/run-dapp.sh
+```
 
 ## Networks
 
