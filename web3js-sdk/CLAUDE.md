@@ -1,82 +1,39 @@
-# CLAUDE.md - Web3.js SDK
+# SolClone Web3.js SDK
 
-## What This Is
+Forked from [solana-labs/solana-web3.js](https://github.com/solana-labs/solana-web3.js). TypeScript client library for building DApps on the SolClone blockchain.
 
-This is the SolClone Web3.js SDK, forked from solana-labs/solana-web3.js. It is the primary JavaScript/TypeScript library for interacting with the SolClone blockchain. It provides `Connection` (RPC client), `PublicKey`, `Keypair`, `Transaction`, `Instruction`, and helpers for all built-in programs.
-
-## Role in SolClone Ecosystem
-
-- This is the **client-side foundation**. The DApp scaffold, wallet adapter, explorer, and wallet GUI all depend on this SDK (or its types).
-- It communicates with the validator's JSON-RPC endpoint.
-- It defines the TypeScript types that mirror the Rust SDK types in the validator.
-
-## Key Technologies
-
-- **Language**: TypeScript
-- **Runtime**: Node.js 16+, browser, React Native
-- **Package manager**: pnpm
-- **Bundler**: Rollup (see `rollup.config.mjs`)
-- **Testing**: Jest / Mocha (in `test/`)
-- **Serialization**: borsh, buffer-layout
-- **Cryptography**: `@noble/ed25519`, tweetnacl
-- **RPC**: JSON-RPC 2.0 over HTTP and WebSocket
-
-## Build Commands
+## Build
 
 ```bash
-pnpm install          # Install dependencies
-pnpm build            # Build the library (CJS + ESM + browser bundles)
-pnpm test             # Run test suite
-pnpm lint             # Lint the code
-pnpm doc              # Generate TypeDoc documentation
+npm install
+npm run build
 ```
 
-## Important Directories and Files
+Uses rollup for bundling. Produces CJS, ESM, and browser bundles.
 
-- `src/connection.ts` - The `Connection` class: all RPC methods (getAccountInfo, sendTransaction, getBalance, etc.)
-- `src/publickey.ts` - `PublicKey` class: base58 encoding, program-derived addresses
-- `src/keypair.ts` - `Keypair` class: ed25519 key generation and import/export
-- `src/transaction/` - `Transaction` and `VersionedTransaction` construction and serialization
-- `src/message/` - `Message` and `MessageV0` encoding for transaction messages
-- `src/instruction.ts` - `TransactionInstruction` type
-- `src/programs/` - Helpers for system program, stake, vote, etc.
-- `src/account.ts` / `src/account-data.ts` - Account types
-- `src/errors.ts` - Custom error classes for RPC and transaction errors
-- `src/utils/` - Encoding utilities, cluster URLs, etc.
-- `test/` - Test files
-- `rollup.config.mjs` - Build configuration producing CJS, ESM, and browser bundles
-- `package.json` - Dependencies and scripts
-- `tsconfig.json` - TypeScript compiler configuration
+## Key Directories
 
-## Testing Commands
+- `src/` -- All TypeScript source code
+- `src/connection.ts` -- RPC connection handling (all RPC methods)
+- `src/transaction.ts` -- Transaction construction and signing
+- `src/publickey.ts` -- Public key and address utilities
+- `src/keypair.ts` -- Ed25519 key generation and import/export
+- `src/programs/` -- Client-side program helpers (system, token)
+- `test/` -- Unit and integration tests
+- `rollup.config.mjs` -- Build configuration for multiple output formats
+
+## Testing
 
 ```bash
-pnpm test             # Run all tests
-pnpm test -- --grep "Connection"  # Run tests matching a pattern
+npm test
+npm run lint
 ```
 
-## Common Patterns
+Tests use mocha/chai. Some integration tests expect a local test validator running on port 8899.
 
-- **Connection**: The primary entry point. All RPC interactions go through `new Connection(url, commitment)`.
-- **Transaction building**: Create a `Transaction`, add `TransactionInstruction` objects via `.add()`, then sign and send.
-- **Commitment levels**: `processed`, `confirmed`, `finalized` -- always specify commitment for consistency.
-- **PublicKey.findProgramAddress**: Used to derive PDAs (Program Derived Addresses) deterministically.
-- **Borsh serialization**: Program instruction data is typically serialized with borsh for on-chain program consumption.
-- **Browser/Node/React Native**: Three build targets with different crypto and fetch polyfills (see `src/fetch-impl.ts` and `src/__forks__/`).
+## Ecosystem Links
 
-## Things to Watch Out For
-
-- This is the legacy v1 maintenance branch (`1.0.0-maintenance`). The modern v2 SDK lives in a different repo structure.
-- The `src/__forks__/` directory contains platform-specific implementations (browser vs Node.js vs React Native).
-- `rollup.config.mjs` produces multiple output formats; changes to exports need to be reflected in all bundles.
-- The `connection.ts` file is very large and contains all RPC method implementations.
-- WebSocket subscriptions (e.g., `onAccountChange`) have connection lifecycle management that can be tricky.
-
-## Related Repositories
-
-- Main repo: https://github.com/code2031/solana-clone
-- Validator: `../validator/` -- The RPC endpoint this SDK communicates with
-- DApp Scaffold: `../dapp-scaffold/` -- Uses this SDK to build example DApps
-- Wallet Adapter: `../wallet-adapter/` -- Uses this SDK for wallet integration
-- Explorer: `../explorer/` -- Uses this SDK to query the chain
-- Program Library: `../program-library/` -- SPL programs whose clients use this SDK
+- Monorepo: https://github.com/code2031/solana-clone
+- Split repo: https://github.com/code2031/solclone-web3js
+- Validator: https://github.com/code2031/solclone-validator
+- DApp Scaffold: https://github.com/code2031/solclone-dapp-scaffold
