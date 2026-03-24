@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9945FF" />
+      <stop offset="100%" stop-color="#14F195" />
+    </linearGradient>
+  </defs>
+  <polygon
+    points="100,10 178,50 178,150 100,190 22,150 22,50"
+    fill="url(#brandGradient)"
+  />
+  <text
+    x="100"
+    y="115"
+    text-anchor="middle"
+    font-family="Inter, Helvetica, Arial, sans-serif"
+    font-weight="700"
+    font-size="64"
+    fill="#FFFFFF"
+    letter-spacing="-2"
+  >SC</text>
+</svg>
