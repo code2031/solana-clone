@@ -15,8 +15,6 @@ class TokenListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPositive = token.priceChangePercent24h >= 0;
-
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -24,6 +22,14 @@ class TokenListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            color: AppTheme.darkCard.withValues(alpha: 0.5),
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.04),
+              width: 1,
+            ),
+          ),
           child: Row(
             children: [
               // Token icon
@@ -44,25 +50,28 @@ class TokenListItem extends StatelessWidget {
                 child: Center(
                   child: token.isNative
                       ? const Text(
-                          '\u25C6',
+                          'S',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
                         )
                       : Text(
-                          token.symbol.isNotEmpty ? token.symbol[0] : '?',
+                          token.symbol.isNotEmpty
+                              ? token.symbol[0].toUpperCase()
+                              : '?',
                           style: const TextStyle(
-                            color: AppTheme.textPrimary,
+                            color: AppTheme.textSecondary,
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                 ),
               ),
               const SizedBox(width: 14),
 
-              // Token name and symbol
+              // Name and symbol
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,66 +83,58 @@ class TokenListItem extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        Text(
-                          '${token.balance.toStringAsFixed(token.balance < 1 ? 6 : 4)} ${token.symbol}',
-                          style: const TextStyle(
-                            color: AppTheme.textTertiary,
-                            fontSize: 13,
-                          ),
-                        ),
-                        if (token.priceUsd > 0) ...[
-                          const SizedBox(width: 6),
-                          Text(
-                            '\u2022',
-                            style: TextStyle(
-                              color: AppTheme.textTertiary.withValues(alpha: 0.5),
-                              fontSize: 8,
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            Formatters.formatUsd(token.priceUsd),
-                            style: const TextStyle(
-                              color: AppTheme.textTertiary,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ],
+                    Text(
+                      token.symbol,
+                      style: const TextStyle(
+                        color: AppTheme.textTertiary,
+                        fontSize: 13,
+                      ),
                     ),
                   ],
                 ),
               ),
 
-              // Value and change
+              // Balance and value
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    token.valueUsd > 0
-                        ? Formatters.formatUsd(token.valueUsd)
-                        : '-',
+                    '${Formatters.formatSol(token.balance, decimals: token.isNative ? 4 : 2)} ${token.symbol}',
                     style: const TextStyle(
                       color: AppTheme.textPrimary,
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  if (token.priceChangePercent24h != 0) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      Formatters.formatPercent(token.priceChangePercent24h),
-                      style: TextStyle(
-                        color: isPositive ? AppTheme.success : AppTheme.error,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
+                  const SizedBox(height: 2),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        Formatters.formatUsd(token.valueUsd),
+                        style: const TextStyle(
+                          color: AppTheme.textTertiary,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                  ],
+                      if (token.priceChangePercent24h != 0) ...[
+                        const SizedBox(width: 6),
+                        Text(
+                          Formatters.formatPercent(token.priceChangePercent24h),
+                          style: TextStyle(
+                            color: token.priceChangePercent24h >= 0
+                                ? AppTheme.success
+                                : AppTheme.error,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
                 ],
               ),
             ],
