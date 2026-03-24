@@ -1,0 +1,604 @@
+---
+# =============================================================================
+# SolClone Validator Server Configuration — Ansible Playbook
+#
+# Configures a freshly provisioned server as a production SolClone validator.
+#
+# Usage:
+#   ansible-playbook -i inventory.ini playbook.yml \
+#     -e cluster=mainnet \
+#     -e solclone_version=1.0.0 \
+#     -e validator_name=validator-01
+# =============================================================================
+
+- name: Configure SolClone Validator
+  hosts: validators
+  become: true
+  gather_facts: true
+
+  vars:
+    # Overridable variables
+    cluster: "mainnet"
+    solclone_version: "1.0.0"
+    validator_name: "validator-01"
+    solclone_user: "solclone"
+    solclone_home: "/home/{{ solclone_user }}"
+    solclone_src: "{{ solclone_home }}/solclone-src"
+    solclone_bin_dir: "{{ solclone_home }}/bin"
+    ledger_dir: "/var/solclone/ledger"
+    accounts_dir: "/var/solclone/accounts"
+    snapshots_dir: "/var/solclone/snapshots"
+    log_dir: "/var/log/solclone"
+    keys_dir: "{{ solclone_home }}/keys"
+    data_device: "/dev/nvme1n1"
+    data_mount: "/var/solclone"
+    entrypoint: ""
+    expected_genesis_hash: ""
+    rpc_port: 8899
+    gossip_port: 8001
+    metrics_port: 9125
+    enable_rpc: false
+    node_exporter_version: "1.7.0"
+
+  handlers:
+    - name: Restart solclone-validator
+      ansible.builtin.systemd:
+        name: solclone-validator
+        state: restarted
+        daemon_reload: true
+
+    - name: Reload sysctl
+      ansible.builtin.command: sysctl --system
+
+    - name: Restart node_exporter
+      ansible.builtin.systemd:
+        name: node_exporter
+        state: restarted
+        daemon_reload: true
+
+    - name: Restart rsyslog
+      ansible.builtin.service:
+        name: rsyslog
+        state: restarted
+
+    - name: Reload ufw
+      ansible.builtin.command: ufw reload
+
+  tasks:
+    # =========================================================================
+    # Phase 1: System Preparation
+    # =========================================================================
+
+    - name: Update apt cache and upgrade packages
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
+        autoremove: true
+      tags: [system, packages]
+
+    - name: Install required system packages
+      ansible.builtin.apt:
+        name:
+          - build-essential
+          - pkg-config
+          - libssl-dev
+          - libudev-dev
+          - clang
+          - cmake
+          - protobuf-compiler
+          - libprotobuf-dev
+          - curl
+          - git
+          - jq
+          - net-tools
+          - htop
+          - iotop
+          - nvme-cli
+          - smartmontools
+          - ufw
+          - logrotate
+          - python3-pip
+          - unzip
+        state: present
+      tags: [system, packages]
+
+    # =========================================================================
+    # Phase 2: User and Directory Setup
+    # =========================================================================
+
+    - name: Create solclone system user
+      ansible.builtin.user:
+        name: "{{ solclone_user }}"
+        shell: /bin/bash
+        system: false
+        create_home: true
+        home: "{{ solclone_home }}"
+      tags: [system, user]
+
+    - name: Format data volume (if not already formatted)
+      community.general.filesystem:
+        fstype: ext4
+        dev: "{{ data_device }}"
+        opts: "-L solclone-data"
+      when: data_device != ""
+      ignore_errors: true
+      tags: [system, storage]
+
+    - name: Mount data volume
+      ansible.posix.mount:
+        path: "{{ data_mount }}"
+        src: "{{ data_device }}"
+        fstype: ext4
+        opts: "defaults,noatime,nodiratime"
+        state: mounted
+      when: data_device != ""
+      tags: [system, storage]
+
+    - name: Create validator directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ solclone_user }}"
+        group: "{{ solclone_user }}"
+        mode: "0750"
+      loop:
+        - "{{ ledger_dir }}"
+        - "{{ accounts_dir }}"
+        - "{{ snapshots_dir }}"
+        - "{{ log_dir }}"
+        - "{{ keys_dir }}"
+        - "{{ solclone_bin_dir }}"
+      tags: [system, directories]
+
+    # =========================================================================
+    # Phase 3: Install Rust and Build Validator
+    # =========================================================================
+
+    - name: Install Rust toolchain
+      ansible.builtin.shell: |
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
+          sh -s -- -y --default-toolchain stable
+      args:
+        creates: "{{ solclone_home }}/.cargo/bin/rustc"
+      become: true
+      become_user: "{{ solclone_user }}"
+      tags: [rust, build]
+
+    - name: Clone SolClone source
+      ansible.builtin.git:
+        repo: "https://github.com/solclone/solclone.git"
+        dest: "{{ solclone_src }}"
+        version: "v{{ solclone_version }}"
+        force: true
+      become: true
+      become_user: "{{ solclone_user }}"
+      tags: [build]
+
+    - name: Build SolClone validator (release mode)
+      ansible.builtin.shell: |
+        source {{ solclone_home }}/.cargo/env
+        cargo build --release
+      args:
+        chdir: "{{ solclone_src }}"
+        creates: "{{ solclone_src }}/target/release/solclone-validator"
+      become: true
+      become_user: "{{ solclone_user }}"
+      environment:
+        CARGO_BUILD_JOBS: "{{ ansible_processor_vcpus }}"
+      tags: [build]
+
+    - name: Install validator binaries
+      ansible.builtin.copy:
+        src: "{{ solclone_src }}/target/release/{{ item }}"
+        dest: "{{ solclone_bin_dir }}/{{ item }}"
+        remote_src: true
+        owner: "{{ solclone_user }}"
+        group: "{{ solclone_user }}"
+        mode: "0755"
+      loop:
+        - solclone
+        - solclone-validator
+        - solclone-keygen
+        - solclone-genesis
+      tags: [build, install]
+
+    # =========================================================================
+    # Phase 4: Kernel and System Tuning
+    # =========================================================================
+
+    - name: Configure sysctl for SolClone validator
+      ansible.builtin.copy:
+        dest: /etc/sysctl.d/21-solclone-validator.conf
+        content: |
+          # SolClone Validator Kernel Parameters
+          net.core.rmem_default = 134217728
+          net.core.rmem_max = 134217728
+          net.core.wmem_default = 134217728
+          net.core.wmem_max = 134217728
+          fs.nr_open = 1000000
+          vm.max_map_count = 1000000
+          vm.swappiness = 1
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Reload sysctl
+      tags: [system, tuning]
+
+    - name: Configure file descriptor limits
+      ansible.builtin.copy:
+        dest: /etc/security/limits.d/90-solclone.conf
+        content: |
+          {{ solclone_user }}  soft  nofile  1000000
+          {{ solclone_user }}  hard  nofile  1000000
+        owner: root
+        group: root
+        mode: "0644"
+      tags: [system, tuning]
+
+    - name: Set CPU governor to performance
+      ansible.builtin.shell: |
+        for cpu in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+          echo performance > "$cpu" 2>/dev/null || true
+        done
+      changed_when: false
+      ignore_errors: true
+      tags: [system, tuning]
+
+    # =========================================================================
+    # Phase 5: Configure systemd Service
+    # =========================================================================
+
+    - name: Create validator startup script
+      ansible.builtin.template:
+        dest: "{{ solclone_home }}/start-validator.sh"
+        src: /dev/stdin
+        owner: "{{ solclone_user }}"
+        group: "{{ solclone_user }}"
+        mode: "0755"
+      vars:
+        content: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+
+          IDENTITY="{{ keys_dir }}/identity.json"
+          VOTE_ACCOUNT="{{ keys_dir }}/vote-account.json"
+
+          exec {{ solclone_bin_dir }}/solclone-validator \
+            --identity "$IDENTITY" \
+            --vote-account "$VOTE_ACCOUNT" \
+            --ledger {{ ledger_dir }} \
+            --accounts {{ accounts_dir }} \
+            --snapshots {{ snapshots_dir }} \
+            --gossip-port {{ gossip_port }} \
+            --dynamic-port-range 8000-8020 \
+            --rpc-port {{ rpc_port }} \
+            --limit-ledger-size \
+            --no-poh-speed-test \
+            {% if entrypoint != "" %}--entrypoint {{ entrypoint }} \{% endif %}
+            {% if expected_genesis_hash != "" %}--expected-genesis-hash {{ expected_genesis_hash }} \{% endif %}
+            {% if enable_rpc %}--full-rpc-api --enable-rpc-transaction-history \{% endif %}
+            --log {{ log_dir }}/validator.log
+      # Inline template workaround
+      tags: [service]
+
+    - name: Create solclone-validator systemd service
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/solclone-validator.service
+        content: |
+          [Unit]
+          Description=SolClone Validator ({{ cluster }})
+          After=network-online.target
+          Wants=network-online.target
+          StartLimitIntervalSec=300
+          StartLimitBurst=5
+
+          [Service]
+          Type=simple
+          User={{ solclone_user }}
+          Group={{ solclone_user }}
+          WorkingDirectory={{ solclone_home }}
+          ExecStart={{ solclone_home }}/start-validator.sh
+          ExecStop={{ solclone_bin_dir }}/solclone-validator exit --force
+          Restart=on-failure
+          RestartSec=10
+          TimeoutStartSec=0
+          TimeoutStopSec=120
+          KillMode=process
+          KillSignal=SIGINT
+
+          # Resource limits
+          LimitNOFILE=1000000
+          LimitNPROC=65535
+          LimitSTACK=infinity
+
+          # Logging
+          StandardOutput=append:{{ log_dir }}/validator-stdout.log
+          StandardError=append:{{ log_dir }}/validator-stderr.log
+
+          # Security hardening
+          ProtectSystem=full
+          NoNewPrivileges=true
+          PrivateTmp=true
+
+          [Install]
+          WantedBy=multi-user.target
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart solclone-validator
+      tags: [service]
+
+    - name: Enable solclone-validator service
+      ansible.builtin.systemd:
+        name: solclone-validator
+        enabled: true
+        daemon_reload: true
+      tags: [service]
+
+    # =========================================================================
+    # Phase 6: Configure Firewall
+    # =========================================================================
+
+    - name: Reset UFW to defaults
+      community.general.ufw:
+        state: reset
+      tags: [firewall]
+
+    - name: Set UFW default deny incoming
+      community.general.ufw:
+        direction: incoming
+        policy: deny
+      tags: [firewall]
+
+    - name: Set UFW default allow outgoing
+      community.general.ufw:
+        direction: outgoing
+        policy: allow
+      tags: [firewall]
+
+    - name: Allow SSH
+      community.general.ufw:
+        rule: allow
+        port: "22"
+        proto: tcp
+        comment: "SSH"
+      tags: [firewall]
+
+    - name: Allow SolClone gossip/repair TCP
+      community.general.ufw:
+        rule: allow
+        port: "8000:8020"
+        proto: tcp
+        comment: "SolClone Gossip/Repair TCP"
+      tags: [firewall]
+
+    - name: Allow SolClone gossip/turbine/repair UDP
+      community.general.ufw:
+        rule: allow
+        port: "8000:8020"
+        proto: udp
+        comment: "SolClone Gossip/Turbine/Repair UDP"
+      tags: [firewall]
+
+    - name: Allow RPC port (if enabled)
+      community.general.ufw:
+        rule: allow
+        port: "{{ rpc_port }}"
+        proto: tcp
+        comment: "SolClone JSON-RPC"
+      when: enable_rpc
+      tags: [firewall]
+
+    - name: Allow metrics port (if enabled)
+      community.general.ufw:
+        rule: allow
+        port: "{{ metrics_port }}"
+        proto: tcp
+        src: "10.0.0.0/8"
+        comment: "Prometheus metrics"
+      when: enable_metrics | default(true)
+      tags: [firewall]
+
+    - name: Enable UFW
+      community.general.ufw:
+        state: enabled
+      tags: [firewall]
+
+    # =========================================================================
+    # Phase 7: Log Rotation
+    # =========================================================================
+
+    - name: Configure log rotation for validator logs
+      ansible.builtin.copy:
+        dest: /etc/logrotate.d/solclone-validator
+        content: |
+          {{ log_dir }}/validator.log
+          {{ log_dir }}/validator-stdout.log
+          {{ log_dir }}/validator-stderr.log
+          {
+              daily
+              rotate 7
+              compress
+              delaycompress
+              missingok
+              notifempty
+              copytruncate
+              size 1G
+              maxsize 2G
+              dateext
+              dateformat -%Y%m%d
+              su {{ solclone_user }} {{ solclone_user }}
+          }
+        owner: root
+        group: root
+        mode: "0644"
+      tags: [logging]
+
+    # =========================================================================
+    # Phase 8: Monitoring Setup
+    # =========================================================================
+
+    - name: Download node_exporter
+      ansible.builtin.get_url:
+        url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+        dest: "/tmp/node_exporter.tar.gz"
+        mode: "0644"
+      tags: [monitoring]
+
+    - name: Extract node_exporter
+      ansible.builtin.unarchive:
+        src: "/tmp/node_exporter.tar.gz"
+        dest: "/usr/local/bin/"
+        remote_src: true
+        extra_opts:
+          - --strip-components=1
+          - --wildcards
+          - "*/node_exporter"
+      tags: [monitoring]
+
+    - name: Create node_exporter systemd service
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/node_exporter.service
+        content: |
+          [Unit]
+          Description=Prometheus Node Exporter
+          After=network-online.target
+          Wants=network-online.target
+
+          [Service]
+          Type=simple
+          User=nobody
+          Group=nogroup
+          ExecStart=/usr/local/bin/node_exporter \
+            --collector.systemd \
+            --collector.processes \
+            --collector.filesystem.mount-points-exclude="^/(sys|proc|dev|host|etc)($$|/)" \
+            --web.listen-address=:9100
+          Restart=on-failure
+          RestartSec=5
+
+          [Install]
+          WantedBy=multi-user.target
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart node_exporter
+      tags: [monitoring]
+
+    - name: Enable and start node_exporter
+      ansible.builtin.systemd:
+        name: node_exporter
+        enabled: true
+        state: started
+        daemon_reload: true
+      tags: [monitoring]
+
+    - name: Create validator health check script
+      ansible.builtin.copy:
+        dest: "{{ solclone_home }}/health-check.sh"
+        content: |
+          #!/usr/bin/env bash
+          # SolClone Validator Health Check
+          # Run via cron or monitoring system
+
+          set -euo pipefail
+
+          SOLCLONE="{{ solclone_bin_dir }}/solclone"
+          RPC_URL="http://127.0.0.1:{{ rpc_port }}"
+          IDENTITY_PUBKEY=$("{{ solclone_bin_dir }}/solclone-keygen" pubkey "{{ keys_dir }}/identity.json")
+
+          echo "=== SolClone Validator Health Check ==="
+          echo "Time: $(date -u)"
+          echo ""
+
+          # Check if validator process is running
+          if systemctl is-active --quiet solclone-validator; then
+              echo "[OK] Validator service is running"
+          else
+              echo "[CRITICAL] Validator service is not running"
+              exit 2
+          fi
+
+          # Check RPC responsiveness
+          if $SOLCLONE --url "$RPC_URL" cluster-version &>/dev/null; then
+              echo "[OK] RPC is responsive"
+          else
+              echo "[WARNING] RPC is not responding"
+              exit 1
+          fi
+
+          # Check catchup status
+          CATCHUP=$($SOLCLONE --url "$RPC_URL" catchup "$IDENTITY_PUBKEY" 2>&1 || true)
+          if echo "$CATCHUP" | grep -q "has caught up"; then
+              echo "[OK] Validator has caught up"
+          else
+              echo "[WARNING] Validator is behind: $CATCHUP"
+          fi
+
+          # Check vote account
+          VOTE_STATUS=$($SOLCLONE --url "$RPC_URL" vote-account "{{ keys_dir }}/vote-account.json" 2>&1 || true)
+          if echo "$VOTE_STATUS" | grep -q "Recent Votes"; then
+              echo "[OK] Validator is voting"
+          else
+              echo "[WARNING] No recent votes detected"
+          fi
+
+          # Check disk space
+          DISK_PCT=$(df "{{ ledger_dir }}" | tail -1 | awk '{print $5}' | tr -d '%')
+          if [ "$DISK_PCT" -lt 80 ]; then
+              echo "[OK] Disk usage: ${DISK_PCT}%"
+          elif [ "$DISK_PCT" -lt 90 ]; then
+              echo "[WARNING] Disk usage: ${DISK_PCT}%"
+          else
+              echo "[CRITICAL] Disk usage: ${DISK_PCT}%"
+              exit 2
+          fi
+
+          echo ""
+          echo "Health check passed."
+        owner: "{{ solclone_user }}"
+        group: "{{ solclone_user }}"
+        mode: "0755"
+      tags: [monitoring]
+
+    - name: Configure health check cron job
+      ansible.builtin.cron:
+        name: "SolClone validator health check"
+        minute: "*/5"
+        job: "{{ solclone_home }}/health-check.sh >> {{ log_dir }}/health-check.log 2>&1"
+        user: "{{ solclone_user }}"
+      tags: [monitoring]
+
+    # =========================================================================
+    # Final
+    # =========================================================================
+
+    - name: Print setup summary
+      ansible.builtin.debug:
+        msg: |
+          ============================================
+          SolClone Validator Configuration Complete
+          ============================================
+
+          Cluster:    {{ cluster }}
+          Validator:  {{ validator_name }}
+          User:       {{ solclone_user }}
+
+          Directories:
+            Binaries:   {{ solclone_bin_dir }}
+            Ledger:     {{ ledger_dir }}
+            Accounts:   {{ accounts_dir }}
+            Snapshots:  {{ snapshots_dir }}
+            Logs:       {{ log_dir }}
+            Keys:       {{ keys_dir }}
+
+          Services:
+            solclone-validator  (systemctl status solclone-validator)
+            node_exporter       (systemctl status node_exporter)
+
+          Next Steps:
+            1. Copy identity and vote keypairs to {{ keys_dir }}/
+            2. Download genesis.bin to {{ ledger_dir }}/
+            3. Start the validator: systemctl start solclone-validator
+            4. Monitor: journalctl -u solclone-validator -f
+      tags: [always]

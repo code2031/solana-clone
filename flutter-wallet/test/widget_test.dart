@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_wallet/main.dart';
 import 'package:flutter_wallet/services/rpc_service.dart';
