@@ -122,51 +122,6 @@ Examples:
 
 ---
 
-## Bug Bounty Program
-
-### Reward Tiers
-
-| Severity | Reward Range |
-|---|---|
-| **Critical** | $50,000 - $500,000 |
-| **High** | $10,000 - $50,000 |
-| **Medium** | $2,000 - $10,000 |
-| **Low** | $500 - $2,000 |
-
-Rewards are determined based on:
-- **Severity**: Impact on the network, users, and funds
-- **Quality of report**: Clarity, reproducibility, and suggested fix
-- **Novelty**: First report of this type of issue
-- **Exploitability**: How easily could this be exploited in practice
-
-Exceptional reports that identify novel attack classes or prevent catastrophic outcomes may receive bonuses above the listed ranges.
-
-### Payment
-
-- Rewards are paid in USDC or SOL (reporter's choice)
-- Payment is processed within 30 days of fix deployment
-- Reporters will be credited in the advisory (unless anonymity is requested)
-
-### Rules
-
-1. **Do not exploit the vulnerability** beyond the minimum necessary to demonstrate it.
-2. **Do not access, modify, or destroy data** belonging to other users or validators.
-3. **Do not disrupt** the network, validators, or services during testing.
-4. **Do not publicly disclose** the vulnerability before the agreed-upon disclosure date.
-5. **Test on devnet or local validators** whenever possible. Never test on mainnet without prior coordination.
-6. **One report per vulnerability.** Duplicate reports receive no reward; the first valid report wins.
-7. Researchers who violate these rules may be disqualified from the program.
-
-### Legal Safe Harbor
-
-SolClone will not pursue legal action against security researchers who:
-- Act in good faith and follow this responsible disclosure policy
-- Avoid privacy violations, data destruction, and service disruption
-- Report vulnerabilities promptly and do not exploit them for profit
-- Give reasonable time for fixes before any disclosure
-
----
-
 ## Security Advisories
 
 Published security advisories are available at:
