@@ -1,0 +1,21 @@
+[package]
+name = "solana-compute-budget"
+description = "Solana compute budget"
+documentation = "https://docs.rs/solana-compute-budget"
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+homepage = { workspace = true }
+license = { workspace = true }
+edition = { workspace = true }
+
+[features]
+agave-unstable-api = []
+dev-context-only-utils = []
+
+[dependencies]
+solana-fee-structure = { workspace = true }
+solana-program-runtime = { workspace = true }
+
+[lints]
+workspace = true
