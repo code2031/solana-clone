@@ -1,86 +1,56 @@
 # SolClone CLI Wallet
 
-A command-line wallet for Solana-compatible blockchains. Built with TypeScript, using raw JSON-RPC calls (no `@solana/web3.js` dependency).
+Custom command-line wallet for the SolClone blockchain, part of the SolClone ecosystem. Built with TypeScript using raw JSON-RPC calls (no `@solana/web3.js` dependency).
 
-## Installation
+**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Location:** `cli-wallet/` within the main monorepo
+
+## Prerequisites
+
+- Node.js >= 16
+- npm
+
+## Build
 
 ```bash
+cd cli-wallet
 npm install
 npm run build
-npm link    # makes 'solclone' available globally
+npm link          # Makes 'solclone' available globally
 ```
 
 ## Quick Start
 
 ```bash
-# Generate a keypair
-solclone keygen
-
-# Configure RPC endpoint
-solclone config set --url http://localhost:8899
-
-# Check your balance
-solclone balance
-
-# Request an airdrop (testnet/devnet)
-solclone airdrop 2
-
-# Send SOL
-solclone transfer <recipient-address> 1.5
-
-# Show your address with QR code
-solclone address
+solclone keygen                              # Generate a keypair
+solclone config set --url http://localhost:8899   # Set RPC endpoint
+solclone balance                             # Check balance
+solclone airdrop 2                           # Request airdrop (testnet/devnet)
+solclone transfer <recipient> 1.5            # Send SOL
+solclone address                             # Show address with QR code
 ```
 
 ## Commands
 
-### Key Management
-```bash
-solclone keygen                        # Generate new keypair
-solclone keygen --outfile key.json     # Save to specific file
-solclone keygen --force                # Overwrite existing keypair
-solclone address                       # Show address + QR code
-```
-
-### Balance & Transfers
-```bash
-solclone balance [address]             # Check SOL balance
-solclone balance --lamports            # Show balance in lamports
-solclone transfer <to> <amount>        # Send SOL
-solclone airdrop <amount> [address]    # Request airdrop
-```
-
-### SPL Tokens
-```bash
-solclone token create-mint --decimals 9    # Create token mint
-solclone token mint <mint> <amount>        # Mint tokens
-solclone token transfer <mint> <to> <amt>  # Transfer tokens
-solclone token balance <mint> [owner]      # Token balance
-solclone token accounts [owner]            # List token accounts
-```
-
-### Staking
-```bash
-solclone stake delegate <validator> <amount>  # Delegate stake
-solclone stake deactivate <stake-account>     # Deactivate
-solclone stake withdraw <stake-account>       # Withdraw
-```
-
-### Information
-```bash
-solclone history [address] [--limit 10]   # Transaction history
-solclone history --verbose                # Detailed tx info
-solclone info [address]                   # Account info
-solclone cluster-info                     # Cluster info
-```
-
-### Configuration
-```bash
-solclone config set --url <rpc-url>       # Set RPC URL
-solclone config set --keypair <path>      # Set default keypair
-solclone config set --commitment confirmed  # Set commitment
-solclone config get                       # Show config
-```
+| Command | Description |
+|---------|-------------|
+| `keygen` | Generate new Ed25519 keypair |
+| `balance [address]` | Check SOL balance (supports `--lamports`) |
+| `transfer <to> <amount>` | Send SOL to an address |
+| `airdrop <amount> [address]` | Request airdrop on testnet/devnet |
+| `address` | Display wallet address with QR code |
+| `token create-mint` | Create a new SPL token mint |
+| `token mint <mint> <amount>` | Mint tokens |
+| `token transfer <mint> <to> <amount>` | Transfer SPL tokens |
+| `token balance <mint> [owner]` | Check token balance |
+| `token accounts [owner]` | List all token accounts |
+| `stake delegate <validator> <amount>` | Delegate stake |
+| `stake deactivate <stake-account>` | Deactivate stake |
+| `stake withdraw <stake-account>` | Withdraw stake |
+| `config get` | Show current configuration |
+| `config set --url <rpc-url>` | Set RPC URL, keypair, or commitment |
+| `history [address]` | Transaction history (supports `--limit`, `--verbose`) |
+| `info [address]` | Account info |
 
 ## Configuration
 
@@ -92,22 +62,27 @@ keypair_path: ~/.solclone/id.json
 commitment: confirmed
 ```
 
-## Architecture
-
-- **No `@solana/web3.js` dependency** -- uses a raw JSON-RPC HTTP client
-- **`tweetnacl`** for Ed25519 key generation and transaction signing
-- **`bs58`** for Base58 encoding/decoding
-- **`commander`** for CLI framework
-- **`chalk`** + **`ora`** for colored output and spinners
-- **`qrcode-terminal`** for displaying receive-address QR codes
-
 ## Development
 
 ```bash
-npm run dev -- keygen          # Run without building
-npm run build                  # Compile TypeScript
-npm run clean                  # Remove build output
+npm run dev -- keygen     # Run without building
+npm run build             # Compile TypeScript
+npm run clean             # Remove build output
 ```
+
+## Architecture
+
+- **tweetnacl** for Ed25519 key generation and transaction signing
+- **bs58** for Base58 encoding/decoding
+- **commander** for CLI framework
+- **chalk** + **ora** for colored output and spinners
+- **qrcode-terminal** for receive-address QR codes
+
+## Related Components
+
+- [Validator](https://github.com/code2031/solclone-validator)
+- [Web3.js SDK](https://github.com/code2031/solclone-web3js)
+- [Flutter Wallet](../flutter-wallet/)
 
 ## License
 

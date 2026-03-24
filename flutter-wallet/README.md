@@ -1,17 +1,75 @@
-# flutter_wallet
+# SolClone Flutter Wallet
 
-SolClone Wallet
+Custom cross-platform mobile and web wallet for the SolClone blockchain, part of the SolClone ecosystem. Built with Dart and Flutter.
 
-## Getting Started
+**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Location:** `flutter-wallet/` within the main monorepo
 
-This project is a starting point for a Flutter application.
+## Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) (stable channel)
+- Dart SDK (bundled with Flutter)
+- Chrome (for web target)
+- Xcode (for iOS) or Android Studio (for Android)
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Build and Run
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+cd flutter-wallet
+
+# Web
+flutter run -d chrome
+
+# Mobile (connected device or emulator)
+flutter run
+
+# Production build
+flutter build web
+flutter build apk          # Android
+flutter build ios           # iOS
+```
+
+## Features
+
+- **Create / Import wallet** -- generate new keypairs or import via mnemonic phrase
+- **Send / Receive SOL** -- transfer native tokens with address QR codes
+- **Staking** -- delegate, deactivate, and withdraw stake
+- **Token management** -- view, send, and receive SPL tokens
+- **DApp browser** -- interact with SolClone DApps from within the wallet
+
+## Architecture
+
+- **Provider** for state management
+- **BIP39** for mnemonic phrase generation and recovery
+- **Ed25519** for cryptographic key operations
+- Connects to the SolClone validator via JSON-RPC
+
+## Key Directories
+
+| Directory | Description |
+|-----------|-------------|
+| `lib/` | Main Dart source code |
+| `lib/screens/` | App screens (home, send, receive, staking, etc.) |
+| `lib/models/` | Data models (wallet, token, transaction) |
+| `lib/services/` | RPC client and blockchain interaction logic |
+| `lib/providers/` | State management providers |
+| `lib/widgets/` | Reusable UI widgets |
+| `test/` | Unit and widget tests |
+
+## Testing
+
+```bash
+flutter test
+flutter analyze
+```
+
+## Related Components
+
+- [CLI Wallet](../cli-wallet/)
+- [Validator](https://github.com/code2031/solclone-validator)
+- [Web3.js SDK](https://github.com/code2031/solclone-web3js)
+- [Explorer](https://github.com/code2031/solclone-explorer)
+
+## License
+
+MIT
