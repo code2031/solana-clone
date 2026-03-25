@@ -254,6 +254,32 @@ solclone/
 │   ├── devnet/           #   Devnet genesis config
 │   ├── testnet/          #   Testnet genesis config
 │   └── mainnet/          #   Mainnet genesis config
+├── ai/                   # AI-powered tools
+│   ├── portfolio-advisor/ #   Risk analysis & rebalancing
+│   ├── contract-auditor/  #   Rust static analysis (12 rules)
+│   ├── explorer/          #   Natural-language blockchain queries
+│   └── nft-generator/     #   Prompt-based NFT minting
+├── bridges/              # Cross-chain bridges
+│   ├── ethereum/          #   ERC-20 lock-and-mint (~15 min)
+│   ├── bitcoin/           #   Multi-sig scBTC (~60 min)
+│   ├── solana/            #   SPL token bridge (~30 sec)
+│   └── ui/                #   Unified bridge interface
+├── ecosystem/            # Ecosystem tools
+│   ├── launchpad/         #   Token launch platform (program + UI)
+│   ├── validator-marketplace/ # Validator browsing & delegation
+│   ├── profiles/          #   On-chain identity
+│   ├── grants/            #   Ecosystem funding
+│   └── bounties/          #   Developer bounty board
+├── playground/           # Browser-based program IDE
+├── templates/            # Anchor program templates
+│   ├── token/             #   Fungible token template
+│   ├── nft-collection/    #   NFT collection template
+│   ├── escrow/            #   Two-party escrow template
+│   ├── voting/            #   On-chain voting template
+│   └── staking-pool/      #   Staking pool template
+├── benchmarks/           # TPS & latency benchmarks
+├── docs-site/            # Docusaurus documentation site
+├── privacy/              # Confidential transfers (shielded pools)
 ├── docker/               # Docker images
 ├── scripts/              # Setup, airdrop, deploy scripts
 ├── .github/workflows/    # CI/CD pipeline

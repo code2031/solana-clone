@@ -139,6 +139,94 @@ cd faucet && npm install && npm run dev          # Dev server
 cd health-dashboard && npm install && npm run dev  # Dev server
 ```
 
+### AI Features (`ai/`)
+
+Four Next.js apps for AI-powered blockchain tools:
+
+```bash
+cd ai/portfolio-advisor && npm install && npm run dev  # Risk analysis
+cd ai/contract-auditor && npm install && npm run dev   # Rust static analysis (12 rules)
+cd ai/explorer && npm install && npm run dev           # NL queries -> RPC
+cd ai/nft-generator && npm install && npm run dev      # Prompt-based NFT minting
+```
+
+### Cross-Chain Bridges (`bridges/`)
+
+Three bridge programs (Rust) with off-chain relayers/attestors (TypeScript):
+
+```bash
+# Build bridge programs
+cd bridges/ethereum/program && cargo build-sbf
+cd bridges/bitcoin/program && cargo build-sbf
+cd bridges/solana/program && cargo build-sbf
+
+# Run relayers/attestors
+cd bridges/ethereum/relayer && npm install && npm start
+cd bridges/bitcoin/attestor && npm install && npm start
+cd bridges/solana/relayer && npm install && npm start
+
+# Bridge UI
+cd bridges/ui && npm install && npm run dev
+```
+
+### Ecosystem Tools (`ecosystem/`)
+
+```bash
+# Build on-chain programs
+cd ecosystem/launchpad/program && cargo build-sbf
+cd ecosystem/profiles/program && cargo build-sbf
+
+# Run UIs
+cd ecosystem/launchpad/ui && npm install && npm run dev
+cd ecosystem/validator-marketplace && npm install && npm run dev
+cd ecosystem/grants && npm install && npm run dev
+cd ecosystem/bounties && npm install && npm run dev
+```
+
+### Playground (`playground/`)
+
+Browser-based program IDE:
+
+```bash
+cd playground && npm install && npm run dev
+```
+
+### Anchor Templates (`templates/`)
+
+Five Anchor program templates (token, nft-collection, escrow, voting, staking-pool):
+
+```bash
+cd templates/<name>/programs && cargo build-sbf
+```
+
+### Benchmarks (`benchmarks/`)
+
+```bash
+cd benchmarks && npm install
+bash run.sh                        # Full suite: starts validator, runs benchmarks, generates RESULTS.md
+npx tsx src/tps-bench.ts           # TPS only
+npx tsx src/latency-bench.ts       # Latency only
+```
+
+### Docs Site (`docs-site/`)
+
+Docusaurus documentation site:
+
+```bash
+cd docs-site && npm install
+npm start                          # Dev server
+npm run build                      # Production build
+```
+
+### Privacy / Confidential Transfers (`privacy/`)
+
+Shielded pool program for private token transfers:
+
+```bash
+cd privacy/program && cargo build-sbf
+cd privacy/program && cargo test
+```
+
 ## Testing
 
 ```bash
@@ -166,6 +254,23 @@ cd explorer && pnpm test:e2e          # playwright E2E
 
 # DApp scaffold
 cd dapp-scaffold && npm test
+```
+
+```bash
+# Bridge programs
+cd bridges/ethereum/program && cargo test
+cd bridges/bitcoin/program && cargo test
+cd bridges/solana/program && cargo test
+
+# Ecosystem programs
+cd ecosystem/launchpad/program && cargo test
+cd ecosystem/profiles/program && cargo test
+
+# Privacy program
+cd privacy/program && cargo test
+
+# Benchmarks (run full suite)
+cd benchmarks && bash run.sh
 ```
 
 The CLI wallet and Flutter wallet have no test suites currently.
@@ -205,6 +310,22 @@ All clients communicate with the validator via **Solana-compatible JSON-RPC** (d
 - **`faucet/`** — Web UI for requesting devnet/testnet tokens. TypeScript, npm dev server.
 
 - **`health-dashboard/`** — Real-time network stats dashboard showing TPS, slot height, validator count, epoch info. TypeScript, npm dev server.
+
+- **`ai/`** — Four AI-powered Next.js apps: `portfolio-advisor/` (risk analysis), `contract-auditor/` (Rust static analysis with 12 built-in rules), `explorer/` (NL queries translated to RPC calls), `nft-generator/` (prompt-based NFT minting). Each is a standalone Next.js App Router project.
+
+- **`bridges/`** — Cross-chain bridge infrastructure. Three bridges: `ethereum/` (ERC-20 lock-and-mint, ~15 min), `bitcoin/` (multi-sig scBTC, ~60 min), `solana/` (SPL token bridge, ~30 sec). Each has `program/` (Rust) and `relayer/` or `attestor/` (TypeScript). `ui/` is the unified Next.js bridge interface.
+
+- **`ecosystem/`** — Ecosystem tools. `launchpad/` (Rust program + Next.js UI for token launches: fixed-price, lottery, auction), `validator-marketplace/` (validator browsing UI), `profiles/` (on-chain identity program), `grants/` (ecosystem funding UI), `bounties/` (developer bounty board UI).
+
+- **`playground/`** — Browser-based Solana program IDE and simulator. Next.js app.
+
+- **`templates/`** — Five Anchor program templates: `token/`, `nft-collection/`, `escrow/`, `voting/`, `staking-pool/`. Each has `programs/src/lib.rs` + `Cargo.toml` + `README.md`. Used via `solclone init <name> --template <type>`.
+
+- **`benchmarks/`** — TPS and latency benchmark suite. `src/tps-bench.ts` and `src/latency-bench.ts` run against a local test validator. `run.sh` orchestrates the full suite and generates `RESULTS.md`.
+
+- **`docs-site/`** — Docusaurus documentation site. 7 guides: intro, getting-started, cli-reference, sdk-guide, anchor-guide, defi-guide, nft-guide. Config in `docusaurus.config.ts`, sidebar in `sidebars.ts`.
+
+- **`privacy/`** — Confidential transfer program with shielded pools. Instructions: `initialize_pool`, `shield`, `transfer_shielded`, `unshield`. ZK proof verification is placeholder (production: Groth16/PLONK). Merkle tree of commitments + nullifier set.
 
 ### Networks
 

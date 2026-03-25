@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'providers/wallet_provider.dart';
 import 'providers/network_provider.dart';
+import 'providers/multi_chain_provider.dart';
 import 'services/rpc_service.dart';
 import 'services/wallet_service.dart';
 import 'services/price_service.dart';
@@ -14,6 +15,8 @@ import 'screens/onboarding/import_wallet_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/send/send_screen.dart';
 import 'screens/receive/receive_screen.dart';
+import 'screens/send/multi_chain_send_screen.dart';
+import 'screens/receive/multi_chain_receive_screen.dart';
 import 'screens/staking/staking_screen.dart';
 import 'screens/dapp_browser/dapp_browser_screen.dart';
 import 'screens/create_token/create_token_screen.dart';
@@ -74,6 +77,9 @@ class SolCloneWallet extends StatelessWidget {
         ChangeNotifierProvider<WalletProvider>(
           create: (_) => WalletProvider(walletService, rpcService, priceService),
         ),
+        ChangeNotifierProvider<MultiChainProvider>(
+          create: (_) => MultiChainProvider(rpcService),
+        ),
       ],
       child: MaterialApp(
         title: 'SolClone Wallet',
@@ -87,6 +93,8 @@ class SolCloneWallet extends StatelessWidget {
           '/home': (context) => const HomeScreen(),
           '/send': (context) => const SendScreen(),
           '/receive': (context) => const ReceiveScreen(),
+          '/multi-chain-send': (context) => const MultiChainSendScreen(),
+          '/multi-chain-receive': (context) => const MultiChainReceiveScreen(),
           '/staking': (context) => const StakingScreen(),
           '/dapp-browser': (context) => const DappBrowserScreen(),
           '/create-token': (context) => const CreateTokenScreen(),
