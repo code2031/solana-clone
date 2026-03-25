@@ -1,35 +1,83 @@
 # SolClone Price Oracle
 
-Decentralized price feed oracle for the SolClone network. Aggregates prices from multiple authorized publishers using a median calculation.
+> Decentralized price feeds with multi-publisher aggregation for the SolClone DeFi ecosystem.
 
-## Supported Feeds
+Part of the [SolClone DeFi Suite](../README.md) | [SolClone](https://github.com/code2031/solana-clone)
 
-| Feed | Description |
-|------|-------------|
-| SCLONE/USD | Native SCLONE token price |
-| SCUSD/USD | SCUSD stablecoin price (target $1.00) |
-| BTC/USD | Bitcoin price |
-| ETH/USD | Ethereum price |
+---
 
-## Price Format
+## Overview
 
-All prices use **8 decimal places** of fixed-point precision. For example:
-- `$1.00` = `100_000_000`
-- `$45,123.99` = `4_512_399_000_000`
+The SolClone Price Oracle provides reliable on-chain price data for DeFi protocols.
+Multiple authorized publishers submit price updates, and the program aggregates them
+using a weighted median to produce a single canonical price per feed. Staleness
+protection ensures consumers never read outdated data.
 
-## Instructions
+## Features
 
-- **create_feed** -- Create a new price feed with a set of authorized publishers.
-- **update_price** -- An authorized publisher submits a new price and confidence value.
-- **aggregate_prices** -- Aggregate all recent publisher submissions using the median. Anyone can trigger aggregation.
-- **add_publisher** / **remove_publisher** -- Feed authority manages the publisher list.
+- **Multi-Publisher Feeds** -- Multiple independent publishers submit prices per feed
+- **Median Aggregation** -- Weighted median filters outliers and manipulation attempts
+- **Staleness Protection** -- Feeds expose a timestamp; consumers can reject stale data
+- **Confidence Intervals** -- Each price includes a confidence band for risk assessment
+- **Permissioned Publishers** -- Feed authority controls which publishers can update
+- **On-Chain Consumption** -- Other programs read price data via CPI or account deserialization
 
-## Staleness
+## Feed Lifecycle
 
-Submissions older than **120 slots** (~1 minute) are considered stale and excluded from aggregation.
+1. **Create Feed** -- Authority initializes a feed account for a price pair (e.g., SCLONE/USD)
+2. **Add Publishers** -- Authority registers publisher public keys for the feed
+3. **Publish Prices** -- Publishers submit price, confidence, and timestamp
+4. **Aggregate** -- Program computes weighted median across all recent submissions
+5. **Consume** -- DeFi programs read the aggregated price from the feed account
 
-## Build
+## Key Parameters
+
+| Parameter | Value |
+|---|---|
+| Minimum Publishers | 3 per feed |
+| Staleness Threshold | 30 seconds (configurable per feed) |
+| Aggregation Method | Stake-weighted median |
+| Max Confidence Band | 5% of price |
+| Update Cooldown | 400ms per publisher per feed |
+
+## Quick Start
+
+Build the on-chain program:
 
 ```bash
 cargo build-bpf
 ```
+
+Run the oracle dashboard:
+
+```bash
+cd app
+npm install
+npm run dev
+```
+
+The oracle dashboard will be available at `http://localhost:3003`.
+
+## Program Instructions
+
+| Instruction | Description |
+|---|---|
+| `create_feed` | Initialize a new price feed account |
+| `add_publisher` | Authorize a publisher for a feed |
+| `remove_publisher` | Revoke a publisher from a feed |
+| `publish_price` | Submit a price update from an authorized publisher |
+| `aggregate` | Trigger median aggregation (called automatically) |
+
+## Consuming Prices
+
+```rust
+let feed_account = next_account_info(accounts_iter)?;
+let feed_data = PriceFeed::try_from_slice(&feed_account.data.borrow())?;
+let price = feed_data.aggregate_price;
+let staleness = clock.unix_timestamp - feed_data.last_update_timestamp;
+require!(staleness < MAX_STALENESS, OracleError::StalePrice);
+```
+
+## License
+
+Apache 2.0 -- see the root [LICENSE](../../LICENSE) file.

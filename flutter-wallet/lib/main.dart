@@ -16,6 +16,9 @@ import 'screens/send/send_screen.dart';
 import 'screens/receive/receive_screen.dart';
 import 'screens/staking/staking_screen.dart';
 import 'screens/dapp_browser/dapp_browser_screen.dart';
+import 'screens/create_token/create_token_screen.dart';
+import 'screens/create_token/mint_nft_screen.dart';
+import 'screens/create_token/manage_tokens_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,6 +87,9 @@ class SolCloneWallet extends StatelessWidget {
           '/receive': (context) => const ReceiveScreen(),
           '/staking': (context) => const StakingScreen(),
           '/dapp-browser': (context) => const DappBrowserScreen(),
+          '/create-token': (context) => const CreateTokenScreen(),
+          '/mint-nft': (context) => const MintNftScreen(),
+          '/manage-tokens': (context) => const ManageTokensScreen(),
         },
       ),
     );
