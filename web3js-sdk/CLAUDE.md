@@ -33,7 +33,7 @@ Tests use mocha/chai. Some integration tests expect a local test validator runni
 
 ## Ecosystem Links
 
-- Monorepo: https://github.com/code2031/solana-clone
+- Monorepo: https://github.com/code2031/prism-chain
 - Split repo: https://github.com/code2031/prism-web3js
 - Validator: https://github.com/code2031/prism-validator
 - DApp Scaffold: https://github.com/code2031/prism-dapp-scaffold

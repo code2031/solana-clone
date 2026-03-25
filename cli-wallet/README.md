@@ -2,7 +2,7 @@
 
 Custom command-line wallet for the Prism blockchain, part of the Prism ecosystem. Built with TypeScript using raw JSON-RPC calls (no `@solana/web3.js` dependency).
 
-**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Monorepo:** [https://github.com/code2031/prism-chain](https://github.com/code2031/prism-chain)
 **Location:** `cli-wallet/` within the main monorepo
 
 ## Prerequisites

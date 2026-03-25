@@ -37,7 +37,7 @@ npm run dev                              # local dev server on port 3000
 
 ## Ecosystem Links
 
-- Monorepo: https://github.com/code2031/solana-clone
+- Monorepo: https://github.com/code2031/prism-chain
 - Split repo: https://github.com/code2031/prism-dapp-scaffold
 - Wallet Adapter: https://github.com/code2031/prism-wallet-adapter
 - Web3.js SDK: https://github.com/code2031/prism-web3js

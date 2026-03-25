@@ -2,7 +2,7 @@
 
 Implements the [Wallet Standard](https://github.com/wallet-standard/wallet-standard) for the Prism blockchain, enabling any compliant third-party wallet -- Phantom, Solflare, Backpack, and others -- to connect to Prism DApps.
 
-Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/prism-chain) ecosystem.
 
 ---
 

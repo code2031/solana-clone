@@ -2,7 +2,7 @@
 
 > On-chain proposals, token-weighted voting, and treasury management for the Prism ecosystem.
 
-Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/prism-chain) ecosystem.
 
 ---
 

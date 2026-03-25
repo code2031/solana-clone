@@ -2,7 +2,7 @@
 
 Custom cross-platform mobile and web wallet for the Prism blockchain, part of the Prism ecosystem. Built with Dart and Flutter.
 
-**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Monorepo:** [https://github.com/code2031/prism-chain](https://github.com/code2031/prism-chain)
 **Location:** `flutter-wallet/` within the main monorepo
 
 ## Prerequisites

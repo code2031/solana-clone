@@ -408,7 +408,7 @@ git commit -m "feat(wallet): mock swap screen (Phase 2 placeholder)"
 - [ ] **Step 1: Scaffold Next.js app**
 
 ```bash
-cd /home/pranav/solana-clone
+cd /home/pranav/prism-chain
 npx create-next-app@latest faucet --typescript --tailwind --app --src-dir=false --import-alias="@/*" --no-eslint
 ```
 

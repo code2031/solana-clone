@@ -36,7 +36,7 @@ yarn lint
 
 ## Ecosystem Links
 
-- Monorepo: https://github.com/code2031/solana-clone
+- Monorepo: https://github.com/code2031/prism-chain
 - Split repo: https://github.com/code2031/prism-backpack
 - Wallet Adapter: https://github.com/code2031/prism-wallet-adapter
 - Explorer: https://github.com/code2031/prism-explorer

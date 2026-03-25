@@ -2,7 +2,7 @@
 
 > Decentralized price feeds with multi-publisher aggregation for the Prism DeFi ecosystem.
 
-Part of the [Prism DeFi Suite](../README.md) | [Prism](https://github.com/code2031/solana-clone)
+Part of the [Prism DeFi Suite](../README.md) | [Prism](https://github.com/code2031/prism-chain)
 
 ---
 

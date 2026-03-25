@@ -2,7 +2,7 @@
 
 > Over-collateralized stablecoin pegged to $1 USD, backed by PRISM deposits.
 
-Part of the [Prism DeFi Suite](../README.md) | [Prism](https://github.com/code2031/solana-clone)
+Part of the [Prism DeFi Suite](../README.md) | [Prism](https://github.com/code2031/prism-chain)
 
 ---
 

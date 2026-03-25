@@ -2,7 +2,7 @@
 
 Modular TypeScript wallet adapters and React components for Prism DApps, forked from [anza-xyz/wallet-adapter](https://github.com/anza-xyz/wallet-adapter).
 
-**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Monorepo:** [https://github.com/code2031/prism-chain](https://github.com/code2031/prism-chain)
 **Split repo:** [https://github.com/code2031/prism-wallet-adapter](https://github.com/code2031/prism-wallet-adapter)
 
 ## Prerequisites

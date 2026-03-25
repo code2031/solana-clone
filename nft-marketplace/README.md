@@ -2,7 +2,7 @@
 
 > Mint, list, buy, auction, and trade NFTs on the Prism blockchain.
 
-Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/prism-chain) ecosystem.
 
 ---
 

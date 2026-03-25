@@ -2,7 +2,7 @@
 
 Drop-in React components for connecting wallets to Prism DApps. Add full wallet support to any React application in three lines of code.
 
-Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/prism-chain) ecosystem.
 
 ---
 

@@ -2,7 +2,7 @@
 
 Core validator node for the Prism blockchain, forked from [anza-xyz/agave](https://github.com/anza-xyz/agave).
 
-**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Monorepo:** [https://github.com/code2031/prism-chain](https://github.com/code2031/prism-chain)
 **Split repo:** [https://github.com/code2031/prism-validator](https://github.com/code2031/prism-validator)
 
 ## Prerequisites

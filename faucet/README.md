@@ -2,7 +2,7 @@
 
 > Request devnet and testnet PRISM tokens through a simple web interface.
 
-Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/prism-chain) ecosystem.
 
 ---
 

@@ -36,7 +36,7 @@ Each package has its own test suite. Tests use Jest.
 
 ## Ecosystem Links
 
-- Monorepo: https://github.com/code2031/solana-clone
+- Monorepo: https://github.com/code2031/prism-chain
 - Split repo: https://github.com/code2031/prism-wallet-adapter
 - Backpack Wallet: https://github.com/code2031/prism-backpack
 - DApp Scaffold: https://github.com/code2031/prism-dapp-scaffold

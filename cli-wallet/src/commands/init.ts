@@ -52,7 +52,7 @@ function findTemplatesDir(): string {
     path.resolve(__dirname, '..', '..', '..', 'templates'),
     path.resolve(__dirname, '..', '..', 'templates'),
     path.resolve(process.cwd(), 'templates'),
-    path.resolve(process.env.HOME || '~', 'solana-clone', 'templates'),
+    path.resolve(process.env.HOME || '~', 'prism-chain', 'templates'),
   ];
 
   for (const candidate of candidates) {

@@ -2,7 +2,7 @@
 
 WalletConnect v2 integration for the Prism blockchain. Enables mobile wallet pairing via QR codes, allowing users to sign transactions on their phone while interacting with DApps on desktop.
 
-Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/prism-chain) ecosystem.
 
 ---
 

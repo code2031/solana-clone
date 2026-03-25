@@ -2,7 +2,7 @@
 
 Collection of on-chain Rust programs for the Prism blockchain, forked from [solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library).
 
-**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Monorepo:** [https://github.com/code2031/prism-chain](https://github.com/code2031/prism-chain)
 **Split repo:** [https://github.com/code2031/prism-programs](https://github.com/code2031/prism-programs)
 
 ## Prerequisites

@@ -2,7 +2,7 @@
 
 Web-based block explorer for the Prism blockchain, forked from [solana-foundation/explorer](https://github.com/solana-foundation/explorer).
 
-**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Monorepo:** [https://github.com/code2031/prism-chain](https://github.com/code2031/prism-chain)
 **Split repo:** [https://github.com/code2031/prism-explorer](https://github.com/code2031/prism-explorer)
 
 ## Prerequisites

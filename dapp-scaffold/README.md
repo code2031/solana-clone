@@ -2,7 +2,7 @@
 
 Next.js starter template for building decentralized applications on the Prism blockchain, forked from [solana-labs/dapp-scaffold](https://github.com/solana-labs/dapp-scaffold).
 
-**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Monorepo:** [https://github.com/code2031/prism-chain](https://github.com/code2031/prism-chain)
 **Split repo:** [https://github.com/code2031/prism-dapp-scaffold](https://github.com/code2031/prism-dapp-scaffold)
 
 ## Prerequisites

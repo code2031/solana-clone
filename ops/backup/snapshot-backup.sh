@@ -5,7 +5,7 @@
 # Usage: ./snapshot-backup.sh
 #
 # Designed to run via cron (e.g., every 6 hours):
-#   0 */6 * * * /home/pranav/solana-clone/ops/backup/snapshot-backup.sh >> /var/log/prism/backup.log 2>&1
+#   0 */6 * * * /home/pranav/prism-chain/ops/backup/snapshot-backup.sh >> /var/log/prism/backup.log 2>&1
 #
 # What it does:
 #   1. Finds the latest full and incremental snapshots

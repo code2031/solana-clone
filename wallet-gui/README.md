@@ -2,7 +2,7 @@
 
 Cross-platform wallet application for the Prism blockchain, forked from [coral-xyz/backpack](https://github.com/coral-xyz/backpack).
 
-**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Monorepo:** [https://github.com/code2031/prism-chain](https://github.com/code2031/prism-chain)
 **Split repo:** [https://github.com/code2031/prism-backpack](https://github.com/code2031/prism-backpack)
 
 ## Prerequisites

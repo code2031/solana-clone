@@ -2,7 +2,7 @@
 
 > Supply assets to earn interest or borrow against collateral on Prism.
 
-Part of the [Prism DeFi Suite](../README.md) | [Prism](https://github.com/code2031/solana-clone)
+Part of the [Prism DeFi Suite](../README.md) | [Prism](https://github.com/code2031/prism-chain)
 
 ---
 

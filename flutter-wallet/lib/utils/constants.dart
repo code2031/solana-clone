@@ -34,12 +34,66 @@ class AppConstants {
   static const String bnbRpcUrl = 'https://bsc-dataseed.binance.org';
   static const String bnbTestnetRpcUrl = 'https://data-seed-prebsc-1-s1.binance.org:8545';
 
+  // Avalanche C-Chain - public JSON-RPC
+  static const String avalancheRpcUrl = 'https://api.avax.network/ext/bc/C/rpc';
+  static const String avalancheTestnetRpcUrl = 'https://api.avax-test.network/ext/bc/C/rpc';
+
+  // Arbitrum One - public JSON-RPC
+  static const String arbitrumRpcUrl = 'https://arb1.arbitrum.io/rpc';
+  static const String arbitrumTestnetRpcUrl = 'https://goerli-rollup.arbitrum.io/rpc';
+
+  // Optimism - public JSON-RPC
+  static const String optimismRpcUrl = 'https://mainnet.optimism.io';
+  static const String optimismTestnetRpcUrl = 'https://goerli.optimism.io';
+
+  // Base (Coinbase L2) - public JSON-RPC
+  static const String baseRpcUrl = 'https://mainnet.base.org';
+  static const String baseTestnetRpcUrl = 'https://goerli.base.org';
+
+  // Fantom Opera - public JSON-RPC
+  static const String fantomRpcUrl = 'https://rpc.ftm.tools';
+  static const String fantomTestnetRpcUrl = 'https://rpc.testnet.fantom.network';
+
+  // Cronos (Crypto.com) - public JSON-RPC
+  static const String cronosRpcUrl = 'https://evm.cronos.org';
+  static const String cronosTestnetRpcUrl = 'https://evm-t3.cronos.org';
+
+  // TRON - TronGrid REST API
+  static const String tronApiUrl = 'https://api.trongrid.io';
+  static const String tronTestnetApiUrl = 'https://api.shasta.trongrid.io';
+
+  // Dogecoin - DogeChain REST API
+  static const String dogecoinApiUrl = 'https://dogechain.info/api/v1';
+
+  // Litecoin - litecoinspace.org REST API
+  static const String litecoinApiUrl = 'https://litecoinspace.org';
+
+  // Cardano - Blockfrost REST API
+  static const String cardanoApiUrl = 'https://cardano-mainnet.blockfrost.io/api/v0';
+  static const String cardanoTestnetApiUrl = 'https://cardano-preprod.blockfrost.io/api/v0';
+  static const String cardanoApiKey = 'YOUR_BLOCKFROST_API_KEY'; // Replace with actual key
+
+  // XRP Ledger - Ripple JSON-RPC
+  static const String xrpRpcUrl = 'https://s1.ripple.com:51234';
+  static const String xrpTestnetRpcUrl = 'https://s.altnet.rippletest.net:51234';
+
   // ── Block Explorers ──
   static const String bitcoinExplorer = 'https://blockstream.info';
   static const String ethereumExplorer = 'https://etherscan.io';
   static const String solanaExplorer = 'https://explorer.solana.com';
   static const String polygonExplorer = 'https://polygonscan.com';
   static const String bnbExplorer = 'https://bscscan.com';
+  static const String avalancheExplorer = 'https://snowtrace.io';
+  static const String arbitrumExplorer = 'https://arbiscan.io';
+  static const String optimismExplorer = 'https://optimistic.etherscan.io';
+  static const String baseExplorer = 'https://basescan.org';
+  static const String fantomExplorer = 'https://ftmscan.com';
+  static const String cronosExplorer = 'https://cronoscan.com';
+  static const String tronExplorer = 'https://tronscan.org';
+  static const String dogecoinExplorer = 'https://dogechain.info';
+  static const String litecoinExplorer = 'https://litecoinspace.org';
+  static const String cardanoExplorer = 'https://cardanoscan.io';
+  static const String xrpExplorer = 'https://xrpscan.com';
 
   // ── Program IDs (Prism / Solana) ──
   static const String systemProgramId = '11111111111111111111111111111111';

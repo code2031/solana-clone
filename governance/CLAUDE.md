@@ -1,6 +1,6 @@
 # Prism DAO Governance
 
-Repository: https://github.com/code2031/solana-clone
+Repository: https://github.com/code2031/prism-chain
 
 ## Build
 

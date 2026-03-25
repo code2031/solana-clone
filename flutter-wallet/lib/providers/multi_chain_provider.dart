@@ -9,6 +9,17 @@ import '../services/chains/solana_service.dart';
 import '../services/chains/polygon_service.dart';
 import '../services/chains/bnb_service.dart';
 import '../services/chains/prism_service.dart';
+import '../services/chains/avalanche_service.dart';
+import '../services/chains/arbitrum_service.dart';
+import '../services/chains/optimism_service.dart';
+import '../services/chains/base_chain_service.dart';
+import '../services/chains/fantom_service.dart';
+import '../services/chains/cronos_service.dart';
+import '../services/chains/tron_service.dart';
+import '../services/chains/dogecoin_service.dart';
+import '../services/chains/litecoin_service.dart';
+import '../services/chains/cardano_service.dart';
+import '../services/chains/xrp_service.dart';
 import '../services/rpc_service.dart';
 
 /// Manages multi-chain wallet state across all supported blockchains.
@@ -25,6 +36,17 @@ class MultiChainProvider extends ChangeNotifier {
   late final EthereumService _ethereumService;
   late final PolygonService _polygonService;
   late final BnbService _bnbService;
+  late final AvalancheService _avalancheService;
+  late final ArbitrumService _arbitrumService;
+  late final OptimismService _optimismService;
+  late final BaseChainService _baseService;
+  late final FantomService _fantomService;
+  late final CronosService _cronosService;
+  late final TronService _tronService;
+  late final DogecoinService _dogecoinService;
+  late final LitecoinService _litecoinService;
+  late final CardanoService _cardanoService;
+  late final XrpService _xrpService;
 
   // State
   Map<ChainType, Chain> _chains = {};
@@ -41,6 +63,16 @@ class MultiChainProvider extends ChangeNotifier {
     'SOL': 140.0,
     'POL': 0.55,
     'BNB': 580.0,
+    'AVAX': 35.0,
+    'FTM': 0.40,
+    'CRO': 0.09,
+    'TRX': 0.12,
+    'DOGE': 0.15,
+    'LTC': 85.0,
+    'ADA': 0.45,
+    'XRP': 0.55,
+    'ARB': 1.10,
+    'OP': 2.50,
     'USDT': 1.0,
     'USDC': 1.0,
     'DAI': 1.0,
@@ -90,6 +122,17 @@ class MultiChainProvider extends ChangeNotifier {
     _ethereumService = EthereumService();
     _polygonService = PolygonService();
     _bnbService = BnbService();
+    _avalancheService = AvalancheService();
+    _arbitrumService = ArbitrumService();
+    _optimismService = OptimismService();
+    _baseService = BaseChainService();
+    _fantomService = FantomService();
+    _cronosService = CronosService();
+    _tronService = TronService();
+    _dogecoinService = DogecoinService();
+    _litecoinService = LitecoinService();
+    _cardanoService = CardanoService();
+    _xrpService = XrpService();
 
     _services = {
       ChainType.prism: _prismService,
@@ -98,6 +141,17 @@ class MultiChainProvider extends ChangeNotifier {
       ChainType.ethereum: _ethereumService,
       ChainType.polygon: _polygonService,
       ChainType.bnb: _bnbService,
+      ChainType.avalanche: _avalancheService,
+      ChainType.arbitrum: _arbitrumService,
+      ChainType.optimism: _optimismService,
+      ChainType.base: _baseService,
+      ChainType.fantom: _fantomService,
+      ChainType.cronos: _cronosService,
+      ChainType.tron: _tronService,
+      ChainType.dogecoin: _dogecoinService,
+      ChainType.litecoin: _litecoinService,
+      ChainType.cardano: _cardanoService,
+      ChainType.xrp: _xrpService,
     };
   }
 
@@ -194,7 +248,21 @@ class MultiChainProvider extends ChangeNotifier {
         tokens = await _fetchPolygonTokens(chain.address);
       } else if (type == ChainType.bnb) {
         tokens = await _fetchBnbTokens(chain.address);
+      } else if (type == ChainType.avalanche) {
+        tokens = await _fetchAvalancheTokens(chain.address);
+      } else if (type == ChainType.arbitrum) {
+        tokens = await _fetchArbitrumTokens(chain.address);
+      } else if (type == ChainType.optimism) {
+        tokens = await _fetchOptimismTokens(chain.address);
+      } else if (type == ChainType.base) {
+        tokens = await _fetchBaseTokens(chain.address);
+      } else if (type == ChainType.fantom) {
+        tokens = await _fetchFantomTokens(chain.address);
+      } else if (type == ChainType.cronos) {
+        tokens = await _fetchCronosTokens(chain.address);
       }
+      // TRON TRC-20 tokens could be fetched here in the future
+      // Dogecoin, Litecoin, Cardano, XRP have no token support
 
       _chains[type] = chain.copyWith(
         balance: balance,
@@ -262,6 +330,156 @@ class MultiChainProvider extends ChangeNotifier {
     for (final token in BEP20Token.popular) {
       try {
         final balance = await _bnbService.getTokenBalance(
+          token.contractAddress,
+          address,
+          tokenDecimals: token.decimals,
+        );
+        if (balance > 0) {
+          final price = _getPriceForSymbol(token.symbol);
+          tokens.add(ChainToken(
+            name: token.name,
+            symbol: token.symbol,
+            contractAddress: token.contractAddress,
+            balance: balance,
+            usdValue: balance * price,
+            decimals: token.decimals,
+          ));
+        }
+      } catch (_) {}
+    }
+    return tokens;
+  }
+
+  Future<List<ChainToken>> _fetchAvalancheTokens(String address) async {
+    final tokens = <ChainToken>[];
+    for (final token in AvalancheToken.popular) {
+      try {
+        final balance = await _avalancheService.getTokenBalance(
+          token.contractAddress,
+          address,
+          tokenDecimals: token.decimals,
+        );
+        if (balance > 0) {
+          final price = _getPriceForSymbol(token.symbol);
+          tokens.add(ChainToken(
+            name: token.name,
+            symbol: token.symbol,
+            contractAddress: token.contractAddress,
+            balance: balance,
+            usdValue: balance * price,
+            decimals: token.decimals,
+          ));
+        }
+      } catch (_) {}
+    }
+    return tokens;
+  }
+
+  Future<List<ChainToken>> _fetchArbitrumTokens(String address) async {
+    final tokens = <ChainToken>[];
+    for (final token in ArbitrumToken.popular) {
+      try {
+        final balance = await _arbitrumService.getTokenBalance(
+          token.contractAddress,
+          address,
+          tokenDecimals: token.decimals,
+        );
+        if (balance > 0) {
+          final price = _getPriceForSymbol(token.symbol);
+          tokens.add(ChainToken(
+            name: token.name,
+            symbol: token.symbol,
+            contractAddress: token.contractAddress,
+            balance: balance,
+            usdValue: balance * price,
+            decimals: token.decimals,
+          ));
+        }
+      } catch (_) {}
+    }
+    return tokens;
+  }
+
+  Future<List<ChainToken>> _fetchOptimismTokens(String address) async {
+    final tokens = <ChainToken>[];
+    for (final token in OptimismToken.popular) {
+      try {
+        final balance = await _optimismService.getTokenBalance(
+          token.contractAddress,
+          address,
+          tokenDecimals: token.decimals,
+        );
+        if (balance > 0) {
+          final price = _getPriceForSymbol(token.symbol);
+          tokens.add(ChainToken(
+            name: token.name,
+            symbol: token.symbol,
+            contractAddress: token.contractAddress,
+            balance: balance,
+            usdValue: balance * price,
+            decimals: token.decimals,
+          ));
+        }
+      } catch (_) {}
+    }
+    return tokens;
+  }
+
+  Future<List<ChainToken>> _fetchBaseTokens(String address) async {
+    final tokens = <ChainToken>[];
+    for (final token in BaseToken.popular) {
+      try {
+        final balance = await _baseService.getTokenBalance(
+          token.contractAddress,
+          address,
+          tokenDecimals: token.decimals,
+        );
+        if (balance > 0) {
+          final price = _getPriceForSymbol(token.symbol);
+          tokens.add(ChainToken(
+            name: token.name,
+            symbol: token.symbol,
+            contractAddress: token.contractAddress,
+            balance: balance,
+            usdValue: balance * price,
+            decimals: token.decimals,
+          ));
+        }
+      } catch (_) {}
+    }
+    return tokens;
+  }
+
+  Future<List<ChainToken>> _fetchFantomTokens(String address) async {
+    final tokens = <ChainToken>[];
+    for (final token in FantomToken.popular) {
+      try {
+        final balance = await _fantomService.getTokenBalance(
+          token.contractAddress,
+          address,
+          tokenDecimals: token.decimals,
+        );
+        if (balance > 0) {
+          final price = _getPriceForSymbol(token.symbol);
+          tokens.add(ChainToken(
+            name: token.name,
+            symbol: token.symbol,
+            contractAddress: token.contractAddress,
+            balance: balance,
+            usdValue: balance * price,
+            decimals: token.decimals,
+          ));
+        }
+      } catch (_) {}
+    }
+    return tokens;
+  }
+
+  Future<List<ChainToken>> _fetchCronosTokens(String address) async {
+    final tokens = <ChainToken>[];
+    for (final token in CronosToken.popular) {
+      try {
+        final balance = await _cronosService.getTokenBalance(
           token.contractAddress,
           address,
           tokenDecimals: token.decimals,

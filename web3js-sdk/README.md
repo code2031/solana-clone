@@ -2,7 +2,7 @@
 
 TypeScript client library for building DApps on the Prism blockchain, forked from [solana-labs/solana-web3.js](https://github.com/solana-labs/solana-web3.js).
 
-**Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
+**Monorepo:** [https://github.com/code2031/prism-chain](https://github.com/code2031/prism-chain)
 **Split repo:** [https://github.com/code2031/prism-web3js](https://github.com/code2031/prism-web3js)
 
 ## Prerequisites

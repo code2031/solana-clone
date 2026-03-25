@@ -29,7 +29,7 @@ cargo --version
 ```bash
 # Clone the repository
 git clone https://github.com/prism/prism.git
-cd solana-clone
+cd prism-chain
 
 # Build the validator in release mode
 cd validator
