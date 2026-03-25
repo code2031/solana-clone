@@ -44,7 +44,7 @@ import '../services/price_service.dart';
 /// Trust Wallet / Exodus-style universal wallet experience.
 class MultiChainProvider extends ChangeNotifier {
   final RpcService _rpcService;
-  final PriceService _priceService = PriceService();
+  late final PriceService _priceService;
 
   // Chain service instances
   late final PrismService _prismService;
@@ -182,7 +182,8 @@ class MultiChainProvider extends ChangeNotifier {
     'BUSD': 1.0,
   };
 
-  MultiChainProvider(this._rpcService) {
+  MultiChainProvider(this._rpcService, {String? coinGeckoApiKey}) {
+    _priceService = PriceService(apiKey: coinGeckoApiKey);
     _initServices();
     _initChains();
   }

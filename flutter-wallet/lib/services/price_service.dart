@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 class PriceService {
   final http.Client _client;
   final String _baseUrl;
+  final String? _apiKey;
   final Random _random = Random();
 
   /// CoinGecko IDs mapped to our ticker symbols.
@@ -108,11 +109,17 @@ class PriceService {
   /// Cache duration (refresh every 60 seconds).
   static const _cacheDuration = Duration(seconds: 60);
 
-  PriceService({http.Client? client, String? baseUrl})
+  PriceService({http.Client? client, String? baseUrl, String? apiKey})
       : _client = client ?? http.Client(),
+        _apiKey = apiKey,
         _baseUrl = baseUrl ?? 'https://api.coingecko.com/api/v3' {
     _loadDefaults();
   }
+
+  Map<String, String> get _headers => {
+    'Accept': 'application/json',
+    if (_apiKey != null) 'x-cg-demo-api-key': _apiKey!,
+  };
 
   /// Get the current USD price for a symbol.
   double getPrice(String symbol) {
@@ -171,7 +178,7 @@ class PriceService {
 
       final response = await _client.get(
         Uri.parse(url),
-        headers: {'Accept': 'application/json'},
+        headers: _headers,
       ).timeout(const Duration(seconds: 10));
 
       if (response.statusCode != 200) {
@@ -235,7 +242,7 @@ class PriceService {
     if (geckoId != null) {
       try {
         final url = '$_baseUrl/coins/$geckoId/market_chart?vs_currency=usd&days=$days';
-        final response = await _client.get(Uri.parse(url)).timeout(const Duration(seconds: 10));
+        final response = await _client.get(Uri.parse(url), headers: _headers).timeout(const Duration(seconds: 10));
 
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body) as Map<String, dynamic>;

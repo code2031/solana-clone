@@ -41,9 +41,12 @@ void main() {
   ));
 
   // Create shared service instances
+  // CoinGecko API key from environment (set in .env or pass at build time)
+  const coinGeckoKey = String.fromEnvironment('COINGECKO_API_KEY',
+      defaultValue: 'CG-5weTyNy3vsCKNqtCixFXyfci');
   final rpcService = RpcService();
   final walletService = WalletService();
-  final priceService = PriceService();
+  final priceService = PriceService(apiKey: coinGeckoKey);
 
   runApp(PrismWallet(
     rpcService: rpcService,
@@ -78,7 +81,7 @@ class PrismWallet extends StatelessWidget {
           create: (_) => WalletProvider(walletService, rpcService, priceService),
         ),
         ChangeNotifierProvider<MultiChainProvider>(
-          create: (_) => MultiChainProvider(rpcService),
+          create: (_) => MultiChainProvider(rpcService, coinGeckoApiKey: coinGeckoKey),
         ),
       ],
       child: MaterialApp(
