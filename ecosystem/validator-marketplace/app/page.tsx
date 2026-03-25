@@ -28,9 +28,17 @@ export default function ValidatorMarketplace() {
       return true;
     });
 
+    const fieldMap: Record<SortField, keyof ValidatorInfo> = {
+      apy: "apy",
+      stake: "totalStake",
+      commission: "commission",
+      uptime: "uptime",
+    };
+
     result.sort((a, b) => {
-      const valA = a[sortBy];
-      const valB = b[sortBy];
+      const key = fieldMap[sortBy];
+      const valA = a[key];
+      const valB = b[key];
       if (typeof valA === "number" && typeof valB === "number") {
         return sortDesc ? valB - valA : valA - valB;
       }
