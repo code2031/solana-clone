@@ -1,0 +1,18 @@
+[package]
+name = "solclone-profiles"
+version = "0.1.0"
+edition = "2021"
+description = "SolClone On-Chain Profiles - Decentralized identity profiles for the SolClone ecosystem"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[features]
+no-entrypoint = []
+cpi = ["no-entrypoint"]
+
+[dependencies]
+solana-program = "1.17"
+borsh = "0.10"
+borsh-derive = "0.10"
+thiserror = "1.0"

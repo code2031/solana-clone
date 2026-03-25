@@ -1,0 +1,19 @@
+[package]
+name = "solclone-bitcoin-bridge"
+version = "0.1.0"
+edition = "2021"
+description = "SolClone <-> Bitcoin cross-chain bridge program"
+license = "MIT"
+
+[dependencies]
+borsh = "0.10"
+solana-program = "1.17"
+spl-token = { version = "4.0", features = ["no-entrypoint"] }
+thiserror = "1.0"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "solclone_bitcoin_bridge"
+
+[features]
+no-entrypoint = []

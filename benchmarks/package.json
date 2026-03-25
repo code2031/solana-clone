@@ -1,0 +1,21 @@
+{
+  "name": "solclone-benchmarks",
+  "version": "1.0.0",
+  "description": "Performance benchmark suite for the SolClone blockchain",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bench:tps": "tsx src/tps-bench.ts",
+    "bench:latency": "tsx src/latency-bench.ts",
+    "bench:all": "tsx src/tps-bench.ts && tsx src/latency-bench.ts && tsx src/report.ts",
+    "report": "tsx src/report.ts"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.87.0",
+    "tsx": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}

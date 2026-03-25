@@ -12,6 +12,7 @@ import { registerConfigCommand } from './commands/config';
 import { registerHistoryCommand } from './commands/history';
 import { registerInfoCommand } from './commands/info';
 import { registerAddressCommand } from './commands/address';
+import { registerInitCommand } from './commands/init';
 
 const VERSION = '1.0.0';
 
@@ -40,6 +41,7 @@ registerConfigCommand(program);
 registerHistoryCommand(program);
 registerInfoCommand(program);
 registerAddressCommand(program);
+registerInitCommand(program);
 
 // ─── Global Error Handling ──────────────────────────────────────────────────
 

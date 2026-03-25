@@ -1,0 +1,19 @@
+[package]
+name = "solclone-nft-collection"
+version = "0.1.0"
+description = "SolClone NFT Collection Program - Create collections and mint NFTs with royalties"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+path = "src/lib.rs"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = "0.29.0"

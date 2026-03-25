@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0F0B2E;
+  --foreground: #E2E8F0;
+  --card-bg: #1A1545;
+  --card-border: #2D2670;
+  --accent-purple: #8B5CF6;
+  --accent-green: #10B981;
+  --accent-blue: #3B82F6;
+  --accent-orange: #F59E0B;
+  --accent-red: #EF4444;
+  --gradient-start: #8B5CF6;
+  --gradient-end: #10B981;
+  --input-bg: #13103A;
+  --input-border: #2D2670;
+  --hover-bg: #231D5E;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card styling */
+.bridge-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+/* Chain badge colors */
+.chain-ethereum { color: #627EEA; }
+.chain-bitcoin { color: #F7931A; }
+.chain-solana { color: #9945FF; }
+.chain-solclone {
+  background: linear-gradient(135deg, #8B5CF6, #10B981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Status badges */
+.status-pending { background: #F59E0B22; color: #F59E0B; }
+.status-confirming { background: #3B82F622; color: #3B82F6; }
+.status-completed { background: #10B98122; color: #10B981; }
+.status-failed { background: #EF444422; color: #EF4444; }
+
+/* Input focus ring */
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25);
+}
+
+/* Button gradient */
+.btn-bridge {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  color: white;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  width: 100%;
+  font-size: 16px;
+}
+
+.btn-bridge:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-bridge:active {
+  transform: translateY(0);
+}
+
+.btn-bridge:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--card-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-purple);
+}
