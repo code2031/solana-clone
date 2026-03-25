@@ -7,6 +7,7 @@ import 'providers/multi_chain_provider.dart';
 import 'services/rpc_service.dart';
 import 'services/wallet_service.dart';
 import 'services/price_service.dart';
+import 'services/chart_service.dart';
 import 'theme/app_theme.dart';
 import 'screens/splash/splash_screen.dart';
 import 'screens/onboarding/welcome_screen.dart';
@@ -47,11 +48,13 @@ void main() {
   final rpcService = RpcService();
   final walletService = WalletService();
   final priceService = PriceService(apiKey: coinGeckoKey);
+  final chartService = ChartService();
 
   runApp(PrismWallet(
     rpcService: rpcService,
     walletService: walletService,
     priceService: priceService,
+    chartService: chartService,
   ));
 }
 
@@ -59,12 +62,14 @@ class PrismWallet extends StatelessWidget {
   final RpcService rpcService;
   final WalletService walletService;
   final PriceService priceService;
+  final ChartService chartService;
 
   const PrismWallet({
     super.key,
     required this.rpcService,
     required this.walletService,
     required this.priceService,
+    required this.chartService,
   });
 
   @override
@@ -74,6 +79,7 @@ class PrismWallet extends StatelessWidget {
         Provider<RpcService>.value(value: rpcService),
         Provider<WalletService>.value(value: walletService),
         Provider<PriceService>.value(value: priceService),
+        Provider<ChartService>.value(value: chartService),
         ChangeNotifierProvider<NetworkProvider>(
           create: (_) => NetworkProvider(rpcService),
         ),
