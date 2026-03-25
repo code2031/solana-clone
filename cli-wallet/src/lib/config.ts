@@ -1,13 +1,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as YAML from 'yaml';
-import { SolCloneConfig, Commitment } from '../types';
+import { PrismConfig, Commitment } from '../types';
 
-const CONFIG_DIR = path.join(process.env.HOME || '~', '.solclone');
+const CONFIG_DIR = path.join(process.env.HOME || '~', '.prism');
 const CONFIG_FILE = path.join(CONFIG_DIR, 'config.yml');
 const DEFAULT_KEYPAIR = path.join(CONFIG_DIR, 'id.json');
 
-const DEFAULT_CONFIG: SolCloneConfig = {
+const DEFAULT_CONFIG: PrismConfig = {
   rpc_url: 'http://localhost:8899',
   keypair_path: DEFAULT_KEYPAIR,
   commitment: 'confirmed',
@@ -25,7 +25,7 @@ export function ensureConfigDir(): void {
 /**
  * Load the configuration from disk, falling back to defaults.
  */
-export function loadConfig(): SolCloneConfig {
+export function loadConfig(): PrismConfig {
   ensureConfigDir();
 
   if (!fs.existsSync(CONFIG_FILE)) {
@@ -35,7 +35,7 @@ export function loadConfig(): SolCloneConfig {
 
   try {
     const raw = fs.readFileSync(CONFIG_FILE, 'utf-8');
-    const parsed = YAML.parse(raw) as Partial<SolCloneConfig>;
+    const parsed = YAML.parse(raw) as Partial<PrismConfig>;
     return {
       rpc_url: parsed.rpc_url || DEFAULT_CONFIG.rpc_url,
       keypair_path: parsed.keypair_path || DEFAULT_CONFIG.keypair_path,
@@ -49,7 +49,7 @@ export function loadConfig(): SolCloneConfig {
 /**
  * Save the configuration to disk.
  */
-export function saveConfig(config: SolCloneConfig): void {
+export function saveConfig(config: PrismConfig): void {
   ensureConfigDir();
   const yamlStr = YAML.stringify(config);
   fs.writeFileSync(CONFIG_FILE, yamlStr, { mode: 0o600 });
@@ -58,7 +58,7 @@ export function saveConfig(config: SolCloneConfig): void {
 /**
  * Update specific fields in the configuration.
  */
-export function updateConfig(updates: Partial<SolCloneConfig>): SolCloneConfig {
+export function updateConfig(updates: Partial<PrismConfig>): PrismConfig {
   const config = loadConfig();
 
   if (updates.rpc_url !== undefined) {

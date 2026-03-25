@@ -44,9 +44,9 @@ const NETWORK_PRESETS: Record<string, NetworkPreset> = {
 };
 
 const NETWORK_REMOTE: Record<string, string> = {
-  devnet: 'https://api.devnet.solclone.io',
-  testnet: 'https://api.testnet.solclone.io',
-  mainnet: 'https://api.mainnet.solclone.io',
+  devnet: 'https://api.devnet.prism.io',
+  testnet: 'https://api.testnet.prism.io',
+  mainnet: 'https://api.mainnet.prism.io',
 };
 
 export function registerConfigCommand(program: Command): void {
@@ -129,9 +129,9 @@ export function registerConfigCommand(program: Command): void {
           printWarning('No configuration values provided. Use --help to see options.');
           println();
           console.log('  Examples:');
-          console.log(`    ${colors.primary('solclone config set --url http://localhost:8899')}`);
-          console.log(`    ${colors.primary('solclone config set --keypair ~/.solclone/id.json')}`);
-          console.log(`    ${colors.primary('solclone config set --commitment finalized')}`);
+          console.log(`    ${colors.primary('prism config set --url http://localhost:8899')}`);
+          console.log(`    ${colors.primary('prism config set --keypair ~/.prism/id.json')}`);
+          console.log(`    ${colors.primary('prism config set --commitment finalized')}`);
           println();
         }
       } catch (err: any) {

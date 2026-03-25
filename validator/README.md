@@ -1,9 +1,9 @@
-# SolClone Validator
+# Prism Validator
 
-Core validator node for the SolClone blockchain, forked from [anza-xyz/agave](https://github.com/anza-xyz/agave).
+Core validator node for the Prism blockchain, forked from [anza-xyz/agave](https://github.com/anza-xyz/agave).
 
 **Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
-**Split repo:** [https://github.com/code2031/solclone-validator](https://github.com/code2031/solclone-validator)
+**Split repo:** [https://github.com/code2031/prism-validator](https://github.com/code2031/prism-validator)
 
 ## Prerequisites
 
@@ -20,8 +20,8 @@ source $HOME/.cargo/env
 rustup component add rustfmt
 
 # Clone and build
-git clone https://github.com/code2031/solclone-validator.git
-cd solclone-validator
+git clone https://github.com/code2031/prism-validator.git
+cd prism-validator
 
 cargo build --release                          # Full workspace build
 cargo build --release --bin solana-validator    # Validator binary only
@@ -58,9 +58,9 @@ cargo fmt --all -- --check                # Format check
 
 ## Related Components
 
-- [Explorer](https://github.com/code2031/solclone-explorer)
-- [Web3.js SDK](https://github.com/code2031/solclone-web3js)
-- [Program Library](https://github.com/code2031/solclone-programs)
+- [Explorer](https://github.com/code2031/prism-explorer)
+- [Web3.js SDK](https://github.com/code2031/prism-web3js)
+- [Program Library](https://github.com/code2031/prism-programs)
 
 ## License
 

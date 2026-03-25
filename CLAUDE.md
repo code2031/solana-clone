@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-SolClone is a complete Solana blockchain fork. This monorepo contains the validator (Rust), CLI wallet (TypeScript), Flutter GUI wallet (Dart), block explorer (Next.js), web3.js SDK, SPL programs, wallet adapter, DApp scaffold, and production operations tooling. The 7 forked upstream components each have their own split repo under `code2031/solclone-*`.
+Prism is a complete Solana blockchain fork. This monorepo contains the validator (Rust), CLI wallet (TypeScript), Flutter GUI wallet (Dart), block explorer (Next.js), web3.js SDK, SPL programs, wallet adapter, DApp scaffold, and production operations tooling. The 7 forked upstream components each have their own split repo under `code2031/prism-*`.
 
 ## Build & Run
 
@@ -42,15 +42,15 @@ make wallet            # Backpack wallet (yarn start)
 ```bash
 cd cli-wallet
 npm install && npm run build   # Compiles to dist/ (tsc)
-npx solclone keygen            # Generate Ed25519 keypair
-npx solclone config use devnet # Switch network
-npx solclone balance           # Check SOL balance
-npx solclone transfer <addr> 1 # Send SOL
-npx solclone token create-mint # Create SPL token
-npx solclone stake delegate <validator> 10  # Stake
+npx prism keygen            # Generate Ed25519 keypair
+npx prism config use devnet # Switch network
+npx prism balance           # Check SOL balance
+npx prism transfer <addr> 1 # Send SOL
+npx prism token create-mint # Create SPL token
+npx prism stake delegate <validator> 10  # Stake
 ```
 
-TypeScript targeting ES2020/CommonJS. Config at `~/.solclone/config.yml`, keypairs at `~/.solclone/id.json`.
+TypeScript targeting ES2020/CommonJS. Config at `~/.prism/config.yml`, keypairs at `~/.prism/id.json`.
 
 ### Flutter Wallet
 
@@ -295,11 +295,11 @@ All clients communicate with the validator via **Solana-compatible JSON-RPC** (d
 
 - **`wallet-adapter/`** — React hooks/UI for DApp wallet integration (pnpm). `wallet-gui/` is Backpack wallet (yarn + turborepo).
 
-- **`wallet-standard/`** — Wallet Standard implementation. Core files: `src/wallet.ts` (SolCloneWallet class), `src/adapter.ts` (legacy bridge), `src/register.ts` (registration), `src/detect.ts` (wallet detection). TypeScript, tsc build.
+- **`wallet-standard/`** — Wallet Standard implementation. Core files: `src/wallet.ts` (PrismWallet class), `src/adapter.ts` (legacy bridge), `src/register.ts` (registration), `src/detect.ts` (wallet detection). TypeScript, tsc build.
 
-- **`wallet-connect/`** — WalletConnect v2 integration. Core files: `src/client.ts` (SignClient wrapper), `src/qr-modal.ts` (QR generation), `src/chains.ts` (SolClone chain IDs). TypeScript, tsc build.
+- **`wallet-connect/`** — WalletConnect v2 integration. Core files: `src/client.ts` (SignClient wrapper), `src/qr-modal.ts` (QR generation), `src/chains.ts` (Prism chain IDs). TypeScript, tsc build.
 
-- **`connect-kit/`** — React component library for DApp wallet connection. Core files: `src/provider.tsx` (SolCloneProvider), `src/components/ConnectButton.tsx`, `src/components/WalletModal.tsx`, `src/hooks/useWallet.ts`, `src/hooks/useSolClone.ts`. Composes wallet-standard + wallet-connect.
+- **`connect-kit/`** — React component library for DApp wallet connection. Core files: `src/provider.tsx` (PrismProvider), `src/components/ConnectButton.tsx`, `src/components/WalletModal.tsx`, `src/hooks/useWallet.ts`, `src/hooks/usePrism.ts`. Composes wallet-standard + wallet-connect.
 
 - **`defi/`** — DeFi suite with four sub-projects: `solswap/` (AMM DEX with program/ and ui/), `sollend/` (lending protocol with program/ and ui/), `scusd/` (algorithmic stablecoin, program/ only), `oracle/` (price feeds, program/ only). Rust programs build with `cargo build-sbf`, UIs are Next.js/React.
 
@@ -319,7 +319,7 @@ All clients communicate with the validator via **Solana-compatible JSON-RPC** (d
 
 - **`playground/`** — Browser-based Solana program IDE and simulator. Next.js app.
 
-- **`templates/`** — Five Anchor program templates: `token/`, `nft-collection/`, `escrow/`, `voting/`, `staking-pool/`. Each has `programs/src/lib.rs` + `Cargo.toml` + `README.md`. Used via `solclone init <name> --template <type>`.
+- **`templates/`** — Five Anchor program templates: `token/`, `nft-collection/`, `escrow/`, `voting/`, `staking-pool/`. Each has `programs/src/lib.rs` + `Cargo.toml` + `README.md`. Used via `prism init <name> --template <type>`.
 
 - **`benchmarks/`** — TPS and latency benchmark suite. `src/tps-bench.ts` and `src/latency-bench.ts` run against a local test validator. `run.sh` orchestrates the full suite and generates `RESULTS.md`.
 
@@ -356,7 +356,7 @@ After modifying a forked component, sync to its split repo:
 ./scripts/update-split-repos.sh
 ```
 
-Split repos: `code2031/solclone-validator`, `solclone-web3js`, `solclone-programs`, `solclone-explorer`, `solclone-wallet-adapter`, `solclone-backpack`, `solclone-dapp-scaffold`.
+Split repos: `code2031/prism-validator`, `prism-web3js`, `prism-programs`, `prism-explorer`, `prism-wallet-adapter`, `prism-backpack`, `prism-dapp-scaffold`.
 
 ## Related Projects
 

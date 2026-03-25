@@ -1,5 +1,5 @@
 /**
- * ConnectButton — Drop-in "Connect Wallet" button for SolClone DApps.
+ * ConnectButton — Drop-in "Connect Wallet" button for Prism DApps.
  *
  * States:
  *   - Disconnected: gradient purple button "Connect Wallet"
@@ -10,7 +10,7 @@
  */
 
 import React, { useState, useRef, useEffect } from "react";
-import { useSolCloneContext } from "./SolCloneProvider";
+import { usePrismContext } from "./PrismProvider";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -35,7 +35,7 @@ function truncateAddress(address: string): string {
 function formatBalance(lamports: number | null): string {
   if (lamports === null) return "";
   const sol = lamports / 1_000_000_000;
-  return `${sol.toFixed(4)} SCLONE`;
+  return `${sol.toFixed(4)} PRISM`;
 }
 
 // ── Styles ──────────────────────────────────────────────────────────────────
@@ -130,7 +130,7 @@ const dropdownItemStyles: React.CSSProperties = {
 };
 
 const spinnerKeyframes = `
-@keyframes solclone-spin {
+@keyframes prism-spin {
   to { transform: rotate(360deg); }
 }
 `;
@@ -144,7 +144,7 @@ export function ConnectButton({
   onDisconnect,
 }: ConnectButtonProps) {
   const { connected, connecting, address, balance, wallet, disconnect } =
-    useSolCloneContext();
+    usePrismContext();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -202,7 +202,7 @@ export function ConnectButton({
               border: "2px solid rgba(255,255,255,0.3)",
               borderTopColor: "#FFFFFF",
               borderRadius: "50%",
-              animation: "solclone-spin 0.6s linear infinite",
+              animation: "prism-spin 0.6s linear infinite",
             }}
           />
           Connecting...

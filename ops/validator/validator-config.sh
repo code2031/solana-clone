@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # =============================================================================
-# SolClone Validator Launch Script — Production Configuration
+# Prism Validator Launch Script — Production Configuration
 # =============================================================================
 # Usage: ./validator-config.sh [--dry-run]
 #
-# This script launches the SolClone validator with production-grade settings.
+# This script launches the Prism validator with production-grade settings.
 # All tunable parameters are sourced from the environment file first, with
 # sensible defaults provided below.
 # =============================================================================
@@ -13,21 +13,21 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Paths & identity
 # ---------------------------------------------------------------------------
-SOLCLONE_ROOT="${SOLCLONE_ROOT:-/home/solclone}"
-VALIDATOR_BIN="${SOLCLONE_ROOT}/.local/share/solclone/install/active_release/bin/solclone-validator"
-IDENTITY_KEYPAIR="${IDENTITY_KEYPAIR:-${SOLCLONE_ROOT}/validator-keypair.json}"
-VOTE_ACCOUNT_KEYPAIR="${VOTE_ACCOUNT_KEYPAIR:-${SOLCLONE_ROOT}/vote-account-keypair.json}"
-LEDGER_DIR="${LEDGER_DIR:-${SOLCLONE_ROOT}/validator-ledger}"
-ACCOUNTS_DIR="${ACCOUNTS_DIR:-${SOLCLONE_ROOT}/validator-accounts}"
-SNAPSHOTS_DIR="${SNAPSHOTS_DIR:-${SOLCLONE_ROOT}/validator-snapshots}"
-LOG_DIR="${LOG_DIR:-/var/log/solclone}"
+PRISM_ROOT="${PRISM_ROOT:-/home/prism}"
+VALIDATOR_BIN="${PRISM_ROOT}/.local/share/prism/install/active_release/bin/prism-validator"
+IDENTITY_KEYPAIR="${IDENTITY_KEYPAIR:-${PRISM_ROOT}/validator-keypair.json}"
+VOTE_ACCOUNT_KEYPAIR="${VOTE_ACCOUNT_KEYPAIR:-${PRISM_ROOT}/vote-account-keypair.json}"
+LEDGER_DIR="${LEDGER_DIR:-${PRISM_ROOT}/validator-ledger}"
+ACCOUNTS_DIR="${ACCOUNTS_DIR:-${PRISM_ROOT}/validator-accounts}"
+SNAPSHOTS_DIR="${SNAPSHOTS_DIR:-${PRISM_ROOT}/validator-snapshots}"
+LOG_DIR="${LOG_DIR:-/var/log/prism}"
 LOG_FILE="${LOG_DIR}/validator.log"
 
 # ---------------------------------------------------------------------------
 # Network
 # ---------------------------------------------------------------------------
 EXPECTED_GENESIS_HASH="${EXPECTED_GENESIS_HASH:-}"
-ENTRYPOINT="${ENTRYPOINT:-entrypoint.mainnet.solclone.org:8001}"
+ENTRYPOINT="${ENTRYPOINT:-entrypoint.mainnet.prism.org:8001}"
 KNOWN_VALIDATORS="${KNOWN_VALIDATORS:-}"
 RPC_PORT="${RPC_PORT:-8899}"
 RPC_BIND_ADDRESS="${RPC_BIND_ADDRESS:-127.0.0.1}"
@@ -150,7 +150,7 @@ build_args() {
 # ---------------------------------------------------------------------------
 main() {
     echo "============================================"
-    echo " SolClone Validator — Production Launcher"
+    echo " Prism Validator — Production Launcher"
     echo "============================================"
     echo "Identity : ${IDENTITY_KEYPAIR}"
     echo "Vote     : ${VOTE_ACCOUNT_KEYPAIR}"

@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     const parsedAmount = Number(amount);
     if (![1, 2, 5].includes(parsedAmount)) {
       return NextResponse.json(
-        { error: "Invalid amount. Must be 1, 2, or 5 SCLONE." },
+        { error: "Invalid amount. Must be 1, 2, or 5 PRISM." },
         { status: 400 }
       );
     }
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Convert SCLONE to lamports (1 SCLONE = 1_000_000_000 lamports)
+    // Convert PRISM to lamports (1 PRISM = 1_000_000_000 lamports)
     const lamports = parsedAmount * 1_000_000_000;
 
     // Call JSON-RPC requestAirdrop

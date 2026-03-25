@@ -1,9 +1,9 @@
-# SolClone Backpack Wallet
+# Prism Backpack Wallet
 
-Cross-platform wallet application for the SolClone blockchain, forked from [coral-xyz/backpack](https://github.com/coral-xyz/backpack).
+Cross-platform wallet application for the Prism blockchain, forked from [coral-xyz/backpack](https://github.com/coral-xyz/backpack).
 
 **Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
-**Split repo:** [https://github.com/code2031/solclone-backpack](https://github.com/code2031/solclone-backpack)
+**Split repo:** [https://github.com/code2031/prism-backpack](https://github.com/code2031/prism-backpack)
 
 ## Prerequisites
 
@@ -14,8 +14,8 @@ Cross-platform wallet application for the SolClone blockchain, forked from [cora
 ## Build
 
 ```bash
-git clone https://github.com/code2031/solclone-backpack.git
-cd solclone-backpack
+git clone https://github.com/code2031/prism-backpack.git
+cd prism-backpack
 
 yarn install
 yarn build          # Production build of all packages
@@ -54,9 +54,9 @@ Optionally enable `chrome://flags/#allow-insecure-localhost` for local SSL.
 
 ## Related Components
 
-- [Wallet Adapter](https://github.com/code2031/solclone-wallet-adapter)
-- [Explorer](https://github.com/code2031/solclone-explorer)
-- [DApp Scaffold](https://github.com/code2031/solclone-dapp-scaffold)
+- [Wallet Adapter](https://github.com/code2031/prism-wallet-adapter)
+- [Explorer](https://github.com/code2031/prism-explorer)
+- [DApp Scaffold](https://github.com/code2031/prism-dapp-scaffold)
 
 ## License
 

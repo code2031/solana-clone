@@ -252,7 +252,7 @@ export default function ProposalDetail({
                   </span>
                   <div className="flex items-center gap-3">
                     <span className="text-sm text-muted">
-                      {formatVotes(voter.weight)} SCLONE
+                      {formatVotes(voter.weight)} PRISM
                     </span>
                     <span
                       className={`rounded-full px-2 py-0.5 text-xs font-semibold ${

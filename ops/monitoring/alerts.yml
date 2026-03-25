@@ -1,5 +1,5 @@
 # =============================================================================
-# SolClone Validator — Prometheus Alerting Rules
+# Prism Validator — Prometheus Alerting Rules
 # =============================================================================
 
 groups:
@@ -7,17 +7,17 @@ groups:
   # -------------------------------------------------------------------------
   # Validator health
   # -------------------------------------------------------------------------
-  - name: solclone_validator_health
+  - name: prism_validator_health
     interval: 30s
     rules:
 
       - alert: ValidatorDown
-        expr: up{job="solclone-validator"} == 0
+        expr: up{job="prism-validator"} == 0
         for: 2m
         labels:
           severity: critical
         annotations:
-          summary: "SolClone validator is unreachable"
+          summary: "Prism validator is unreachable"
           description: >-
             The validator metrics endpoint has been unreachable for more than
             2 minutes. Check if the process is running and the RPC port is
@@ -89,7 +89,7 @@ groups:
   # -------------------------------------------------------------------------
   # System resources
   # -------------------------------------------------------------------------
-  - name: solclone_system_resources
+  - name: prism_system_resources
     interval: 30s
     rules:
 

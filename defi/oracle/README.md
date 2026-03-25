@@ -1,14 +1,14 @@
-# SolClone Price Oracle
+# Prism Price Oracle
 
-> Decentralized price feeds with multi-publisher aggregation for the SolClone DeFi ecosystem.
+> Decentralized price feeds with multi-publisher aggregation for the Prism DeFi ecosystem.
 
-Part of the [SolClone DeFi Suite](../README.md) | [SolClone](https://github.com/code2031/solana-clone)
+Part of the [Prism DeFi Suite](../README.md) | [Prism](https://github.com/code2031/solana-clone)
 
 ---
 
 ## Overview
 
-The SolClone Price Oracle provides reliable on-chain price data for DeFi protocols.
+The Prism Price Oracle provides reliable on-chain price data for DeFi protocols.
 Multiple authorized publishers submit price updates, and the program aggregates them
 using a weighted median to produce a single canonical price per feed. Staleness
 protection ensures consumers never read outdated data.
@@ -24,7 +24,7 @@ protection ensures consumers never read outdated data.
 
 ## Feed Lifecycle
 
-1. **Create Feed** -- Authority initializes a feed account for a price pair (e.g., SCLONE/USD)
+1. **Create Feed** -- Authority initializes a feed account for a price pair (e.g., PRISM/USD)
 2. **Add Publishers** -- Authority registers publisher public keys for the feed
 3. **Publish Prices** -- Publishers submit price, confidence, and timestamp
 4. **Aggregate** -- Program computes weighted median across all recent submissions

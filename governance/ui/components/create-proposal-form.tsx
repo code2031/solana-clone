@@ -35,7 +35,7 @@ const ACTION_TYPES: { value: ActionType; label: string; description: string }[] 
 const PARAMETER_FIELDS: Record<ActionType, { key: string; label: string; placeholder: string }[]> = {
   treasury_transfer: [
     { key: "recipient", label: "Recipient Address", placeholder: "Enter wallet address..." },
-    { key: "amount", label: "Amount (SCLONE)", placeholder: "e.g. 50000" },
+    { key: "amount", label: "Amount (PRISM)", placeholder: "e.g. 50000" },
     { key: "memo", label: "Memo", placeholder: "Purpose of transfer..." },
   ],
   parameter_change: [
@@ -82,7 +82,7 @@ export default function CreateProposalForm({
       <div className="mb-6">
         <h2 className="text-xl font-bold text-foreground">Create Proposal</h2>
         <p className="mt-1 text-sm text-muted">
-          Requires at least 100,000 SCLONE tokens to submit.
+          Requires at least 100,000 PRISM tokens to submit.
         </p>
       </div>
 

@@ -36,7 +36,7 @@ const PROPOSALS = [
     id: 2,
     title: "Fund DeFi ecosystem grants program",
     description:
-      "Allocate 500,000 SCLONE from the DAO treasury to establish a DeFi ecosystem grants program.\n\nThe program will fund developers building lending protocols, AMMs, derivatives, and other DeFi primitives on SolClone.\n\nA grants committee of 5 elected members will review applications on a rolling basis, with individual grants capped at 50,000 SCLONE.",
+      "Allocate 500,000 PRISM from the DAO treasury to establish a DeFi ecosystem grants program.\n\nThe program will fund developers building lending protocols, AMMs, derivatives, and other DeFi primitives on Prism.\n\nA grants committee of 5 elected members will review applications on a rolling basis, with individual grants capped at 50,000 PRISM.",
     status: "Active" as const,
     forVotes: 3_100_000,
     againstVotes: 450_000,
@@ -85,7 +85,7 @@ const PROPOSALS = [
   {
     id: 5,
     title: "Add SCUSD/USDC liquidity incentives",
-    description: "Allocate 200,000 SCLONE over 6 months to incentivize SCUSD/USDC LP positions.",
+    description: "Allocate 200,000 PRISM over 6 months to incentivize SCUSD/USDC LP positions.",
     status: "Failed" as const,
     forVotes: 1_800_000,
     againstVotes: 2_500_000,
@@ -218,7 +218,7 @@ export default function DaoPage() {
             Treasury Balance
           </p>
           <p className="text-2xl font-bold text-foreground">
-            12.5M <span className="text-sm font-normal text-muted">SCLONE</span>
+            12.5M <span className="text-sm font-normal text-muted">PRISM</span>
           </p>
         </div>
         <div className="rounded-xl border border-card-border bg-card-bg p-5">
@@ -242,7 +242,7 @@ export default function DaoPage() {
             Voting Power
           </p>
           <p className="text-2xl font-bold text-foreground">
-            0 <span className="text-sm font-normal text-muted">SCLONE</span>
+            0 <span className="text-sm font-normal text-muted">PRISM</span>
           </p>
           <p className="mt-0.5 text-xs text-muted">Connect wallet to view</p>
         </div>

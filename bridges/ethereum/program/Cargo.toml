@@ -1,8 +1,8 @@
 [package]
-name = "solclone-ethereum-bridge"
+name = "prism-ethereum-bridge"
 version = "0.1.0"
 edition = "2021"
-description = "SolClone <-> Ethereum cross-chain bridge program"
+description = "Prism <-> Ethereum cross-chain bridge program"
 license = "MIT"
 
 [dependencies]
@@ -13,7 +13,7 @@ thiserror = "1.0"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "solclone_ethereum_bridge"
+name = "prism_ethereum_bridge"
 
 [features]
 no-entrypoint = []

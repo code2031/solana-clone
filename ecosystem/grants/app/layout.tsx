@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone Grants",
-  description: "Fund and apply for grants to build on the SolClone ecosystem",
+  title: "Prism Grants",
+  description: "Fund and apply for grants to build on the Prism ecosystem",
 };
 
 export default function RootLayout({
@@ -32,7 +32,7 @@ export default function RootLayout({
                 SG
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-                SolClone Grants
+                Prism Grants
               </span>
             </div>
             <div className="flex items-center gap-6">
@@ -48,7 +48,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <footer className="border-t border-[#2a2a4a] py-8 mt-16">
           <div className="max-w-7xl mx-auto px-6 text-center text-sm text-[#666688]">
-            SolClone Grants &mdash; Funding the future of decentralized infrastructure
+            Prism Grants &mdash; Funding the future of decentralized infrastructure
           </div>
         </footer>
       </body>

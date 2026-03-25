@@ -47,7 +47,7 @@ export function formatStake(lamports: number): string {
 export const MOCK_VALIDATORS: ValidatorInfo[] = [
   {
     id: "v1",
-    name: "SolClone Foundation",
+    name: "Prism Foundation",
     identity: "SCFd1111111111111111111111111111111111111111",
     voteAccount: "SCFv1111111111111111111111111111111111111111",
     totalStake: 5_200_000,

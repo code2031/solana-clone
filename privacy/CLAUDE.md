@@ -1,8 +1,8 @@
-# CLAUDE.md -- SolClone Privacy / Confidential Transfers
+# CLAUDE.md -- Prism Privacy / Confidential Transfers
 
 ## Overview
 
-Rust on-chain program implementing shielded pools for private token transfers on SolClone. Users deposit public SPL tokens into a pool, transfer privately within the pool using zero-knowledge proofs, and withdraw back to public accounts.
+Rust on-chain program implementing shielded pools for private token transfers on Prism. Users deposit public SPL tokens into a pool, transfer privately within the pool using zero-knowledge proofs, and withdraw back to public accounts.
 
 ## Structure
 

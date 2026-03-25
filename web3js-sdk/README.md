@@ -1,9 +1,9 @@
-# SolClone Web3.js SDK
+# Prism Web3.js SDK
 
-TypeScript client library for building DApps on the SolClone blockchain, forked from [solana-labs/solana-web3.js](https://github.com/solana-labs/solana-web3.js).
+TypeScript client library for building DApps on the Prism blockchain, forked from [solana-labs/solana-web3.js](https://github.com/solana-labs/solana-web3.js).
 
 **Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
-**Split repo:** [https://github.com/code2031/solclone-web3js](https://github.com/code2031/solclone-web3js)
+**Split repo:** [https://github.com/code2031/prism-web3js](https://github.com/code2031/prism-web3js)
 
 ## Prerequisites
 
@@ -13,8 +13,8 @@ TypeScript client library for building DApps on the SolClone blockchain, forked 
 ## Build
 
 ```bash
-git clone https://github.com/code2031/solclone-web3js.git
-cd solclone-web3js
+git clone https://github.com/code2031/prism-web3js.git
+cd prism-web3js
 
 npm install
 npm run build
@@ -47,7 +47,7 @@ Unit tests use mocha/chai. Some integration tests expect a local test validator 
 ## Usage
 
 ```typescript
-import { Connection, Keypair, Transaction } from '@solclone/web3.js';
+import { Connection, Keypair, Transaction } from '@prism/web3.js';
 
 const connection = new Connection('http://localhost:8899');
 const keypair = Keypair.generate();
@@ -56,9 +56,9 @@ const balance = await connection.getBalance(keypair.publicKey);
 
 ## Related Components
 
-- [Validator](https://github.com/code2031/solclone-validator)
-- [DApp Scaffold](https://github.com/code2031/solclone-dapp-scaffold)
-- [Wallet Adapter](https://github.com/code2031/solclone-wallet-adapter)
+- [Validator](https://github.com/code2031/prism-validator)
+- [DApp Scaffold](https://github.com/code2031/prism-dapp-scaffold)
+- [Wallet Adapter](https://github.com/code2031/prism-wallet-adapter)
 
 ## License
 

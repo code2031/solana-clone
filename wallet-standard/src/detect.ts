@@ -10,11 +10,11 @@ import type { Wallet, WalletIcon } from "@wallet-standard/base";
 
 /** Summary of a detected wallet, suitable for rendering in UI. */
 export interface DetectedWallet {
-  /** Human-readable wallet name (e.g., "Phantom", "SolClone"). */
+  /** Human-readable wallet name (e.g., "Phantom", "Prism"). */
   name: string;
   /** Wallet icon as a data URI. */
   icon: WalletIcon | undefined;
-  /** Chains the wallet supports (e.g., "solana:mainnet", "solclone:devnet"). */
+  /** Chains the wallet supports (e.g., "solana:mainnet", "prism:devnet"). */
   chains: readonly string[];
   /** Feature identifiers the wallet exposes. */
   features: string[];
@@ -104,9 +104,9 @@ function getRegisteredWallets(): Wallet[] {
  *
  * @example
  * ```ts
- * import { detectWallets } from "@solclone/wallet-standard";
+ * import { detectWallets } from "@prism/wallet-standard";
  *
- * const wallets = detectWallets({ chains: ["solclone:mainnet"] });
+ * const wallets = detectWallets({ chains: ["prism:mainnet"] });
  * wallets.forEach(w => console.log(w.name, w.icon, w.chains));
  * ```
  */

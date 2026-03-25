@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone NFT Studio",
+  title: "Prism NFT Studio",
   description: "AI-powered NFT generation and minting on Solana",
 };
 
@@ -35,7 +35,7 @@ export default function RootLayout({
                   </svg>
                 </div>
                 <span className="text-lg font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-orange-400 bg-clip-text text-transparent">
-                  SolClone NFT Studio
+                  Prism NFT Studio
                 </span>
               </div>
               <div className="flex items-center gap-4 text-sm text-[#64748b]">

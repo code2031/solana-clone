@@ -1,6 +1,6 @@
 # Validator Upgrade Runbook
 
-This document describes the staged rollout process for upgrading SolClone validators, including feature gates, version compatibility, and rollback procedures.
+This document describes the staged rollout process for upgrading Prism validators, including feature gates, version compatibility, and rollback procedures.
 
 ---
 
@@ -19,7 +19,7 @@ This document describes the staged rollout process for upgrading SolClone valida
 
 ## Upgrade Philosophy
 
-SolClone follows a conservative upgrade strategy to maintain network stability:
+Prism follows a conservative upgrade strategy to maintain network stability:
 
 1. **No surprise breaking changes.** All breaking changes are gated behind feature flags that activate at a future epoch.
 2. **Staged rollout.** Upgrades propagate from devnet to testnet to mainnet with soak time at each stage.
@@ -51,7 +51,7 @@ Before beginning any upgrade:
 
 - [ ] Read the full release notes for the target version
 - [ ] Review breaking changes and new feature gates
-- [ ] Verify the release is signed by the SolClone release key
+- [ ] Verify the release is signed by the Prism release key
 - [ ] Check that the version has been running on devnet for at least 7 days
 - [ ] Check that the version has been running on testnet for at least 7 days (mainnet upgrades)
 - [ ] Confirm disk space: at least 200 GB free for the build and snapshot
@@ -137,18 +137,18 @@ Proposed -> Pending Activation -> Active -> (permanent)
 
 ```bash
 # List all feature gates and their status
-solclone feature status --url <RPC_URL>
+prism feature status --url <RPC_URL>
 
 # Check a specific feature
-solclone feature status <FEATURE_PUBKEY> --url <RPC_URL>
+prism feature status <FEATURE_PUBKEY> --url <RPC_URL>
 
 # Activate a feature (requires authority — usually foundation multisig)
-solclone feature activate <FEATURE_PUBKEY> \
+prism feature activate <FEATURE_PUBKEY> \
   --keypair /secure/feature-authority.json \
   --url <RPC_URL>
 
 # Check which features your validator version supports
-solclone-validator --version
+prism-validator --version
 # Cross-reference with the release notes
 ```
 
@@ -172,37 +172,37 @@ This is the normal procedure for minor version upgrades.
 
 ```bash
 # 1. Build the new version
-cd ~/solclone-src
+cd ~/prism-src
 git fetch --tags
 git checkout v<NEW_VERSION>
 cargo build --release
 
 # 2. Verify the build
-./target/release/solclone-validator --version
+./target/release/prism-validator --version
 # Should show the new version
 
 # 3. Wait for a restart window
 # The validator will find a window where it is not the leader
-solclone-validator --ledger /var/solclone/ledger wait-for-restart-window \
+prism-validator --ledger /var/prism/ledger wait-for-restart-window \
   --min-idle-time 2 --skip-new-snapshot-check
 
 # 4. Stop the validator
-sudo systemctl stop solclone-validator
+sudo systemctl stop prism-validator
 
 # 5. Install new binaries
-cp target/release/solclone ~/bin/solclone
-cp target/release/solclone-validator ~/bin/solclone-validator
-cp target/release/solclone-keygen ~/bin/solclone-keygen
+cp target/release/prism ~/bin/prism
+cp target/release/prism-validator ~/bin/prism-validator
+cp target/release/prism-keygen ~/bin/prism-keygen
 
 # 6. Start the validator
-sudo systemctl start solclone-validator
+sudo systemctl start prism-validator
 
 # 7. Verify the upgrade
-solclone-validator --version
-journalctl -u solclone-validator -f  # Watch startup logs
+prism-validator --version
+journalctl -u prism-validator -f  # Watch startup logs
 
 # 8. Verify catchup
-solclone catchup <IDENTITY_PUBKEY> --url http://127.0.0.1:8899
+prism catchup <IDENTITY_PUBKEY> --url http://127.0.0.1:8899
 ```
 
 ### Zero-Downtime Upgrade (Hot Swap)
@@ -214,21 +214,21 @@ For high-availability setups with a standby validator.
 # (same as steps 1-2 above)
 
 # 2. Copy the tower file from the active validator
-scp active-validator:/var/solclone/ledger/tower-*.bin /var/solclone/ledger/
+scp active-validator:/var/prism/ledger/tower-*.bin /var/prism/ledger/
 
 # 3. Start the standby with --no-voting initially
-solclone-validator --no-voting [... flags ...] &
+prism-validator --no-voting [... flags ...] &
 
 # 4. Wait for the standby to catch up
-solclone catchup <STANDBY_IDENTITY> --url http://127.0.0.1:8899
+prism catchup <STANDBY_IDENTITY> --url http://127.0.0.1:8899
 
 # 5. Switch: stop active, enable voting on standby
 # On active:
-sudo systemctl stop solclone-validator
+sudo systemctl stop prism-validator
 
 # On standby: restart with voting enabled
 # (update start script to remove --no-voting, then restart)
-sudo systemctl restart solclone-validator
+sudo systemctl restart prism-validator
 
 # 6. Upgrade the original server and make it the new standby
 ```
@@ -241,17 +241,17 @@ Major versions may include ledger format changes or require a fresh snapshot.
 # 1. Build the new version (same as above)
 
 # 2. Stop the validator
-sudo systemctl stop solclone-validator
+sudo systemctl stop prism-validator
 
 # 3. Back up the current ledger
-cp -r /var/solclone/ledger /var/solclone/ledger-backup-$(date +%Y%m%d)
+cp -r /var/prism/ledger /var/prism/ledger-backup-$(date +%Y%m%d)
 
 # 4. If ledger format changed, download a fresh snapshot
 # Check release notes for instructions
 
 # 5. Install new binaries and start
 cp target/release/* ~/bin/
-sudo systemctl start solclone-validator
+sudo systemctl start prism-validator
 
 # 6. Monitor closely for 24 hours
 ```
@@ -266,20 +266,20 @@ If an upgrade causes issues, roll back to the previous version.
 
 ```bash
 # 1. Stop the validator
-sudo systemctl stop solclone-validator
+sudo systemctl stop prism-validator
 
 # 2. Restore old binaries
 # (assumes you kept the old build or have pre-built binaries)
-cp ~/bin-backup/solclone ~/bin/solclone
-cp ~/bin-backup/solclone-validator ~/bin/solclone-validator
-cp ~/bin-backup/solclone-keygen ~/bin/solclone-keygen
+cp ~/bin-backup/prism ~/bin/prism
+cp ~/bin-backup/prism-validator ~/bin/prism-validator
+cp ~/bin-backup/prism-keygen ~/bin/prism-keygen
 
 # 3. Start the validator
-sudo systemctl start solclone-validator
+sudo systemctl start prism-validator
 
 # 4. Verify the rollback
-solclone-validator --version
-solclone catchup <IDENTITY_PUBKEY> --url http://127.0.0.1:8899
+prism-validator --version
+prism catchup <IDENTITY_PUBKEY> --url http://127.0.0.1:8899
 ```
 
 ### Rollback with Ledger Reset
@@ -288,18 +288,18 @@ If the new version corrupted the ledger:
 
 ```bash
 # 1. Stop the validator
-sudo systemctl stop solclone-validator
+sudo systemctl stop prism-validator
 
 # 2. Restore old binaries (as above)
 
 # 3. Remove the corrupted ledger
-rm -rf /var/solclone/ledger/rocksdb
+rm -rf /var/prism/ledger/rocksdb
 
 # 4. If you have a backup:
-cp -r /var/solclone/ledger-backup-YYYYMMDD/* /var/solclone/ledger/
+cp -r /var/prism/ledger-backup-YYYYMMDD/* /var/prism/ledger/
 
 # 5. If no backup, the validator will download a snapshot on start
-sudo systemctl start solclone-validator
+sudo systemctl start prism-validator
 ```
 
 ### Rollback Limitations
@@ -325,20 +325,20 @@ Emergency upgrades bypass the normal staged rollout for critical security patche
 
 ```bash
 # 1. Download the emergency release (signed)
-wget https://releases.solclone.io/emergency/v<VERSION>/solclone-release.tar.gz
-wget https://releases.solclone.io/emergency/v<VERSION>/solclone-release.tar.gz.sig
+wget https://releases.prism.io/emergency/v<VERSION>/prism-release.tar.gz
+wget https://releases.prism.io/emergency/v<VERSION>/prism-release.tar.gz.sig
 
 # 2. Verify the signature
-gpg --verify solclone-release.tar.gz.sig solclone-release.tar.gz
+gpg --verify prism-release.tar.gz.sig prism-release.tar.gz
 
 # 3. Extract and install
-tar -xzf solclone-release.tar.gz -C ~/bin/
+tar -xzf prism-release.tar.gz -C ~/bin/
 
 # 4. Restart the validator
-sudo systemctl restart solclone-validator
+sudo systemctl restart prism-validator
 
 # 5. Confirm the version
-solclone-validator --version
+prism-validator --version
 ```
 
 ### Communication During Emergency Upgrades

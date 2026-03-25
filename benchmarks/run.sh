@@ -53,9 +53,9 @@ fi
 
 # ─── Start Testnet ───────────────────────────────────────────────────────────
 
-log "Starting SolClone testnet..."
+log "Starting Prism testnet..."
 
-VALIDATOR_BIN="$PROJECT_ROOT/validator/target/release/solclone-validator"
+VALIDATOR_BIN="$PROJECT_ROOT/validator/target/release/prism-validator"
 START_SCRIPT="$PROJECT_ROOT/scripts/start-testnet.sh"
 
 if [ -x "$START_SCRIPT" ]; then
@@ -64,7 +64,7 @@ if [ -x "$START_SCRIPT" ]; then
   VALIDATOR_PID=$!
 elif [ -x "$VALIDATOR_BIN" ]; then
   log "Starting validator directly..."
-  "$VALIDATOR_BIN" --rpc-port "$RPC_PORT" --ledger /tmp/solclone-bench-ledger &
+  "$VALIDATOR_BIN" --rpc-port "$RPC_PORT" --ledger /tmp/prism-bench-ledger &
   VALIDATOR_PID=$!
 else
   warn "No validator binary found. Assuming testnet is already running on $RPC_URL."
@@ -92,7 +92,7 @@ export RPC_URL
 
 echo ""
 echo "============================================"
-echo "  SolClone Benchmark Suite"
+echo "  Prism Benchmark Suite"
 echo "  RPC: $RPC_URL"
 echo "============================================"
 echo ""

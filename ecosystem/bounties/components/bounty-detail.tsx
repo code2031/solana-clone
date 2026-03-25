@@ -120,7 +120,7 @@ export function BountyDetail({ bounty }: { bounty: Bounty }) {
           <div className="text-3xl font-bold text-red-400 mb-1">
             {bounty.reward.toLocaleString()}
           </div>
-          <div className="text-sm text-[#666688]">SCLONE</div>
+          <div className="text-sm text-[#666688]">PRISM</div>
         </div>
 
         {/* Details */}

@@ -74,7 +74,7 @@ export function registerAirdropCommand(program: Command): void {
         } catch (err: any) {
           confirmSpinner.fail('Confirmation timed out');
           printWarning(
-            'The airdrop may still succeed. Check your balance with: solclone balance'
+            'The airdrop may still succeed. Check your balance with: prism balance'
           );
         }
 

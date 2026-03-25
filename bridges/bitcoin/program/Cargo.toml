@@ -1,8 +1,8 @@
 [package]
-name = "solclone-bitcoin-bridge"
+name = "prism-bitcoin-bridge"
 version = "0.1.0"
 edition = "2021"
-description = "SolClone <-> Bitcoin cross-chain bridge program"
+description = "Prism <-> Bitcoin cross-chain bridge program"
 license = "MIT"
 
 [dependencies]
@@ -13,7 +13,7 @@ thiserror = "1.0"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "solclone_bitcoin_bridge"
+name = "prism_bitcoin_bridge"
 
 [features]
 no-entrypoint = []

@@ -1,17 +1,17 @@
 /**
- * @solclone/connect-kit
+ * @prism/connect-kit
  *
- * React component library for adding wallet connections to SolClone DApps.
+ * React component library for adding wallet connections to Prism DApps.
  * Drop-in components and hooks for wallet connect, disconnect, sign, and send.
  */
 
 // Provider
-export { SolCloneProvider, useSolCloneContext } from "./SolCloneProvider";
+export { PrismProvider, usePrismContext } from "./PrismProvider";
 export type {
-  SolCloneProviderProps,
-  SolCloneContextValue,
-  SolCloneNetwork,
-} from "./SolCloneProvider";
+  PrismProviderProps,
+  PrismContextValue,
+  PrismNetwork,
+} from "./PrismProvider";
 
 // Components
 export { ConnectButton } from "./ConnectButton";
@@ -24,9 +24,9 @@ export type { WalletModalProps } from "./WalletModal";
 export { useWallet } from "./useWallet";
 export type { UseWalletReturn } from "./useWallet";
 
-export { useSolClone } from "./useSolClone";
+export { usePrism } from "./usePrism";
 export type {
-  UseSolCloneReturn,
-  SolCloneNetwork as SolCloneNetworkType,
+  UsePrismReturn,
+  PrismNetwork as PrismNetworkType,
   TokenAccount,
-} from "./useSolClone";
+} from "./usePrism";

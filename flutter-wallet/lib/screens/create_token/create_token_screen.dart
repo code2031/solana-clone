@@ -183,7 +183,7 @@ class _CreateTokenScreenState extends State<CreateTokenScreen>
           const SizedBox(height: 8),
           const Center(
             child: Text(
-              'Deploy your own token on the SolClone network',
+              'Deploy your own token on the Prism network',
               style: TextStyle(color: AppTheme.textTertiary, fontSize: 14),
             ),
           ),

@@ -1,6 +1,6 @@
-# SolClone Voting Template
+# Prism Voting Template
 
-An on-chain governance voting program built with the Anchor framework for the SolClone blockchain. Supports proposals with multiple options, weighted voting, and automatic finalization.
+An on-chain governance voting program built with the Anchor framework for the Prism blockchain. Supports proposals with multiple options, weighted voting, and automatic finalization.
 
 ## Features
 
@@ -12,7 +12,7 @@ An on-chain governance voting program built with the Anchor framework for the So
 
 ```bash
 # Initialize from template
-solclone init my-dao --template voting
+prism init my-dao --template voting
 
 # Build
 anchor build

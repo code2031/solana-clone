@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone Bridge",
-  description: "Cross-chain bridge for Ethereum, Bitcoin, Solana, and SolClone",
+  title: "Prism Bridge",
+  description: "Cross-chain bridge for Ethereum, Bitcoin, Solana, and Prism",
 };
 
 function ChainIcon({ chain, size = 20 }: { chain: string; size?: number }) {
@@ -22,13 +22,13 @@ function ChainIcon({ chain, size = 20 }: { chain: string; size?: number }) {
     ethereum: "#627EEA",
     bitcoin: "#F7931A",
     solana: "#9945FF",
-    solclone: "#8B5CF6",
+    prism: "#8B5CF6",
   };
   const labels: Record<string, string> = {
     ethereum: "ETH",
     bitcoin: "BTC",
     solana: "SOL",
-    solclone: "SC",
+    prism: "SC",
   };
   return (
     <span
@@ -89,7 +89,7 @@ export default function RootLayout({
                 SC
               </div>
               <h1 className="text-xl font-bold" style={{ color: "#E2E8F0" }}>
-                SolClone <span className="gradient-text">Bridge</span>
+                Prism <span className="gradient-text">Bridge</span>
               </h1>
             </div>
 
@@ -97,7 +97,7 @@ export default function RootLayout({
               <ChainIcon chain="ethereum" size={24} />
               <ChainIcon chain="bitcoin" size={24} />
               <ChainIcon chain="solana" size={24} />
-              <ChainIcon chain="solclone" size={24} />
+              <ChainIcon chain="prism" size={24} />
             </div>
           </div>
         </header>
@@ -114,7 +114,7 @@ export default function RootLayout({
           className="py-4"
         >
           <div className="max-w-6xl mx-auto px-4 text-center text-sm" style={{ color: "#64748B" }}>
-            SolClone Bridge - Cross-chain infrastructure powered by guardian networks
+            Prism Bridge - Cross-chain infrastructure powered by guardian networks
           </div>
         </footer>
       </body>

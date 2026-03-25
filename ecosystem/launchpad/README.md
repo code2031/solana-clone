@@ -1,4 +1,4 @@
-# SolClone Launchpad
+# Prism Launchpad
 
 A fair token distribution platform built as a Rust on-chain program with a Next.js frontend. Supports three launch types to accommodate different project needs.
 
@@ -52,7 +52,7 @@ cargo build-sbf
 ```bash
 solana program deploy target/deploy/launchpad.so \
   --url devnet \
-  --keypair ~/.solclone/id.json
+  --keypair ~/.prism/id.json
 ```
 
 ### Run the UI
@@ -68,7 +68,7 @@ npm run dev
 
 ```bash
 # Fixed-price launch: 1,000,000 tokens at 0.01 SOL each
-solclone launchpad create \
+prism launchpad create \
   --type fixed-price \
   --token <MINT_ADDRESS> \
   --allocation 1000000 \

@@ -1,6 +1,6 @@
-# SolClone Mainnet Validator Requirements
+# Prism Mainnet Validator Requirements
 
-This document specifies the hardware, software, and network requirements for running a SolClone mainnet validator.
+This document specifies the hardware, software, and network requirements for running a Prism mainnet validator.
 
 ---
 
@@ -91,8 +91,8 @@ The validator is built from source. Ensure you are on the release branch matchin
 ### Build the Validator
 
 ```bash
-git clone https://github.com/solclone/solclone.git
-cd solclone
+git clone https://github.com/prism/prism.git
+cd prism
 git checkout v<RELEASE_VERSION>
 cargo build --release
 ```
@@ -141,7 +141,7 @@ sudo ufw enable
 
 ### Kernel Parameters
 
-Add to `/etc/sysctl.d/21-solclone-validator.conf`:
+Add to `/etc/sysctl.d/21-prism-validator.conf`:
 
 ```ini
 # Increase UDP buffer sizes
@@ -166,11 +166,11 @@ sudo sysctl --system
 
 ### File Descriptor Limits
 
-Add to `/etc/security/limits.d/90-solclone.conf`:
+Add to `/etc/security/limits.d/90-prism.conf`:
 
 ```
-solclone  soft  nofile  1000000
-solclone  hard  nofile  1000000
+prism  soft  nofile  1000000
+prism  hard  nofile  1000000
 ```
 
 ### CPU Governor
@@ -199,7 +199,7 @@ echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governo
 - **Never store the authorized withdrawer keypair on the validator server.**
 - Generate cold keys on an air-gapped machine.
 - Back up all keypairs in multiple secure locations (encrypted USB, hardware wallet, safe deposit box).
-- Use `solclone-keygen` with `--word-count 24` for mnemonic backup of critical keys.
+- Use `prism-keygen` with `--word-count 24` for mnemonic backup of critical keys.
 
 ---
 
@@ -207,7 +207,7 @@ echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governo
 
 ### Required Monitoring
 
-- **Validator health**: `solclone catchup`, `solclone validators`, vote account status.
+- **Validator health**: `prism catchup`, `prism validators`, vote account status.
 - **System metrics**: CPU, RAM, disk I/O, network throughput (via Prometheus + node_exporter).
 - **Disk space**: Alert at 80% capacity; snapshot pruning may be needed.
 - **NVMe health**: Track wear level and temperature.
@@ -217,7 +217,7 @@ echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governo
 
 - Prometheus + Grafana for metrics visualization.
 - Alertmanager for alerts (PagerDuty, Slack, or email integration).
-- SolClone's built-in metrics exporter (port 9125 by default).
+- Prism's built-in metrics exporter (port 9125 by default).
 
 ---
 
@@ -263,4 +263,4 @@ Bare metal servers provide the best price-to-performance for validator operation
 - [ ] Log rotation configured
 - [ ] NVMe health baseline recorded
 - [ ] Backup procedures documented and tested
-- [ ] Joined the SolClone validator Discord/communications channel
+- [ ] Joined the Prism validator Discord/communications channel

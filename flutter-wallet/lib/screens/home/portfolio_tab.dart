@@ -44,7 +44,7 @@ class _PortfolioTabState extends State<PortfolioTab> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'SolClone Wallet',
+                          'Prism Wallet',
                           style: TextStyle(
                             color: AppTheme.textPrimary,
                             fontSize: 20,
@@ -83,11 +83,11 @@ class _PortfolioTabState extends State<PortfolioTab> {
                 ),
               ),
 
-              // Content area -- switches between all chains and SolClone only
+              // Content area -- switches between all chains and Prism only
               Expanded(
                 child: _showAllChains
                     ? const ChainsOverview()
-                    : _SolClonePortfolioView(
+                    : _PrismPortfolioView(
                         walletProvider: walletProvider,
                         networkProvider: networkProvider,
                       ),
@@ -120,7 +120,7 @@ class _PortfolioTabState extends State<PortfolioTab> {
   }
 }
 
-/// Toggle widget for switching between "All Chains" and "SolClone Only" views.
+/// Toggle widget for switching between "All Chains" and "Prism Only" views.
 class _ViewToggle extends StatelessWidget {
   final bool showAllChains;
   final ValueChanged<bool> onToggle;
@@ -148,7 +148,7 @@ class _ViewToggle extends StatelessWidget {
             onTap: () => onToggle(true),
           ),
           _ToggleOption(
-            label: 'SolClone',
+            label: 'Prism',
             isSelected: !showAllChains,
             onTap: () => onToggle(false),
           ),
@@ -195,12 +195,12 @@ class _ToggleOption extends StatelessWidget {
   }
 }
 
-/// The original SolClone-only portfolio view, extracted for clarity.
-class _SolClonePortfolioView extends StatelessWidget {
+/// The original Prism-only portfolio view, extracted for clarity.
+class _PrismPortfolioView extends StatelessWidget {
   final WalletProvider walletProvider;
   final NetworkProvider networkProvider;
 
-  const _SolClonePortfolioView({
+  const _PrismPortfolioView({
     required this.walletProvider,
     required this.networkProvider,
   });

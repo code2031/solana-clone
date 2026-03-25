@@ -1,7 +1,7 @@
 {
-  "name": "solclone-solana-bridge-relayer",
+  "name": "prism-solana-bridge-relayer",
   "version": "0.1.0",
-  "description": "Relayer service for the SolClone <-> Solana cross-chain bridge",
+  "description": "Relayer service for the Prism <-> Solana cross-chain bridge",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

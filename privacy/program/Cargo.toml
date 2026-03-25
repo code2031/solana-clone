@@ -1,8 +1,8 @@
 [package]
-name = "solclone-privacy"
+name = "prism-privacy"
 version = "0.1.0"
 edition = "2021"
-description = "SolClone privacy / confidential transfer program with shielded pools"
+description = "Prism privacy / confidential transfer program with shielded pools"
 license = "MIT"
 
 [dependencies]
@@ -13,7 +13,7 @@ thiserror = "1.0"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "solclone_privacy"
+name = "prism_privacy"
 
 [features]
 no-entrypoint = []

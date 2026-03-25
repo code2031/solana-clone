@@ -2,7 +2,7 @@
 name = "scusd-stablecoin"
 version = "0.1.0"
 edition = "2021"
-description = "SCUSD Stablecoin - Overcollateralized stablecoin backed by SCLONE"
+description = "SCUSD Stablecoin - Overcollateralized stablecoin backed by PRISM"
 
 [dependencies]
 solana-program = "1.17"

@@ -1,8 +1,8 @@
 # SolSwap -- Automated Market Maker DEX
 
-> Constant-product AMM for trustless token swaps on SolClone.
+> Constant-product AMM for trustless token swaps on Prism.
 
-Part of the [SolClone DeFi Suite](../README.md) | [SolClone](https://github.com/code2031/solana-clone)
+Part of the [Prism DeFi Suite](../README.md) | [Prism](https://github.com/code2031/solana-clone)
 
 ---
 
@@ -27,7 +27,7 @@ pro-rata to liquidity providers.
 | Recipient | Share | Description |
 |---|---|---|
 | Liquidity Providers | 0.25% | Accrues in pool reserves |
-| Protocol Treasury | 0.05% | Funds SolClone DAO governance |
+| Protocol Treasury | 0.05% | Funds Prism DAO governance |
 
 ## Quick Start
 
@@ -58,7 +58,7 @@ The SolSwap interface will be available at `http://localhost:3000`.
 
 ## Tech Stack
 
-- **On-Chain**: Rust, SolClone BPF program framework
+- **On-Chain**: Rust, Prism BPF program framework
 - **Frontend**: Next.js 14, Tailwind CSS, wallet-adapter
 - **Math**: u128 fixed-point arithmetic to prevent overflow
 

@@ -1,8 +1,8 @@
 [package]
-name = "solclone-launchpad"
+name = "prism-launchpad"
 version = "0.1.0"
 edition = "2021"
-description = "SolClone Launchpad - Token launch platform with fixed-price, lottery, and auction modes"
+description = "Prism Launchpad - Token launch platform with fixed-price, lottery, and auction modes"
 
 [lib]
 crate-type = ["cdylib", "lib"]

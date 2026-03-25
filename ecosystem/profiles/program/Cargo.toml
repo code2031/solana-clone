@@ -1,8 +1,8 @@
 [package]
-name = "solclone-profiles"
+name = "prism-profiles"
 version = "0.1.0"
 edition = "2021"
-description = "SolClone On-Chain Profiles - Decentralized identity profiles for the SolClone ecosystem"
+description = "Prism On-Chain Profiles - Decentralized identity profiles for the Prism ecosystem"
 
 [lib]
 crate-type = ["cdylib", "lib"]

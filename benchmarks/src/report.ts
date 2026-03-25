@@ -1,5 +1,5 @@
 /**
- * Report Generator for SolClone Benchmarks
+ * Report Generator for Prism Benchmarks
  *
  * Reads TPS and latency results, formats them as a markdown table,
  * and writes to RESULTS.md.
@@ -47,7 +47,7 @@ function main() {
   const latencyResult = loadJson<LatencyResult>("latency-result.json");
   const timestamp = new Date().toISOString();
 
-  let markdown = `# SolClone Benchmark Results
+  let markdown = `# Prism Benchmark Results
 
 > Generated: ${timestamp}
 

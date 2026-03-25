@@ -1,4 +1,4 @@
-# SolClone DeFi Suite
+# Prism DeFi Suite
 
 Repository: https://github.com/code2031/solana-clone
 

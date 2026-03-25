@@ -704,7 +704,7 @@ class TokenService {
   Uint8List _deriveAssociatedTokenAddress(Uint8List owner, Uint8List mint) {
     // The PDA seeds for an ATA are: [owner, tokenProgramId, mint]
     // We concatenate seeds + programId + "ProgramDerivedAddress" and SHA-256 hash.
-    // For our SolClone chain this produces a deterministic 32-byte address.
+    // For our Prism chain this produces a deterministic 32-byte address.
     final seeds = BytesBuilder();
     seeds.add(owner);
     seeds.add(_tokenProgramId);
@@ -738,11 +738,11 @@ class TokenService {
     // compatible with the chain's PDA derivation.
     //
     // We import dart:convert at the top, and use the chain's approach:
-    // For our SolClone network, the validator accepts this derivation.
+    // For our Prism network, the validator accepts this derivation.
     var hash = data;
     // Apply a deterministic transform: we XOR-fold into 32 bytes and then
     // run through a mixing function to produce a pseudo-PDA.
-    // This matches what our SolClone validator expects.
+    // This matches what our Prism validator expects.
     final result = Uint8List(32);
     for (var i = 0; i < data.length; i++) {
       result[i % 32] ^= data[i];

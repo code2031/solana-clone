@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone Launchpad",
-  description: "Token launch platform for the SolClone ecosystem — fixed-price, lottery, and auction launches",
+  title: "Prism Launchpad",
+  description: "Token launch platform for the Prism ecosystem — fixed-price, lottery, and auction launches",
 };
 
 export default function RootLayout({
@@ -32,7 +32,7 @@ export default function RootLayout({
                 SL
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                SolClone Launchpad
+                Prism Launchpad
               </span>
             </div>
             <div className="flex items-center gap-6">
@@ -48,7 +48,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <footer className="border-t border-[#2a2a4a] py-8 mt-16">
           <div className="max-w-7xl mx-auto px-6 text-center text-sm text-[#666688]">
-            SolClone Launchpad &mdash; Powering fair token launches on SolClone
+            Prism Launchpad &mdash; Powering fair token launches on Prism
           </div>
         </footer>
       </body>

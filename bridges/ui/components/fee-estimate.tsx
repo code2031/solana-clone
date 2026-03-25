@@ -32,7 +32,7 @@ function calculateFees(
     ethereum: { fee: "0.003 ETH", usd: "$9.50" },
     bitcoin: { fee: "5,000 sats", usd: "$3.25" },
     solana: { fee: "0.000005 SOL", usd: "$0.001" },
-    solclone: { fee: "0.000005 SC", usd: "$0.001" },
+    prism: { fee: "0.000005 SC", usd: "$0.001" },
   };
 
   // Estimated times
@@ -40,7 +40,7 @@ function calculateFees(
     ethereum: "~15 minutes",
     bitcoin: "~60 minutes",
     solana: "~30 seconds",
-    solclone: "~30 seconds",
+    prism: "~30 seconds",
   };
 
   // Use the slower chain's time
@@ -48,7 +48,7 @@ function calculateFees(
   const destTime = timeEstimates[destChain] || "~5 minutes";
 
   // Pick the chain with longer estimated time
-  const timeOrder = ["solclone", "solana", "ethereum", "bitcoin"];
+  const timeOrder = ["prism", "solana", "ethereum", "bitcoin"];
   const sourceIdx = timeOrder.indexOf(sourceChain);
   const destIdx = timeOrder.indexOf(destChain);
   const estimatedTime = sourceIdx >= destIdx ? sourceTime : destTime;

@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #
-# bootstrap-network.sh — Bootstrap a new SolClone network from genesis.
+# bootstrap-network.sh — Bootstrap a new Prism network from genesis.
 #
 # Usage:
 #   ./bootstrap-network.sh --cluster devnet|testnet|mainnet [OPTIONS]
 #
 # Options:
 #   --cluster <name>       Target cluster (devnet, testnet, mainnet)
-#   --ledger-dir <path>    Directory for ledger data (default: /var/solclone/ledger)
+#   --ledger-dir <path>    Directory for ledger data (default: /var/prism/ledger)
 #   --identity <path>      Path to bootstrap validator identity keypair
 #   --faucet-lamports <n>  Lamports to mint to faucet (devnet/testnet only)
 #   --dry-run              Print commands without executing
@@ -20,14 +20,14 @@ IFS=$'\n\t'
 # Defaults
 # ---------------------------------------------------------------------------
 CLUSTER=""
-LEDGER_DIR="/var/solclone/ledger"
+LEDGER_DIR="/var/prism/ledger"
 IDENTITY_KEYPAIR=""
 FAUCET_LAMPORTS="500000000000000000"   # 500M SOL in lamports (devnet default)
 DRY_RUN=false
-SOLCLONE_BIN="${SOLCLONE_BIN:-solclone}"
-SOLCLONE_KEYGEN="${SOLCLONE_KEYGEN:-solclone-keygen}"
-SOLCLONE_GENESIS="${SOLCLONE_GENESIS:-solclone-genesis}"
-SOLCLONE_VALIDATOR="${SOLCLONE_VALIDATOR:-solclone-validator}"
+PRISM_BIN="${PRISM_BIN:-prism}"
+PRISM_KEYGEN="${PRISM_KEYGEN:-prism-keygen}"
+PRISM_GENESIS="${PRISM_GENESIS:-prism-genesis}"
+PRISM_VALIDATOR="${PRISM_VALIDATOR:-prism-validator}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 KEYS_DIR=""
 LOG_FILE=""
@@ -137,7 +137,7 @@ LOG_FILE="${SCRIPT_DIR}/logs/bootstrap-${CLUSTER}-$(date -u +%Y%m%d%H%M%S).log"
 
 mkdir -p "$KEYS_DIR" "$LEDGER_DIR" "$(dirname "$LOG_FILE")"
 
-log "Bootstrapping SolClone ${CLUSTER} network"
+log "Bootstrapping Prism ${CLUSTER} network"
 log "Keys directory: $KEYS_DIR"
 log "Ledger directory: $LEDGER_DIR"
 log "Log file: $LOG_FILE"
@@ -156,11 +156,11 @@ generate_keypair() {
     if [[ -f "$path" ]]; then
         warn "Keypair already exists: $path (skipping)"
     else
-        run "$SOLCLONE_KEYGEN" new --no-passphrase --outfile "$path" --force
+        run "$PRISM_KEYGEN" new --no-passphrase --outfile "$path" --force
         log "Generated keypair: $name -> $path"
     fi
     # Print pubkey
-    run "$SOLCLONE_KEYGEN" pubkey "$path"
+    run "$PRISM_KEYGEN" pubkey "$path"
 }
 
 # Bootstrap validator identity
@@ -233,14 +233,14 @@ GENESIS_ARGS+=(
 )
 
 log "Running genesis creation..."
-run "$SOLCLONE_GENESIS" "${GENESIS_ARGS[@]}"
+run "$PRISM_GENESIS" "${GENESIS_ARGS[@]}"
 log "Genesis block created successfully"
 
 # ---------------------------------------------------------------------------
 # Step 3: Compute and record genesis hash
 # ---------------------------------------------------------------------------
 log "=== Step 3: Recording genesis hash ==="
-GENESIS_HASH=$(run "$SOLCLONE_GENESIS" hash --ledger "$LEDGER_DIR" 2>/dev/null || echo "UNKNOWN")
+GENESIS_HASH=$(run "$PRISM_GENESIS" hash --ledger "$LEDGER_DIR" 2>/dev/null || echo "UNKNOWN")
 log "Genesis hash: $GENESIS_HASH"
 echo "$GENESIS_HASH" > "$KEYS_DIR/genesis-hash.txt"
 
@@ -288,7 +288,7 @@ case "$CLUSTER" in
 esac
 
 log "Starting bootstrap validator..."
-run "$SOLCLONE_VALIDATOR" "${VALIDATOR_ARGS[@]}" &
+run "$PRISM_VALIDATOR" "${VALIDATOR_ARGS[@]}" &
 VALIDATOR_PID=$!
 log "Bootstrap validator started (PID: $VALIDATOR_PID)"
 
@@ -296,7 +296,7 @@ log "Bootstrap validator started (PID: $VALIDATOR_PID)"
 log "Waiting for RPC to become available..."
 MAX_RETRIES=60
 RETRY_COUNT=0
-until run "$SOLCLONE_BIN" --url http://127.0.0.1:8899 cluster-version 2>/dev/null; do
+until run "$PRISM_BIN" --url http://127.0.0.1:8899 cluster-version 2>/dev/null; do
     RETRY_COUNT=$((RETRY_COUNT + 1))
     if [[ $RETRY_COUNT -ge $MAX_RETRIES ]]; then
         die "Timed out waiting for bootstrap validator RPC"
@@ -310,7 +310,7 @@ log "RPC is available"
 # ---------------------------------------------------------------------------
 log "=== Step 5: Verifying vote account ==="
 
-run "$SOLCLONE_BIN" --url http://127.0.0.1:8899 vote-account "$VOTE_PUBKEY"
+run "$PRISM_BIN" --url http://127.0.0.1:8899 vote-account "$VOTE_PUBKEY"
 log "Vote account verified"
 
 # ---------------------------------------------------------------------------
@@ -320,7 +320,7 @@ log "=== Step 6: Delegating initial stake ==="
 
 # The bootstrap stake is already delegated via genesis.
 # Verify the delegation.
-run "$SOLCLONE_BIN" --url http://127.0.0.1:8899 stake-account "$STAKE_PUBKEY"
+run "$PRISM_BIN" --url http://127.0.0.1:8899 stake-account "$STAKE_PUBKEY"
 log "Stake delegation verified"
 
 # ---------------------------------------------------------------------------
@@ -328,7 +328,7 @@ log "Stake delegation verified"
 # ---------------------------------------------------------------------------
 if [[ "${CLUSTER_CONF[faucet_enabled]}" == "true" ]]; then
     log "=== Step 7: Starting faucet ==="
-    run "$SOLCLONE_BIN" faucet \
+    run "$PRISM_BIN" faucet \
         --keypair "$KEYS_DIR/faucet.json" \
         --per-time-cap 1000 \
         --per-request-cap 10 &
@@ -340,7 +340,7 @@ fi
 # Summary
 # ---------------------------------------------------------------------------
 log "========================================="
-log "SolClone ${CLUSTER} network bootstrapped!"
+log "Prism ${CLUSTER} network bootstrapped!"
 log "========================================="
 log ""
 log "  Genesis hash:      $GENESIS_HASH"

@@ -1,14 +1,14 @@
-# SolClone Health Dashboard
+# Prism Health Dashboard
 
-> Real-time network monitoring and statistics for the SolClone blockchain.
+> Real-time network monitoring and statistics for the Prism blockchain.
 
-Part of the [SolClone](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
 
 ---
 
 ## Overview
 
-The SolClone Health Dashboard is a Next.js application that provides live visibility
+The Prism Health Dashboard is a Next.js application that provides live visibility
 into network health. It displays current slot height, transactions per second, active
 validator count, epoch progress, and historical performance charts. Data is polled
 from the RPC endpoint every 2 seconds using SWR for efficient cache-based revalidation.
@@ -37,7 +37,7 @@ The dashboard will be available at `http://localhost:3000`.
 
 | Variable | Default | Description |
 |---|---|---|
-| `RPC_URL` | `http://localhost:8899` | SolClone RPC endpoint |
+| `RPC_URL` | `http://localhost:8899` | Prism RPC endpoint |
 | `POLL_INTERVAL` | `2000` | Polling interval in milliseconds |
 | `HISTORY_WINDOW` | `300` | Number of data points to retain for charts |
 
@@ -46,8 +46,8 @@ The dashboard will be available at `http://localhost:3000`.
 - **Framework**: Next.js 14 (App Router)
 - **Charts**: Recharts for time-series and gauge visualizations
 - **Data Fetching**: SWR with 2-second refresh interval
-- **Styling**: Tailwind CSS with SolClone design tokens
-- **RPC Client**: SolClone web3.js SDK
+- **Styling**: Tailwind CSS with Prism design tokens
+- **RPC Client**: Prism web3.js SDK
 
 ## RPC Methods Used
 

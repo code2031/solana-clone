@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# Quick-start: Run a DApp on SolClone
+# Quick-start: Run a DApp on Prism
 # This starts the local network + explorer + DApp scaffold
 # ============================================================================
 
@@ -10,7 +10,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CLI="$ROOT/validator/target/release/solana"
 VALIDATOR_BIN="$ROOT/validator/target/release"
 
-echo "=== SolClone DApp Quick Start ==="
+echo "=== Prism DApp Quick Start ==="
 echo ""
 
 # Check if validator is built
@@ -72,7 +72,7 @@ echo "  5. Deploy a custom program:"
 echo "     ./examples/deploy-program.sh <program.so>"
 echo ""
 echo "  6. Use the CLI wallet:"
-echo "     cd cli-wallet && npx solclone balance"
+echo "     cd cli-wallet && npx prism balance"
 echo ""
 echo "  7. Use the Flutter wallet:"
 echo "     cd flutter-wallet && flutter run -d chrome"

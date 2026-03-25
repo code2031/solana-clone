@@ -1,6 +1,6 @@
-# SolClone Privacy / Confidential Transfers
+# Prism Privacy / Confidential Transfers
 
-Shielded token pools for private transactions on SolClone. Users can deposit public tokens into a shielded pool, transfer within the pool without revealing amounts or recipients, and withdraw back to public accounts.
+Shielded token pools for private transactions on Prism. Users can deposit public tokens into a shielded pool, transfer within the pool without revealing amounts or recipients, and withdraw back to public accounts.
 
 ## Architecture
 

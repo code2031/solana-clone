@@ -15,7 +15,7 @@ const MOCK_RECENT: BridgeRecord[] = [
   {
     id: "1",
     sourceChain: "Ethereum",
-    destChain: "SolClone",
+    destChain: "Prism",
     token: "ETH",
     amount: "1.5000",
     status: "completed",
@@ -25,7 +25,7 @@ const MOCK_RECENT: BridgeRecord[] = [
   {
     id: "2",
     sourceChain: "Bitcoin",
-    destChain: "SolClone",
+    destChain: "Prism",
     token: "BTC",
     amount: "0.0500",
     status: "confirming",
@@ -34,7 +34,7 @@ const MOCK_RECENT: BridgeRecord[] = [
   },
   {
     id: "3",
-    sourceChain: "SolClone",
+    sourceChain: "Prism",
     destChain: "Solana",
     token: "SOL",
     amount: "250.00",
@@ -45,7 +45,7 @@ const MOCK_RECENT: BridgeRecord[] = [
   {
     id: "4",
     sourceChain: "Solana",
-    destChain: "SolClone",
+    destChain: "Prism",
     token: "USDC",
     amount: "10,000",
     status: "completed",
@@ -55,7 +55,7 @@ const MOCK_RECENT: BridgeRecord[] = [
   {
     id: "5",
     sourceChain: "Ethereum",
-    destChain: "SolClone",
+    destChain: "Prism",
     token: "USDT",
     amount: "5,000",
     status: "pending",
@@ -64,7 +64,7 @@ const MOCK_RECENT: BridgeRecord[] = [
   },
   {
     id: "6",
-    sourceChain: "SolClone",
+    sourceChain: "Prism",
     destChain: "Ethereum",
     token: "scETH",
     amount: "3.2000",
@@ -85,7 +85,7 @@ const CHAIN_COLORS: Record<string, string> = {
   Ethereum: "#627EEA",
   Bitcoin: "#F7931A",
   Solana: "#9945FF",
-  SolClone: "#8B5CF6",
+  Prism: "#8B5CF6",
 };
 
 export default function RecentBridges() {

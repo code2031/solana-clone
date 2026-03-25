@@ -1,11 +1,11 @@
-# SolClone <-> Ethereum Bridge
+# Prism <-> Ethereum Bridge
 
-Cross-chain bridge enabling trustless asset transfers between SolClone and Ethereum.
+Cross-chain bridge enabling trustless asset transfers between Prism and Ethereum.
 
 ## Architecture
 
 ```
-Ethereum                          SolClone
+Ethereum                          Prism
 +-----------------+               +-----------------+
 | Bridge Contract |  <-- VAAs --> | Bridge Program  |
 | (ERC-20 vault)  |               | (SPL minting)  |
@@ -19,23 +19,23 @@ Ethereum                          SolClone
 
 ### Components
 
-1. **Bridge Program** (`program/`) - Solana-side program deployed on SolClone that manages wrapped token mints, guardian attestations, and transfer lifecycle.
+1. **Bridge Program** (`program/`) - Solana-side program deployed on Prism that manages wrapped token mints, guardian attestations, and transfer lifecycle.
 
 2. **Relayer Service** (`relayer/`) - TypeScript service that watches events on both chains and submits cross-chain attestations.
 
 ## How It Works
 
-### Ethereum -> SolClone
+### Ethereum -> Prism
 
 1. User deposits ERC-20 tokens into the Ethereum bridge contract
 2. Relayer observes the deposit event after sufficient confirmations (15 blocks)
-3. Guardian signs a VAA (Verified Action Approval) and submits to SolClone bridge program
+3. Guardian signs a VAA (Verified Action Approval) and submits to Prism bridge program
 4. Once threshold signatures are collected, anyone can call `complete_transfer` to mint wrapped tokens to the recipient
 
-### SolClone -> Ethereum
+### Prism -> Ethereum
 
-1. User calls `redeem` on the SolClone bridge program, burning wrapped tokens
-2. Relayer observes the redemption event on SolClone
+1. User calls `redeem` on the Prism bridge program, burning wrapped tokens
+2. Relayer observes the redemption event on Prism
 3. Guardian co-signs a release transaction on Ethereum
 4. After threshold signatures, ERC-20 tokens are released to the recipient
 
@@ -51,7 +51,7 @@ The bridge uses a multi-signature guardian model. Each guardian runs a relayer n
 
 ## Token Registration
 
-Before an ERC-20 token can be bridged, the admin must call `register_token` to create a corresponding wrapped SPL mint on SolClone.
+Before an ERC-20 token can be bridged, the admin must call `register_token` to create a corresponding wrapped SPL mint on Prism.
 
 ## Running the Relayer
 
@@ -62,7 +62,7 @@ npm run build
 
 # Configure environment
 export ETHEREUM_RPC="https://eth-mainnet.example.com"
-export SOLCLONE_RPC="http://localhost:8899"
+export PRISM_RPC="http://localhost:8899"
 export BRIDGE_PROGRAM_ID="EthBrdg11111111111111111111111111111111111"
 export GUARDIAN_KEYPAIR="./guardian-keypair.json"
 

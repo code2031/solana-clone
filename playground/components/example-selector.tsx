@@ -14,7 +14,7 @@ export const EXAMPLES: CodeExample[] = [
 const address = "11111111111111111111111111111112";
 
 console.log("Fetching balance for:", address);
-const result = await solclone.getBalance(address);
+const result = await prism.getBalance(address);
 
 console.log("Balance result:", result);
 
@@ -34,7 +34,7 @@ console.log(\`  From: \${from}\`);
 console.log(\`  To:   \${to}\`);
 
 try {
-  const result = await solclone.sendTransaction(from, to, lamports);
+  const result = await prism.sendTransaction(from, to, lamports);
   console.log("Transaction signature:", result);
   console.log("Transfer complete!");
 } catch (err) {
@@ -48,11 +48,11 @@ try {
 const authority = "TokenAuthority1111111111111111111111111111";
 
 console.log("Step 1: Requesting airdrop for token creation...");
-const airdrop = await solclone.requestAirdrop(authority, 2_000_000_000);
+const airdrop = await prism.requestAirdrop(authority, 2_000_000_000);
 console.log("Airdrop result:", airdrop);
 
 console.log("\\nStep 2: Creating token mint...");
-const mintResult = await solclone.call("createMint", [
+const mintResult = await prism.call("createMint", [
   authority,  // mint authority
   authority,  // freeze authority
   9,          // decimals
@@ -60,7 +60,7 @@ const mintResult = await solclone.call("createMint", [
 console.log("Mint created:", mintResult);
 
 console.log("\\nStep 3: Minting tokens...");
-const mintToResult = await solclone.call("mintTo", [
+const mintToResult = await prism.call("mintTo", [
   mintResult, // mint address
   authority,  // destination
   1000000000, // amount (1 token with 9 decimals)
@@ -77,7 +77,7 @@ console.log("Fetching token accounts for owner:", owner);
 console.log("Filtering by mint:", mint);
 
 try {
-  const accounts = await solclone.getTokenAccountsByOwner(owner, mint);
+  const accounts = await prism.getTokenAccountsByOwner(owner, mint);
   console.log("\\nToken accounts:", accounts);
 
   if (accounts?.value?.length > 0) {
@@ -97,7 +97,7 @@ try {
     name: "Get Block Info",
     code: `// Get Block Info - Fetch block details by slot
 console.log("Fetching current block height...");
-const height = await solclone.getBlockHeight();
+const height = await prism.getBlockHeight();
 console.log("Current block height:", height);
 
 if (typeof height === "number" && height > 0) {
@@ -105,7 +105,7 @@ if (typeof height === "number" && height > 0) {
   console.log(\`\\nFetching block at slot \${targetSlot}...\`);
 
   try {
-    const block = await solclone.getBlock(targetSlot);
+    const block = await prism.getBlock(targetSlot);
     console.log("\\nBlock details:");
     console.log("  Parent slot:", block?.parentSlot);
     console.log("  Block time:", block?.blockTime ? new Date(block.blockTime * 1000).toISOString() : "N/A");

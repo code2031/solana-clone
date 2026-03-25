@@ -1,10 +1,10 @@
 /**
- * SolCloneWalletAdapter — Bridges the SolClone Wallet Standard wallet
+ * PrismWalletAdapter — Bridges the Prism Wallet Standard wallet
  * to the @solana/wallet-adapter ecosystem.
  *
  * This allows DApps using `@solana/wallet-adapter-react` (the most
- * popular Solana wallet integration library) to connect to SolClone
- * without any SolClone-specific code.
+ * popular Solana wallet integration library) to connect to Prism
+ * without any Prism-specific code.
  */
 
 import type { Wallet, WalletAccount } from "@wallet-standard/base";
@@ -18,11 +18,11 @@ import type {
   SolanaSignMessageFeature,
 } from "@solana/wallet-standard-features";
 import {
-  SolCloneConnect,
-  SolCloneDisconnect,
-  SolCloneSignTransaction,
-  SolCloneSignAndSendTransaction,
-  SolCloneSignMessage,
+  PrismConnect,
+  PrismDisconnect,
+  PrismSignTransaction,
+  PrismSignAndSendTransaction,
+  PrismSignMessage,
 } from "./features";
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -53,10 +53,10 @@ type EventMap = Record<string, Set<(...args: any[]) => void>>;
 
 // ── Adapter ─────────────────────────────────────────────────────────────────
 
-export class SolCloneWalletAdapter implements WalletAdapterInterface {
-  readonly name = "SolClone";
+export class PrismWalletAdapter implements WalletAdapterInterface {
+  readonly name = "Prism";
   readonly icon: string;
-  readonly url = "https://solclone.io";
+  readonly url = "https://prism.io";
 
   #wallet: Wallet;
   #account: WalletAccount | null = null;
@@ -97,18 +97,18 @@ export class SolCloneWalletAdapter implements WalletAdapterInterface {
 
     try {
       const connectFeature = this.#wallet.features[
-        SolCloneConnect
-      ] as StandardConnectFeature[typeof SolCloneConnect] | undefined;
+        PrismConnect
+      ] as StandardConnectFeature[typeof PrismConnect] | undefined;
 
       if (!connectFeature) {
-        throw new Error("SolClone wallet does not support connect.");
+        throw new Error("Prism wallet does not support connect.");
       }
 
       const result = await connectFeature.connect();
       const accounts = result.accounts;
 
       if (!accounts || accounts.length === 0) {
-        throw new Error("No accounts returned from SolClone wallet.");
+        throw new Error("No accounts returned from Prism wallet.");
       }
 
       this.#account = accounts[0];
@@ -126,8 +126,8 @@ export class SolCloneWalletAdapter implements WalletAdapterInterface {
 
     try {
       const disconnectFeature = this.#wallet.features[
-        SolCloneDisconnect
-      ] as StandardDisconnectFeature[typeof SolCloneDisconnect] | undefined;
+        PrismDisconnect
+      ] as StandardDisconnectFeature[typeof PrismDisconnect] | undefined;
 
       if (disconnectFeature) {
         await disconnectFeature.disconnect();
@@ -144,11 +144,11 @@ export class SolCloneWalletAdapter implements WalletAdapterInterface {
     this.#requireConnected();
 
     const feature = this.#wallet.features[
-      SolCloneSignTransaction
-    ] as SolanaSignTransactionFeature[typeof SolCloneSignTransaction] | undefined;
+      PrismSignTransaction
+    ] as SolanaSignTransactionFeature[typeof PrismSignTransaction] | undefined;
 
     if (!feature) {
-      throw new Error("SolClone wallet does not support signTransaction.");
+      throw new Error("Prism wallet does not support signTransaction.");
     }
 
     const [result] = await feature.signTransaction({
@@ -165,11 +165,11 @@ export class SolCloneWalletAdapter implements WalletAdapterInterface {
     this.#requireConnected();
 
     const feature = this.#wallet.features[
-      SolCloneSignTransaction
-    ] as SolanaSignTransactionFeature[typeof SolCloneSignTransaction] | undefined;
+      PrismSignTransaction
+    ] as SolanaSignTransactionFeature[typeof PrismSignTransaction] | undefined;
 
     if (!feature) {
-      throw new Error("SolClone wallet does not support signTransaction.");
+      throw new Error("Prism wallet does not support signTransaction.");
     }
 
     const inputs = transactions.map((transaction) => ({
@@ -187,11 +187,11 @@ export class SolCloneWalletAdapter implements WalletAdapterInterface {
     this.#requireConnected();
 
     const feature = this.#wallet.features[
-      SolCloneSignMessage
-    ] as SolanaSignMessageFeature[typeof SolCloneSignMessage] | undefined;
+      PrismSignMessage
+    ] as SolanaSignMessageFeature[typeof PrismSignMessage] | undefined;
 
     if (!feature) {
-      throw new Error("SolClone wallet does not support signMessage.");
+      throw new Error("Prism wallet does not support signMessage.");
     }
 
     const [result] = await feature.signMessage({
@@ -208,12 +208,12 @@ export class SolCloneWalletAdapter implements WalletAdapterInterface {
     this.#requireConnected();
 
     const feature = this.#wallet.features[
-      SolCloneSignAndSendTransaction
-    ] as SolanaSignAndSendTransactionFeature[typeof SolCloneSignAndSendTransaction] | undefined;
+      PrismSignAndSendTransaction
+    ] as SolanaSignAndSendTransactionFeature[typeof PrismSignAndSendTransaction] | undefined;
 
     if (!feature) {
       throw new Error(
-        "SolClone wallet does not support signAndSendTransaction.",
+        "Prism wallet does not support signAndSendTransaction.",
       );
     }
 
@@ -263,15 +263,15 @@ export class SolCloneWalletAdapter implements WalletAdapterInterface {
 }
 
 /**
- * Convenience factory: finds the SolClone wallet in the Wallet Standard
+ * Convenience factory: finds the Prism wallet in the Wallet Standard
  * registry and returns a ready-to-use adapter.
  */
-export function createSolCloneAdapter(): SolCloneWalletAdapter | null {
+export function createPrismAdapter(): PrismWalletAdapter | null {
   const global = globalThis as any;
 
   // Try the direct reference first.
-  if (global.__solclone_wallet__) {
-    return new SolCloneWalletAdapter(global.__solclone_wallet__);
+  if (global.__prism_wallet__) {
+    return new PrismWalletAdapter(global.__prism_wallet__);
   }
 
   // Fall back to scanning the registry.
@@ -279,8 +279,8 @@ export function createSolCloneAdapter(): SolCloneWalletAdapter | null {
   if (Array.isArray(registry)) {
     for (const entry of registry) {
       const w: Wallet | undefined = entry?.wallet ?? entry;
-      if (w && w.name === "SolClone") {
-        return new SolCloneWalletAdapter(w);
+      if (w && w.name === "Prism") {
+        return new PrismWalletAdapter(w);
       }
     }
   }

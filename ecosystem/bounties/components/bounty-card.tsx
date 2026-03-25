@@ -67,7 +67,7 @@ export function BountyCard({
         <div className="flex items-center gap-4">
           <div>
             <span className="text-red-400 font-bold">{bounty.reward.toLocaleString()}</span>
-            <span className="text-xs text-[#666688] ml-1">SCLONE</span>
+            <span className="text-xs text-[#666688] ml-1">PRISM</span>
           </div>
           <div className="text-sm text-[#666688]">
             {bounty.status === "Completed"

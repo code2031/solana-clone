@@ -3,7 +3,7 @@ use anchor_lang::prelude::*;
 declare_id!("NftCollect111111111111111111111111111111111");
 
 #[program]
-pub mod solclone_nft_collection {
+pub mod prism_nft_collection {
     use super::*;
 
     /// Create a new NFT collection with metadata.

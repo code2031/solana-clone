@@ -8,7 +8,7 @@ pub const MAX_DESCRIPTION_LEN: usize = 256;
 pub const MAX_OPTION_LABEL_LEN: usize = 32;
 
 #[program]
-pub mod solclone_voting {
+pub mod prism_voting {
     use super::*;
 
     /// Create a new proposal with a title, description, and voting options.

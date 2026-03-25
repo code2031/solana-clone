@@ -1,6 +1,6 @@
-# SolClone Bridges
+# Prism Bridges
 
-Cross-chain bridge infrastructure enabling asset transfers between SolClone and external blockchains. Each bridge uses a lock-and-mint architecture where tokens are locked on the source chain and corresponding wrapped tokens are minted on SolClone.
+Cross-chain bridge infrastructure enabling asset transfers between Prism and external blockchains. Each bridge uses a lock-and-mint architecture where tokens are locked on the source chain and corresponding wrapped tokens are minted on Prism.
 
 ## Supported Bridges
 
@@ -13,10 +13,10 @@ Cross-chain bridge infrastructure enabling asset transfers between SolClone and 
 ## Architecture
 
 ```
-Source Chain                    SolClone
+Source Chain                    Prism
 +------------------+           +-------------------+
 | Lock tokens in   |  Relayer  | Mint wrapped      |
-| bridge contract  | -------> | tokens on SolClone |
+| bridge contract  | -------> | tokens on Prism |
 +------------------+  / Attest +-------------------+
                      /
              +------+------+
@@ -28,21 +28,21 @@ Source Chain                    SolClone
 
 ### Ethereum Bridge (`ethereum/`)
 
-- **program/** -- Rust on-chain program that mints/burns wrapped ERC-20 tokens on SolClone
+- **program/** -- Rust on-chain program that mints/burns wrapped ERC-20 tokens on Prism
 - **relayer/** -- TypeScript service that watches Ethereum events and submits mint instructions
-- Lock ERC-20 tokens on Ethereum, receive scETH / scUSDC / scWETH on SolClone
+- Lock ERC-20 tokens on Ethereum, receive scETH / scUSDC / scWETH on Prism
 
 ### Bitcoin Bridge (`bitcoin/`)
 
 - **program/** -- Rust on-chain program managing scBTC supply and redemptions
 - **attestor/** -- TypeScript attestor service that monitors Bitcoin transactions via multi-sig
-- Deposit BTC to a multi-sig address, receive scBTC on SolClone
+- Deposit BTC to a multi-sig address, receive scBTC on Prism
 
 ### Solana Bridge (`solana/`)
 
 - **program/** -- Rust on-chain program for SPL token bridging
 - **relayer/** -- TypeScript relayer that watches Solana finality and relays proofs
-- Bridge native SPL tokens between Solana mainnet and SolClone
+- Bridge native SPL tokens between Solana mainnet and Prism
 
 ## Unified Bridge UI (`ui/`)
 
@@ -50,7 +50,7 @@ A Next.js web application providing a single interface for all three bridges. Us
 
 ## Privacy Module
 
-The `privacy/` module (at the repo root under `privacy/`) provides shielded pool functionality. Bridged tokens can optionally be deposited into shielded pools for private transfers within SolClone. See `privacy/README.md` for details.
+The `privacy/` module (at the repo root under `privacy/`) provides shielded pool functionality. Bridged tokens can optionally be deposited into shielded pools for private transfers within Prism. See `privacy/README.md` for details.
 
 ## Quick Start
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# add-validator.sh — Add a new validator to an existing SolClone network.
+# add-validator.sh — Add a new validator to an existing Prism network.
 #
 # Usage:
 #   ./add-validator.sh --cluster devnet|testnet|mainnet --entrypoint <host:port> [OPTIONS]
@@ -28,15 +28,15 @@ CLUSTER=""
 ENTRYPOINT=""
 RPC_URL="http://127.0.0.1:8899"
 VALIDATOR_NAME="validator-$(date +%s)"
-LEDGER_DIR="/var/solclone/ledger"
+LEDGER_DIR="/var/prism/ledger"
 STAKE_AMOUNT="1"
 COMMISSION=10
 IDENTITY_KEYPAIR=""
 SKIP_STAKE=false
 DRY_RUN=false
-SOLCLONE_BIN="${SOLCLONE_BIN:-solclone}"
-SOLCLONE_KEYGEN="${SOLCLONE_KEYGEN:-solclone-keygen}"
-SOLCLONE_VALIDATOR="${SOLCLONE_VALIDATOR:-solclone-validator}"
+PRISM_BIN="${PRISM_BIN:-prism}"
+PRISM_KEYGEN="${PRISM_KEYGEN:-prism-keygen}"
+PRISM_VALIDATOR="${PRISM_VALIDATOR:-prism-validator}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # ---------------------------------------------------------------------------
@@ -92,7 +92,7 @@ LOG_FILE="${LOG_DIR}/add-validator-${VALIDATOR_NAME}-$(date -u +%Y%m%d%H%M%S).lo
 
 mkdir -p "$KEYS_DIR" "$LEDGER_DIR" "$LOG_DIR"
 
-log "Adding validator '${VALIDATOR_NAME}' to SolClone ${CLUSTER}"
+log "Adding validator '${VALIDATOR_NAME}' to Prism ${CLUSTER}"
 exec > >(tee -a "$LOG_FILE") 2>&1
 
 # ---------------------------------------------------------------------------
@@ -106,10 +106,10 @@ generate_keypair() {
     if [[ -f "$path" ]]; then
         warn "Keypair already exists: $path (skipping generation)"
     else
-        run "$SOLCLONE_KEYGEN" new --no-passphrase --outfile "$path" --force
+        run "$PRISM_KEYGEN" new --no-passphrase --outfile "$path" --force
         log "Generated keypair: $name"
     fi
-    run "$SOLCLONE_KEYGEN" pubkey "$path"
+    run "$PRISM_KEYGEN" pubkey "$path"
 }
 
 # Identity keypair
@@ -142,9 +142,9 @@ log "=== Step 2: Funding identity account ==="
 case "$CLUSTER" in
     devnet|testnet)
         log "Requesting airdrop for identity account..."
-        run "$SOLCLONE_BIN" --url "$RPC_URL" airdrop 10 "$IDENTITY_PUBKEY"
+        run "$PRISM_BIN" --url "$RPC_URL" airdrop 10 "$IDENTITY_PUBKEY"
         sleep 2
-        BALANCE=$(run "$SOLCLONE_BIN" --url "$RPC_URL" balance "$IDENTITY_PUBKEY" | awk '{print $1}')
+        BALANCE=$(run "$PRISM_BIN" --url "$RPC_URL" balance "$IDENTITY_PUBKEY" | awk '{print $1}')
         log "Identity balance: ${BALANCE} SOL"
         ;;
     mainnet)
@@ -152,7 +152,7 @@ case "$CLUSTER" in
         log "Identity pubkey: $IDENTITY_PUBKEY"
         log "Minimum recommended: 5 SOL for transaction fees and vote costs."
         # Verify balance
-        BALANCE=$(run "$SOLCLONE_BIN" --url "$RPC_URL" balance "$IDENTITY_PUBKEY" 2>/dev/null | awk '{print $1}' || echo "0")
+        BALANCE=$(run "$PRISM_BIN" --url "$RPC_URL" balance "$IDENTITY_PUBKEY" 2>/dev/null | awk '{print $1}' || echo "0")
         if [[ "$BALANCE" == "0" ]]; then
             die "Identity account has no balance. Fund it before proceeding."
         fi
@@ -165,7 +165,7 @@ esac
 # ---------------------------------------------------------------------------
 log "=== Step 3: Creating vote account ==="
 
-run "$SOLCLONE_BIN" --url "$RPC_URL" create-vote-account \
+run "$PRISM_BIN" --url "$RPC_URL" create-vote-account \
     "$KEYS_DIR/vote-account.json" \
     "$KEYS_DIR/identity.json" \
     "$WITHDRAWER_PUBKEY" \
@@ -174,7 +174,7 @@ run "$SOLCLONE_BIN" --url "$RPC_URL" create-vote-account \
 log "Vote account created: $VOTE_PUBKEY (commission: ${COMMISSION}%)"
 
 # Verify vote account
-run "$SOLCLONE_BIN" --url "$RPC_URL" vote-account "$VOTE_PUBKEY"
+run "$PRISM_BIN" --url "$RPC_URL" vote-account "$VOTE_PUBKEY"
 log "Vote account verified on-chain"
 
 # ---------------------------------------------------------------------------
@@ -184,7 +184,7 @@ if ! $SKIP_STAKE; then
     log "=== Step 4: Delegating stake ==="
 
     # Create stake account
-    run "$SOLCLONE_BIN" --url "$RPC_URL" create-stake-account \
+    run "$PRISM_BIN" --url "$RPC_URL" create-stake-account \
         "$KEYS_DIR/stake-account.json" \
         "$STAKE_AMOUNT" \
         --from "$KEYS_DIR/identity.json"
@@ -192,7 +192,7 @@ if ! $SKIP_STAKE; then
     log "Stake account created with ${STAKE_AMOUNT} SOL"
 
     # Delegate to our vote account
-    run "$SOLCLONE_BIN" --url "$RPC_URL" delegate-stake \
+    run "$PRISM_BIN" --url "$RPC_URL" delegate-stake \
         "$KEYS_DIR/stake-account.json" \
         "$VOTE_PUBKEY" \
         --stake-authority "$KEYS_DIR/identity.json"
@@ -251,7 +251,7 @@ case "$CLUSTER" in
 esac
 
 log "Starting validator with entrypoint: $ENTRYPOINT"
-run "$SOLCLONE_VALIDATOR" "${VALIDATOR_ARGS[@]}" &
+run "$PRISM_VALIDATOR" "${VALIDATOR_ARGS[@]}" &
 VALIDATOR_PID=$!
 log "Validator started (PID: $VALIDATOR_PID)"
 
@@ -263,7 +263,7 @@ log "=== Step 6: Verifying validator status ==="
 log "Waiting for validator to catch up..."
 MAX_RETRIES=120
 RETRY_COUNT=0
-until run "$SOLCLONE_BIN" --url "$RPC_URL" catchup "$IDENTITY_PUBKEY" 2>/dev/null; do
+until run "$PRISM_BIN" --url "$RPC_URL" catchup "$IDENTITY_PUBKEY" 2>/dev/null; do
     RETRY_COUNT=$((RETRY_COUNT + 1))
     if [[ $RETRY_COUNT -ge $MAX_RETRIES ]]; then
         warn "Validator has not caught up after ${MAX_RETRIES} retries"
@@ -275,7 +275,7 @@ done
 
 # Verify the validator appears in the vote accounts list
 log "Checking vote account status..."
-VOTE_STATUS=$(run "$SOLCLONE_BIN" --url "$RPC_URL" vote-account "$VOTE_PUBKEY" 2>/dev/null || true)
+VOTE_STATUS=$(run "$PRISM_BIN" --url "$RPC_URL" vote-account "$VOTE_PUBKEY" 2>/dev/null || true)
 if echo "$VOTE_STATUS" | grep -q "Recent Votes"; then
     log "Validator is actively voting!"
 else
@@ -284,7 +284,7 @@ fi
 
 # Check gossip for our node
 log "Checking gossip for validator presence..."
-run "$SOLCLONE_BIN" --url "$RPC_URL" gossip | grep "$IDENTITY_PUBKEY" || \
+run "$PRISM_BIN" --url "$RPC_URL" gossip | grep "$IDENTITY_PUBKEY" || \
     warn "Validator not yet visible in gossip"
 
 # ---------------------------------------------------------------------------

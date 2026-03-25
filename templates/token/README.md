@@ -1,6 +1,6 @@
-# SolClone Token Template
+# Prism Token Template
 
-A complete SPL-compatible token program built with the Anchor framework for the SolClone blockchain.
+A complete SPL-compatible token program built with the Anchor framework for the Prism blockchain.
 
 ## Features
 
@@ -13,7 +13,7 @@ A complete SPL-compatible token program built with the Anchor framework for the 
 
 ```bash
 # Initialize from template
-solclone init my-token --template token
+prism init my-token --template token
 
 # Build
 anchor build

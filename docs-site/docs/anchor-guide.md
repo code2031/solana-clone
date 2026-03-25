@@ -4,13 +4,13 @@ sidebar_position: 5
 
 # Anchor Guide
 
-SolClone includes a set of Anchor program templates that let you quickly scaffold and deploy on-chain programs. This guide covers the available templates and how to build with them.
+Prism includes a set of Anchor program templates that let you quickly scaffold and deploy on-chain programs. This guide covers the available templates and how to build with them.
 
 ## Prerequisites
 
-- SolClone CLI installed (`solclone` command available)
+- Prism CLI installed (`prism` command available)
 - Rust toolchain with `anchor-cli` installed
-- A running SolClone testnet
+- A running Prism testnet
 
 ```bash
 # Install Anchor CLI
@@ -21,14 +21,14 @@ avm use latest
 
 ## Initializing a Project
 
-Use `solclone init` to scaffold a new project from a template:
+Use `prism init` to scaffold a new project from a template:
 
 ```bash
 # See available templates
-solclone init --help
+prism init --help
 
 # Create a project
-solclone init my-project --template <template-name>
+prism init my-project --template <template-name>
 ```
 
 ### Available Templates
@@ -46,7 +46,7 @@ solclone init my-project --template <template-name>
 Create a fungible token with full lifecycle management.
 
 ```bash
-solclone init my-token --template token
+prism init my-token --template token
 cd my-token
 ```
 
@@ -62,7 +62,7 @@ cd my-token
 ```typescript
 import * as anchor from '@coral-xyz/anchor';
 
-const program = anchor.workspace.SolcloneToken;
+const program = anchor.workspace.PrismToken;
 
 // Initialize a mint
 await program.methods
@@ -82,7 +82,7 @@ await program.methods
 Build NFT collections with metadata and royalty enforcement.
 
 ```bash
-solclone init my-nfts --template nft
+prism init my-nfts --template nft
 cd my-nfts
 ```
 
@@ -113,7 +113,7 @@ await program.methods
 Trustless atomic swaps between two token types.
 
 ```bash
-solclone init my-escrow --template escrow
+prism init my-escrow --template escrow
 cd my-escrow
 ```
 
@@ -134,7 +134,7 @@ cd my-escrow
 On-chain governance with weighted voting.
 
 ```bash
-solclone init my-dao --template voting
+prism init my-dao --template voting
 cd my-dao
 ```
 
@@ -171,7 +171,7 @@ await program.methods
 DeFi staking with configurable reward rates.
 
 ```bash
-solclone init my-staking --template staking
+prism init my-staking --template staking
 cd my-staking
 ```
 
@@ -193,7 +193,7 @@ anchor build
 # Run tests
 anchor test
 
-# Deploy to SolClone devnet
+# Deploy to Prism devnet
 anchor deploy --provider.cluster http://localhost:8899
 
 # Get the program ID
@@ -214,5 +214,5 @@ my-project/
 ## Next Steps
 
 - [SDK Guide](./sdk-guide) -- interact with your programs from TypeScript
-- [DeFi Guide](./defi-guide) -- learn about SolClone DeFi protocols
+- [DeFi Guide](./defi-guide) -- learn about Prism DeFi protocols
 - [CLI Reference](./cli-reference) -- deploy and manage from the command line

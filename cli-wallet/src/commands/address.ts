@@ -53,7 +53,7 @@ export function registerAddressCommand(program: Command): void {
         printError(err.message);
         if (err.message.includes('not found')) {
           console.log(
-            `  Generate a keypair first with: ${colors.primary('solclone keygen')}`
+            `  Generate a keypair first with: ${colors.primary('prism keygen')}`
           );
         }
         process.exit(1);

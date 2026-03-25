@@ -1,4 +1,4 @@
-# SolClone: A High-Performance Layer 1 Blockchain
+# Prism: A High-Performance Layer 1 Blockchain
 
 **Whitepaper v1.0**
 **March 2026**
@@ -26,7 +26,7 @@
 
 ## 1. Abstract
 
-SolClone is a high-performance, permissionless Layer 1 blockchain designed for decentralized applications and digital asset economies at global scale. Forked from the Solana protocol, SolClone preserves the core architectural innovations -- Proof of History (PoH), Tower BFT consensus, and parallel transaction execution -- while introducing governance refinements, improved tokenomics, and an expanded developer ecosystem. The network targets sustained throughput exceeding 65,000 transactions per second (TPS) with 400ms block times and sub-second finality, achieved without sacrificing decentralization or security. This whitepaper presents the technical architecture, consensus design, economic model, and development roadmap for the SolClone network.
+Prism is a high-performance, permissionless Layer 1 blockchain designed for decentralized applications and digital asset economies at global scale. Forked from the Solana protocol, Prism preserves the core architectural innovations -- Proof of History (PoH), Tower BFT consensus, and parallel transaction execution -- while introducing governance refinements, improved tokenomics, and an expanded developer ecosystem. The network targets sustained throughput exceeding 65,000 transactions per second (TPS) with 400ms block times and sub-second finality, achieved without sacrificing decentralization or security. This whitepaper presents the technical architecture, consensus design, economic model, and development roadmap for the Prism network.
 
 ---
 
@@ -40,9 +40,9 @@ First-generation blockchains such as Bitcoin process roughly 7 TPS. Ethereum's b
 
 Solana demonstrated that a monolithic Layer 1 design, when built around a novel timekeeping mechanism (Proof of History) and aggressive hardware-aware optimizations, can achieve throughput competitive with centralized systems. However, network instability events, validator concentration, and governance limitations have motivated the development of a refined fork.
 
-### 2.3 The SolClone Vision
+### 2.3 The Prism Vision
 
-SolClone inherits Solana's proven architecture and extends it with three objectives:
+Prism inherits Solana's proven architecture and extends it with three objectives:
 
 1. **Stability** -- Improved congestion management and validator incentive alignment to reduce network degradation under load.
 2. **Decentralization** -- A flatter staking curve and on-chain governance to distribute power more broadly across validators.
@@ -52,11 +52,11 @@ SolClone inherits Solana's proven architecture and extends it with three objecti
 
 ## 3. Architecture Overview
 
-SolClone's architecture comprises eight interlocking subsystems, each targeting a specific bottleneck in distributed ledger performance.
+Prism's architecture comprises eight interlocking subsystems, each targeting a specific bottleneck in distributed ledger performance.
 
 ```
 +------------------------------------------------------------------+
-|                      SolClone Architecture                       |
+|                      Prism Architecture                       |
 +------------------------------------------------------------------+
 |                                                                  |
 |  +-------------------+    +-------------------+                  |
@@ -117,7 +117,7 @@ Traditional blockchains maintain a mempool where unconfirmed transactions wait. 
 
 ### 3.5 Sealevel
 
-Sealevel is a parallelized transaction runtime. Transactions in SolClone explicitly declare which accounts they will read from and write to. The runtime uses this information to identify non-overlapping transactions and executes them concurrently across all available CPU cores and GPU compute units. This is analogous to CPU instruction-level parallelism applied at the transaction level.
+Sealevel is a parallelized transaction runtime. Transactions in Prism explicitly declare which accounts they will read from and write to. The runtime uses this information to identify non-overlapping transactions and executes them concurrently across all available CPU cores and GPU compute units. This is analogous to CPU instruction-level parallelism applied at the transaction level.
 
 ### 3.6 Pipelining
 
@@ -144,7 +144,7 @@ Full ledger history is distributed across a network of Archiver nodes using a pr
 
 ## 4. Consensus Mechanism
 
-SolClone's consensus is the composition of Proof of History and Tower BFT.
+Prism's consensus is the composition of Proof of History and Tower BFT.
 
 ### 4.1 Slot and Epoch Structure
 
@@ -196,13 +196,13 @@ Validators submit votes as on-chain transactions, making the consensus process f
 
 ## 5. Token Economics
 
-### 5.1 The SCLONE Token
+### 5.1 The PRISM Token
 
-SCLONE is the native utility token of the SolClone network. It serves three functions: payment of transaction fees, staking collateral for consensus participation, and governance voting weight.
+PRISM is the native utility token of the Prism network. It serves three functions: payment of transaction fees, staking collateral for consensus participation, and governance voting weight.
 
 ### 5.2 Supply and Distribution
 
-| Allocation | Percentage | SCLONE Amount | Vesting |
+| Allocation | Percentage | PRISM Amount | Vesting |
 |------------|-----------|---------------|---------|
 | Community & Ecosystem | 40% | 200,000,000 | 4-year linear |
 | Foundation Reserve | 15% | 75,000,000 | 3-year linear |
@@ -215,7 +215,7 @@ SCLONE is the native utility token of the SolClone network. It serves three func
 
 ### 5.3 Inflation Schedule
 
-SolClone begins with an annualized inflation rate of 8%, decreasing by 15% per year until it reaches a long-term floor of 1.5%.
+Prism begins with an annualized inflation rate of 8%, decreasing by 15% per year until it reaches a long-term floor of 1.5%.
 
 ```
   Inflation Rate Over Time
@@ -237,7 +237,7 @@ SolClone begins with an annualized inflation rate of 8%, decreasing by 15% per y
 
 ### 5.4 Transaction Fees
 
-Each transaction incurs a base fee of 5,000 lamports (0.000005 SCLONE). Fifty percent of fees are burned, creating deflationary pressure that partially offsets inflation. The remaining fifty percent is distributed to the leader that produced the block containing the transaction.
+Each transaction incurs a base fee of 5,000 lamports (0.000005 PRISM). Fifty percent of fees are burned, creating deflationary pressure that partially offsets inflation. The remaining fifty percent is distributed to the leader that produced the block containing the transaction.
 
 ### 5.5 Staking Rewards
 
@@ -247,7 +247,7 @@ Inflation-minted tokens are distributed to stakers proportional to their delegat
 
 ## 6. Account Model
 
-SolClone uses an account-based model (not UTXO). Every piece of on-chain state is stored in an account identified by a 256-bit Ed25519 public key.
+Prism uses an account-based model (not UTXO). Every piece of on-chain state is stored in an account identified by a 256-bit Ed25519 public key.
 
 ### 6.1 Account Structure
 
@@ -273,7 +273,7 @@ Programs can derive deterministic account addresses using seeds and the program 
 
 ### 7.1 On-Chain Programs
 
-SolClone programs are compiled to Berkeley Packet Filter (BPF) bytecode and deployed as executable accounts. The BPF virtual machine provides a sandboxed, deterministic execution environment with bounded compute budgets (measured in compute units) that prevent infinite loops and resource exhaustion.
+Prism programs are compiled to Berkeley Packet Filter (BPF) bytecode and deployed as executable accounts. The BPF virtual machine provides a sandboxed, deterministic execution environment with bounded compute budgets (measured in compute units) that prevent infinite loops and resource exhaustion.
 
 Programs are stateless by design. All mutable state resides in separate accounts passed to the program as instruction arguments. This separation of code and data enables Sealevel's parallel execution model.
 
@@ -281,13 +281,13 @@ Programs are stateless by design. All mutable state resides in separate accounts
 
 | Language | Status | Toolchain |
 |----------|--------|-----------|
-| Rust | Primary | `cargo build-bpf` via SolClone SDK |
+| Rust | Primary | `cargo build-bpf` via Prism SDK |
 | C / C++ | Supported | LLVM BPF backend |
 | Python | Planned | Seahorse framework (transpiles to Rust) |
 
 ### 7.3 SPL Token Standard
 
-The SolClone Program Library (SPL) provides canonical on-chain programs for common operations:
+The Prism Program Library (SPL) provides canonical on-chain programs for common operations:
 
 - **SPL Token** -- Fungible and non-fungible token creation, minting, transfer, and burning.
 - **SPL Associated Token Account** -- Deterministic token account derivation per wallet-mint pair.
@@ -307,7 +307,7 @@ Programs can invoke other programs synchronously within a single transaction. Th
 
 | Node Type | Role | Stake Required |
 |-----------|------|----------------|
-| Validator | Produces blocks, votes on consensus | Yes (minimum 1 SCLONE delegated) |
+| Validator | Produces blocks, votes on consensus | Yes (minimum 1 PRISM delegated) |
 | RPC Node | Serves read queries and transaction submission | No |
 | Archiver | Stores historical ledger segments | No (rewarded via replication proofs) |
 
@@ -360,7 +360,7 @@ Transaction data flows through a QUIC-based transport layer. QUIC provides multi
 | Sustained Throughput | 30,000-50,000 TPS | Mixed workload |
 | Block Time | 400 ms | Standard slot duration |
 | Time to Finality | < 1 second | 66.7% stake confirmation |
-| Transaction Cost | 0.000005 SCLONE | Base fee, no priority |
+| Transaction Cost | 0.000005 PRISM | Base fee, no priority |
 | Validator Hardware | 256 GB RAM, 24-core CPU, GPU, NVMe SSD | Recommended spec |
 
 ### 9.2 Horizontal Scaling Path
@@ -373,17 +373,17 @@ While the initial network operates as a single shard, the architecture supports 
 
 ### 10.1 On-Chain Governance
 
-SolClone implements on-chain governance through the SPL Governance program. Any SCLONE holder can:
+Prism implements on-chain governance through the SPL Governance program. Any PRISM holder can:
 
 - **Create proposals** for parameter changes (inflation rate, fee structure, compute limits).
-- **Vote** with weight proportional to staked SCLONE.
+- **Vote** with weight proportional to staked PRISM.
 - **Delegate** voting power to representatives.
 
 ### 10.2 Governance Parameters
 
 | Parameter | Value |
 |-----------|-------|
-| Proposal Threshold | 1,000,000 SCLONE (0.2% of supply) |
+| Proposal Threshold | 1,000,000 PRISM (0.2% of supply) |
 | Voting Period | 5 epochs (~10 days) |
 | Quorum | 10% of circulating supply |
 | Approval Threshold | 66.7% of votes cast |
@@ -391,7 +391,7 @@ SolClone implements on-chain governance through the SPL Governance program. Any 
 
 ### 10.3 Foundation Role
 
-The SolClone Foundation serves as a steward during the network's early phases, funding development grants, managing partnerships, and coordinating upgrades. Foundation authority is designed to decrease over time as governance matures, with a target of full decentralization within 3 years of mainnet launch.
+The Prism Foundation serves as a steward during the network's early phases, funding development grants, managing partnerships, and coordinating upgrades. Foundation authority is designed to decrease over time as governance matures, with a target of full decentralization within 3 years of mainnet launch.
 
 ---
 
@@ -399,13 +399,13 @@ The SolClone Foundation serves as a steward during the network's early phases, f
 
 ### 11.1 Developer Tools
 
-SolClone ships with a complete developer toolkit from genesis:
+Prism ships with a complete developer toolkit from genesis:
 
 | Tool | Description |
 |------|-------------|
-| `solclone-cli` | Command-line wallet and validator management |
-| SolClone Wallet GUI | Desktop and browser-based wallet application |
-| SolClone Explorer | Block explorer with transaction search, validator stats, and token tracking |
+| `prism-cli` | Command-line wallet and validator management |
+| Prism Wallet GUI | Desktop and browser-based wallet application |
+| Prism Explorer | Block explorer with transaction search, validator stats, and token tracking |
 | Web3.js SDK | JavaScript/TypeScript client library for DApp integration |
 | Wallet Adapter | Standardized wallet connection interface for web applications |
 | DApp Scaffold | Starter templates for common DApp patterns (DEX, NFT marketplace, DAO) |
@@ -497,4 +497,4 @@ All core protocol code and SPL programs undergo independent audits by at least t
 
 ---
 
-*Copyright 2026 SolClone Foundation. This document is provided for informational purposes. It does not constitute financial advice or a solicitation of investment. Protocol specifications are subject to change as development progresses.*
+*Copyright 2026 Prism Foundation. This document is provided for informational purposes. It does not constitute financial advice or a solicitation of investment. Protocol specifications are subject to change as development progresses.*

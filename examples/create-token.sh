@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# Create a new SPL Token on SolClone
+# Create a new SPL Token on Prism
 # Usage: ./examples/create-token.sh [token-name] [decimals]
 # ============================================================================
 
@@ -14,7 +14,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CLI="$ROOT/validator/target/release/solana"
 SPL_TOKEN="$ROOT/validator/target/release/spl-token"
 
-echo "=== Create SPL Token on SolClone ==="
+echo "=== Create SPL Token on Prism ==="
 echo ""
 echo "  Token:    $TOKEN_NAME"
 echo "  Decimals: $DECIMALS"

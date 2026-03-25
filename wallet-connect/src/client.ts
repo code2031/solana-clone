@@ -1,5 +1,5 @@
 /**
- * SolCloneWalletConnectClient — WalletConnect v2 integration for SolClone.
+ * PrismWalletConnectClient — WalletConnect v2 integration for Prism.
  *
  * Allows mobile wallets to connect to web DApps via QR codes using
  * the WalletConnect relay protocol. Handles session lifecycle,
@@ -12,7 +12,7 @@ import type {
   SignClientTypes,
   PairingTypes,
 } from "@walletconnect/types";
-import { getNamespaces, type ChainDefinition, SOLCLONE_MAINNET } from "./chains";
+import { getNamespaces, type ChainDefinition, PRISM_MAINNET } from "./chains";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -26,7 +26,7 @@ export interface WalletConnectConfig {
     url: string;
     icons: string[];
   };
-  /** Chain to use by default. Defaults to solclone:mainnet. */
+  /** Chain to use by default. Defaults to prism:mainnet. */
   defaultChain?: ChainDefinition;
 }
 
@@ -47,7 +47,7 @@ export type WalletConnectEventHandler = (event: {
 
 // ── Client ──────────────────────────────────────────────────────────────────
 
-export class SolCloneWalletConnectClient {
+export class PrismWalletConnectClient {
   #signClient: SignClient | null = null;
   #session: SessionTypes.Struct | null = null;
   #config: WalletConnectConfig;
@@ -69,10 +69,10 @@ export class SolCloneWalletConnectClient {
     this.#signClient = await (SC as any).init({
       projectId: this.#config.projectId,
       metadata: this.#config.metadata ?? {
-        name: "SolClone DApp",
-        description: "A decentralized application on SolClone",
-        url: "https://solclone.io",
-        icons: ["https://solclone.io/icon.png"],
+        name: "Prism DApp",
+        description: "A decentralized application on Prism",
+        url: "https://prism.io",
+        icons: ["https://prism.io/icon.png"],
       },
     });
 
@@ -99,10 +99,10 @@ export class SolCloneWalletConnectClient {
 
     const { uri, approval } = await this.#signClient!.connect({
       requiredNamespaces: {
-        solclone: {
-          chains: namespaces.solclone.chains,
-          methods: namespaces.solclone.methods,
-          events: namespaces.solclone.events,
+        prism: {
+          chains: namespaces.prism.chains,
+          methods: namespaces.prism.methods,
+          events: namespaces.prism.events,
         },
       },
       optionalNamespaces: {
@@ -130,7 +130,7 @@ export class SolCloneWalletConnectClient {
 
   /**
    * Approve an incoming session proposal (wallet-side).
-   * Called when the SolClone wallet receives a `session_proposal` event.
+   * Called when the Prism wallet receives a `session_proposal` event.
    */
   async approve(
     proposalId: number,
@@ -142,13 +142,13 @@ export class SolCloneWalletConnectClient {
     const namespaces: Record<string, SessionTypes.Namespace> = {};
 
     // Group accounts by namespace.
-    const solcloneAccounts = accounts.filter((a) => a.startsWith("solclone:"));
+    const prismAccounts = accounts.filter((a) => a.startsWith("prism:"));
     const solanaAccounts = accounts.filter((a) => a.startsWith("solana:"));
 
-    if (solcloneAccounts.length > 0) {
-      namespaces.solclone = {
-        accounts: solcloneAccounts,
-        chains: chains.filter((c) => c.startsWith("solclone:")),
+    if (prismAccounts.length > 0) {
+      namespaces.prism = {
+        accounts: prismAccounts,
+        chains: chains.filter((c) => c.startsWith("prism:")),
         methods: [
           "solana_signTransaction",
           "solana_signAndSendTransaction",
@@ -212,7 +212,7 @@ export class SolCloneWalletConnectClient {
     this.#requireSession();
 
     const chain =
-      this.#config.defaultChain?.id ?? SOLCLONE_MAINNET.id;
+      this.#config.defaultChain?.id ?? PRISM_MAINNET.id;
 
     const result = await this.#signClient!.request({
       topic: this.#session!.topic,
@@ -238,7 +238,7 @@ export class SolCloneWalletConnectClient {
     this.#requireSession();
 
     const chain =
-      this.#config.defaultChain?.id ?? SOLCLONE_MAINNET.id;
+      this.#config.defaultChain?.id ?? PRISM_MAINNET.id;
 
     const result = await this.#signClient!.request({
       topic: this.#session!.topic,
@@ -262,7 +262,7 @@ export class SolCloneWalletConnectClient {
     this.#requireSession();
 
     const chain =
-      this.#config.defaultChain?.id ?? SOLCLONE_MAINNET.id;
+      this.#config.defaultChain?.id ?? PRISM_MAINNET.id;
 
     const result = await this.#signClient!.request({
       topic: this.#session!.topic,

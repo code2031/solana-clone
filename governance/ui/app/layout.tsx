@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone DAO",
-  description: "Decentralized governance for the SolClone network",
+  title: "Prism DAO",
+  description: "Decentralized governance for the Prism network",
 };
 
 export default function RootLayout({
@@ -49,7 +49,7 @@ export default function RootLayout({
                 </svg>
               </div>
               <span className="text-xl font-bold tracking-tight">
-                SolClone DAO
+                Prism DAO
               </span>
             </div>
             <nav className="hidden items-center gap-6 text-sm font-medium sm:flex">
@@ -79,7 +79,7 @@ export default function RootLayout({
         </header>
         <main className="flex-1">{children}</main>
         <footer className="border-t border-card-border py-6 text-center text-sm text-muted">
-          SolClone DAO Governance v0.1.0
+          Prism DAO Governance v0.1.0
         </footer>
       </body>
     </html>

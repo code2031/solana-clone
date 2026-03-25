@@ -10,7 +10,7 @@ interface CodeEditorProps {
 
 export default function CodeEditor({ code, onChange }: CodeEditorProps) {
   const handleEditorDidMount: OnMount = useCallback((editor, monaco) => {
-    monaco.editor.defineTheme("solclone-dark", {
+    monaco.editor.defineTheme("prism-dark", {
       base: "vs-dark",
       inherit: true,
       rules: [
@@ -32,7 +32,7 @@ export default function CodeEditor({ code, onChange }: CodeEditorProps) {
         "editorGutter.background": "#0F0B2E",
       },
     });
-    monaco.editor.setTheme("solclone-dark");
+    monaco.editor.setTheme("prism-dark");
 
     editor.updateOptions({
       fontSize: 14,

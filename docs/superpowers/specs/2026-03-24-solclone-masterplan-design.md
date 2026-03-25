@@ -1,4 +1,4 @@
-# SolClone Masterplan: Best Crypto Experience in the World
+# Prism Masterplan: Best Crypto Experience in the World
 
 **Date:** 2026-03-24
 **Status:** Approved
@@ -8,7 +8,7 @@
 
 ## Goal
 
-Transform SolClone from a Solana fork into a standalone, best-in-class Layer 1 blockchain with the best user experience, developer experience, and feature set of any crypto project. Each phase builds on the previous, creating compounding value.
+Transform Prism from a Solana fork into a standalone, best-in-class Layer 1 blockchain with the best user experience, developer experience, and feature set of any crypto project. Each phase builds on the previous, creating compounding value.
 
 ---
 
@@ -23,7 +23,7 @@ Redesign the Flutter wallet to match or exceed Phantom's quality:
 
 - **Instant onboarding**: Create wallet in 3 taps. Biometric lock. No seed phrase required upfront (delayed backup prompt).
 - **Token auto-discovery**: Automatically detect and display all SPL tokens in the wallet. Show USD values, 24h change, portfolio chart.
-- **Transaction preview**: Before signing, show a human-readable breakdown: "Send 5.2 SCLONE to 7xK2...nP4" with fee estimate.
+- **Transaction preview**: Before signing, show a human-readable breakdown: "Send 5.2 PRISM to 7xK2...nP4" with fee estimate.
 - **Swap integration**: In-app token swap (calls the Phase 2 DEX when available, mock UI for now).
 - **Collectibles tab**: NFT gallery with grid view, full-screen detail, send.
 - **Activity feed**: Rich transaction history with type icons, counterparty labels, status badges.
@@ -37,7 +37,7 @@ Redesign the Flutter wallet to match or exceed Phantom's quality:
 - **Faucet web UI**: Next.js app at `faucet/` — enter address, select amount, get devnet SOL. Rate-limited.
 - **SDK playground**: Interactive web-based code editor where developers can write and test SDK calls against devnet. Powered by Monaco editor + live RPC.
 - **Anchor templates**: Pre-built Anchor program templates: token, NFT collection, escrow, voting, staking pool.
-- **`solclone init`**: CLI command that scaffolds a new Anchor project pre-configured for SolClone networks.
+- **`prism init`**: CLI command that scaffolds a new Anchor project pre-configured for Prism networks.
 - **Improved docs site**: Docusaurus or similar, auto-generated API docs from the SDK, tutorials, guides.
 
 ### 1.3 Performance Baseline
@@ -54,7 +54,7 @@ Redesign the Flutter wallet to match or exceed Phantom's quality:
 | Faucet web UI | Next.js |
 | SDK playground | Next.js + Monaco |
 | Anchor templates (5 programs) | Rust/Anchor |
-| `solclone init` CLI command | TypeScript |
+| `prism init` CLI command | TypeScript |
 | Docs site | Docusaurus |
 | Benchmark suite | Bash/TypeScript |
 | Network health dashboard | Next.js |
@@ -92,7 +92,7 @@ Supply and borrow against collateral:
 
 Over-collateralized stablecoin pegged to $1:
 
-- **Mint**: Deposit SCLONE as collateral (150% collateralization ratio), mint SCUSD.
+- **Mint**: Deposit PRISM as collateral (150% collateralization ratio), mint SCUSD.
 - **Redeem**: Return SCUSD, get collateral back minus stability fee.
 - **Liquidation**: If collateral ratio drops below 120%, position is liquidated.
 - **Price feed**: On-chain oracle aggregating prices from multiple sources.
@@ -104,7 +104,7 @@ On-chain price feed program:
 - **Push model**: Authorized publishers submit price updates.
 - **Aggregation**: Median of multiple publishers, confidence interval.
 - **Staleness protection**: Prices expire after configurable time window.
-- **Feeds**: SCLONE/USD, SCUSD/USD, BTC/USD, ETH/USD.
+- **Feeds**: PRISM/USD, SCUSD/USD, BTC/USD, ETH/USD.
 
 ### 2.5 Deliverables
 
@@ -124,7 +124,7 @@ On-chain price feed program:
 ## Phase 3: NFT + AI
 
 **Timeline target:** 6-8 weeks
-**Objective:** Differentiate SolClone with a native NFT marketplace and AI-powered features.
+**Objective:** Differentiate Prism with a native NFT marketplace and AI-powered features.
 
 ### 3.1 NFT Marketplace (SolMart)
 
@@ -163,13 +163,13 @@ Full-featured NFT platform:
 ## Phase 4: Cross-Chain + Privacy
 
 **Timeline target:** 8-10 weeks
-**Objective:** Connect SolClone to the broader crypto ecosystem and add privacy features.
+**Objective:** Connect Prism to the broader crypto ecosystem and add privacy features.
 
 ### 4.1 Cross-Chain Bridges
 
-- **Ethereum bridge**: Lock ETH/ERC-20 on Ethereum, mint wrapped tokens on SolClone. Uses a validator set to attest deposits.
-- **Bitcoin bridge**: Lock BTC via multi-sig, mint scBTC on SolClone.
-- **Solana bridge**: Transfer SPL tokens between real Solana and SolClone. Same token standard makes this straightforward.
+- **Ethereum bridge**: Lock ETH/ERC-20 on Ethereum, mint wrapped tokens on Prism. Uses a validator set to attest deposits.
+- **Bitcoin bridge**: Lock BTC via multi-sig, mint scBTC on Prism.
+- **Solana bridge**: Transfer SPL tokens between real Solana and Prism. Same token standard makes this straightforward.
 - **Bridge UI**: Unified interface — select source chain, token, amount, destination. Track bridge status.
 
 ### 4.2 Privacy
@@ -184,7 +184,7 @@ Upgrade the Flutter wallet to support multiple chains in one app:
 
 - **Ethereum**: View ETH/ERC-20 balances, send, receive. Import MetaMask seed.
 - **Bitcoin**: View BTC balance, send, receive. BIP84 (native SegWit) derivation.
-- **Solana**: Connect to real Solana alongside SolClone.
+- **Solana**: Connect to real Solana alongside Prism.
 - **Unified portfolio**: Total portfolio value across all chains.
 
 ### 4.4 Deliverables
@@ -208,10 +208,10 @@ Upgrade the Flutter wallet to support multiple chains in one app:
 
 ### 5.1 DAO
 
-- **Proposal system**: Anyone with 100K+ SCLONE (or delegated votes) can propose. Types: parameter change, treasury spend, program upgrade.
+- **Proposal system**: Anyone with 100K+ PRISM (or delegated votes) can propose. Types: parameter change, treasury spend, program upgrade.
 - **Voting**: Token-weighted voting. 3-day voting period. 10% quorum.
 - **Timelock**: Approved proposals execute after 2-day timelock. Emergency proposals (2/3 supermajority) execute in 6 hours.
-- **Treasury**: DAO controls the ecosystem fund (150M SCLONE from genesis).
+- **Treasury**: DAO controls the ecosystem fund (150M PRISM from genesis).
 - **Delegation**: Delegate voting power to representatives.
 
 ### 5.2 Community Infrastructure
@@ -220,7 +220,7 @@ Upgrade the Flutter wallet to support multiple chains in one app:
 - **Validator marketplace**: Browse validators, compare commission/uptime/stake, delegate directly from the wallet.
 - **Launchpad**: New projects launch tokens with fair distribution — fixed-price sales, lottery, or auction. Integrated with the DEX for day-one liquidity.
 - **On-chain profiles**: Link wallet to display name, avatar, bio. Used across marketplace, explorer, governance.
-- **Developer bounty board**: Post bounties for features/bugs, pay in SCLONE on completion.
+- **Developer bounty board**: Post bounties for features/bugs, pay in PRISM on completion.
 
 ### 5.3 Deliverables
 
@@ -244,8 +244,8 @@ The plan succeeds when:
 2. **DeFi**: Users can swap tokens, lend/borrow, and mint stablecoins natively.
 3. **NFTs**: Creators can mint and sell NFTs in a built-in marketplace.
 4. **AI**: Users can get portfolio advice and audit contracts with AI.
-5. **Cross-chain**: Assets can flow between Ethereum, Bitcoin, Solana, and SolClone.
-6. **Governance**: SCLONE holders can propose and vote on protocol changes.
+5. **Cross-chain**: Assets can flow between Ethereum, Bitcoin, Solana, and Prism.
+6. **Governance**: PRISM holders can propose and vote on protocol changes.
 7. **Performance**: Sustained 50K+ TPS on testnet with sub-second finality.
 
 ---

@@ -43,7 +43,7 @@ const GRANT_STATUS_STYLES: Record<string, string> = {
 
 export default function TreasuryPanel({
   balance,
-  tokenSymbol = "SCLONE",
+  tokenSymbol = "PRISM",
   recentDisbursements,
   grantApplications,
 }: TreasuryPanelProps) {

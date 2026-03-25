@@ -1,6 +1,6 @@
-# SolClone Flutter Wallet
+# Prism Flutter Wallet
 
-Custom cross-platform mobile and web wallet for the SolClone blockchain, part of the SolClone ecosystem. Built with Dart and Flutter.
+Custom cross-platform mobile and web wallet for the Prism blockchain, part of the Prism ecosystem. Built with Dart and Flutter.
 
 **Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
 **Location:** `flutter-wallet/` within the main monorepo
@@ -35,14 +35,14 @@ flutter build ios           # iOS
 - **Send / Receive SOL** -- transfer native tokens with address QR codes
 - **Staking** -- delegate, deactivate, and withdraw stake
 - **Token management** -- view, send, and receive SPL tokens
-- **DApp browser** -- interact with SolClone DApps from within the wallet
+- **DApp browser** -- interact with Prism DApps from within the wallet
 
 ## Architecture
 
 - **Provider** for state management
 - **BIP39** for mnemonic phrase generation and recovery
 - **Ed25519** for cryptographic key operations
-- Connects to the SolClone validator via JSON-RPC
+- Connects to the Prism validator via JSON-RPC
 
 ## Key Directories
 
@@ -66,9 +66,9 @@ flutter analyze
 ## Related Components
 
 - [CLI Wallet](../cli-wallet/)
-- [Validator](https://github.com/code2031/solclone-validator)
-- [Web3.js SDK](https://github.com/code2031/solclone-web3js)
-- [Explorer](https://github.com/code2031/solclone-explorer)
+- [Validator](https://github.com/code2031/prism-validator)
+- [Web3.js SDK](https://github.com/code2031/prism-web3js)
+- [Explorer](https://github.com/code2031/prism-explorer)
 
 ## License
 

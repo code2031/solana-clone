@@ -117,12 +117,12 @@ class SolanaService extends ChainService {
     // 3. Compile to message, sign with Ed25519
     // 4. Serialize and submit via sendTransaction
     //
-    // This follows the same pattern as the existing SolClone RPC service.
+    // This follows the same pattern as the existing Prism RPC service.
     final lamports = (amount * 1000000000).round();
     throw UnimplementedError(
       'Solana transaction sending requires Ed25519 signing. '
       'Amount: $amount SOL ($lamports lamports) to $to. '
-      'Use the existing WalletProvider.sendSol() for SolClone transactions.',
+      'Use the existing WalletProvider.sendSol() for Prism transactions.',
     );
   }
 
@@ -162,7 +162,7 @@ class SolanaService extends ChainService {
   @override
   String generateAddress(List<int> seed) {
     // BIP44 derivation path: m/44'/501'/0'/0'
-    // Same as SolClone -- Ed25519 keypair from seed.
+    // Same as Prism -- Ed25519 keypair from seed.
     // The existing CryptoUtils.keypairFromMnemonic handles this.
     //
     // Deterministic placeholder based on seed bytes (Base58-like):

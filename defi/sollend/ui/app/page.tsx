@@ -152,7 +152,7 @@ export default function Home() {
           <h1 className="mb-2 text-3xl font-bold text-white sm:text-4xl">
             Lend &amp; Borrow on{" "}
             <span className="bg-gradient-to-r from-purple-400 to-green-400 bg-clip-text text-transparent">
-              SolClone
+              Prism
             </span>
           </h1>
           <p className="mb-8 max-w-xl text-gray-400">
@@ -215,7 +215,7 @@ export default function Home() {
 
       {/* ---- Footer ---- */}
       <footer className="border-t border-gray-800/40 py-6 text-center text-sm text-gray-600">
-        SolLend Protocol &mdash; Built on SolClone
+        SolLend Protocol &mdash; Built on Prism
       </footer>
 
       {/* ---- Modals ---- */}

@@ -4,7 +4,7 @@ use anchor_spl::token::{self, Token, TokenAccount, Transfer};
 declare_id!("EscrowProg1111111111111111111111111111111111");
 
 #[program]
-pub mod solclone_escrow {
+pub mod prism_escrow {
     use super::*;
 
     /// Initialize an escrow: lock token A and specify expected token B amount.

@@ -1,8 +1,8 @@
-# CLAUDE.md -- SolClone Benchmark Suite
+# CLAUDE.md -- Prism Benchmark Suite
 
 ## Overview
 
-TPS and latency benchmarks for the SolClone validator. Benchmarks run against a local test validator and produce a timestamped RESULTS.md report.
+TPS and latency benchmarks for the Prism validator. Benchmarks run against a local test validator and produce a timestamped RESULTS.md report.
 
 ## Quick Start
 

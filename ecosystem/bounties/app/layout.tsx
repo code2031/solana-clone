@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone Bounties",
-  description: "Earn SCLONE by completing development bounties for the SolClone ecosystem",
+  title: "Prism Bounties",
+  description: "Earn PRISM by completing development bounties for the Prism ecosystem",
 };
 
 export default function RootLayout({
@@ -32,7 +32,7 @@ export default function RootLayout({
                 SB
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-red-400 to-rose-400 bg-clip-text text-transparent">
-                SolClone Bounties
+                Prism Bounties
               </span>
             </div>
             <div className="flex items-center gap-6">
@@ -48,7 +48,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <footer className="border-t border-[#2a2a4a] py-8 mt-16">
           <div className="max-w-7xl mx-auto px-6 text-center text-sm text-[#666688]">
-            SolClone Bounties &mdash; Build, earn, and grow the ecosystem
+            Prism Bounties &mdash; Build, earn, and grow the ecosystem
           </div>
         </footer>
       </body>

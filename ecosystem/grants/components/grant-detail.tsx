@@ -30,7 +30,7 @@ export function GrantDetail({ grant }: { grant: Grant }) {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-[#0a0a0f] rounded-lg p-4">
             <div className="text-amber-400 font-bold text-lg">{grant.fundingAmount.toLocaleString()}</div>
-            <div className="text-xs text-[#666688] mt-1">SCLONE Funding</div>
+            <div className="text-xs text-[#666688] mt-1">PRISM Funding</div>
           </div>
           <div className="bg-[#0a0a0f] rounded-lg p-4">
             <div className="text-white font-bold text-lg">

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # =============================================================================
-# SolClone Validator — Snapshot Backup Script
+# Prism Validator — Snapshot Backup Script
 # =============================================================================
 # Usage: ./snapshot-backup.sh
 #
 # Designed to run via cron (e.g., every 6 hours):
-#   0 */6 * * * /home/pranav/solana-clone/ops/backup/snapshot-backup.sh >> /var/log/solclone/backup.log 2>&1
+#   0 */6 * * * /home/pranav/solana-clone/ops/backup/snapshot-backup.sh >> /var/log/prism/backup.log 2>&1
 #
 # What it does:
 #   1. Finds the latest full and incremental snapshots
@@ -17,23 +17,23 @@
 set -euo pipefail
 
 # ---------------------------------------------------------------------------
-# Configuration (override via environment or /etc/solclone/backup.env)
+# Configuration (override via environment or /etc/prism/backup.env)
 # ---------------------------------------------------------------------------
-BACKUP_ENV="/etc/solclone/backup.env"
+BACKUP_ENV="/etc/prism/backup.env"
 if [[ -f "${BACKUP_ENV}" ]]; then
     # shellcheck source=/dev/null
     source "${BACKUP_ENV}"
 fi
 
-SNAPSHOT_DIR="${SNAPSHOT_DIR:-/home/solclone/validator-snapshots}"
-STAGING_DIR="${STAGING_DIR:-/tmp/solclone-backup-staging}"
-S3_BUCKET="${S3_BUCKET:-s3://solclone-snapshots}"
+SNAPSHOT_DIR="${SNAPSHOT_DIR:-/home/prism/validator-snapshots}"
+STAGING_DIR="${STAGING_DIR:-/tmp/prism-backup-staging}"
+S3_BUCKET="${S3_BUCKET:-s3://prism-snapshots}"
 S3_PREFIX="${S3_PREFIX:-backups/$(hostname)}"
 S3_ENDPOINT="${S3_ENDPOINT:-}"
 RETENTION_DAYS="${RETENTION_DAYS:-7}"
 COMPRESS_THREADS="${COMPRESS_THREADS:-4}"
 MAX_UPLOAD_RETRIES="${MAX_UPLOAD_RETRIES:-3}"
-LOCK_FILE="/tmp/solclone-backup.lock"
+LOCK_FILE="/tmp/prism-backup.lock"
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -190,7 +190,7 @@ prune() {
 # ---------------------------------------------------------------------------
 main() {
     log "============================================"
-    log " SolClone Snapshot Backup"
+    log " Prism Snapshot Backup"
     log "============================================"
 
     preflight

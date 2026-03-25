@@ -124,7 +124,7 @@ export default function Home() {
       <section className="mx-auto w-full max-w-6xl px-4 pt-10 sm:px-6">
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Trade on <span className="gradient-text">SolClone</span>
+            Trade on <span className="gradient-text">Prism</span>
           </h1>
           <p className="text-base text-gray-400">
             Lightning-fast token swaps with 0.25% fees. Provide liquidity and earn.

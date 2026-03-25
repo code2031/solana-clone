@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # =============================================================================
-# SolClone Validator — UFW Firewall Setup
+# Prism Validator — UFW Firewall Setup
 # =============================================================================
 # Usage: sudo ./firewall.sh [--public-rpc] [--ssh-port PORT] [--admin-ip IP]
 #
-# Opens only the ports required for a SolClone validator node.
+# Opens only the ports required for a Prism validator node.
 # By default, RPC (8899) and WebSocket (8900) are restricted to localhost.
 # Use --public-rpc to open them (only if you're running a public RPC node).
 # =============================================================================
@@ -69,7 +69,7 @@ if ! command -v ufw &>/dev/null; then
 fi
 
 echo "============================================"
-echo " SolClone Validator — Firewall Setup"
+echo " Prism Validator — Firewall Setup"
 echo "============================================"
 echo ""
 
@@ -100,8 +100,8 @@ fi
 # Gossip & Turbine (8000-8020 TCP+UDP)
 # ---------------------------------------------------------------------------
 echo "[3/6] Allowing gossip/turbine ports 8000-8020..."
-ufw allow 8000:8020/tcp comment "SolClone gossip TCP"
-ufw allow 8000:8020/udp comment "SolClone gossip UDP"
+ufw allow 8000:8020/tcp comment "Prism gossip TCP"
+ufw allow 8000:8020/udp comment "Prism gossip UDP"
 echo "       8000-8020 TCP+UDP open"
 
 # ---------------------------------------------------------------------------
@@ -109,13 +109,13 @@ echo "       8000-8020 TCP+UDP open"
 # ---------------------------------------------------------------------------
 echo "[4/6] Configuring RPC and WebSocket ports..."
 if [[ "${PUBLIC_RPC}" == "true" ]]; then
-    ufw allow 8899/tcp comment "SolClone RPC (public)"
-    ufw allow 8900/tcp comment "SolClone WebSocket (public)"
+    ufw allow 8899/tcp comment "Prism RPC (public)"
+    ufw allow 8900/tcp comment "Prism WebSocket (public)"
     echo "       WARNING: RPC (8899) and WS (8900) open to public."
     echo "       Ensure you have rate limiting via a reverse proxy."
 else
-    ufw allow from 127.0.0.1 to any port 8899 proto tcp comment "SolClone RPC (localhost)"
-    ufw allow from 127.0.0.1 to any port 8900 proto tcp comment "SolClone WebSocket (localhost)"
+    ufw allow from 127.0.0.1 to any port 8899 proto tcp comment "Prism RPC (localhost)"
+    ufw allow from 127.0.0.1 to any port 8900 proto tcp comment "Prism WebSocket (localhost)"
     echo "       RPC (8899) and WS (8900) restricted to localhost"
 fi
 

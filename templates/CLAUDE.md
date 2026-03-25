@@ -1,4 +1,4 @@
-# CLAUDE.md -- SolClone Anchor Templates
+# CLAUDE.md -- Prism Anchor Templates
 
 ## Overview
 
@@ -44,7 +44,7 @@ cd templates/staking-pool/programs && cargo build-sbf
 ## CLI Integration
 
 ```bash
-solclone init my-project --template token
+prism init my-project --template token
 ```
 
 This copies the template, renames the project in Cargo.toml, and generates a new program keypair.

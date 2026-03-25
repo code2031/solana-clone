@@ -1,23 +1,23 @@
-# SCUSD -- SolClone Stablecoin
+# SCUSD -- Prism Stablecoin
 
-> Over-collateralized stablecoin pegged to $1 USD, backed by SCLONE deposits.
+> Over-collateralized stablecoin pegged to $1 USD, backed by PRISM deposits.
 
-Part of the [SolClone DeFi Suite](../README.md) | [SolClone](https://github.com/code2031/solana-clone)
+Part of the [Prism DeFi Suite](../README.md) | [Prism](https://github.com/code2031/solana-clone)
 
 ---
 
 ## Overview
 
-SCUSD is a decentralized, over-collateralized stablecoin on the SolClone blockchain.
-Users mint SCUSD by depositing SCLONE tokens as collateral at a minimum 150%
+SCUSD is a decentralized, over-collateralized stablecoin on the Prism blockchain.
+Users mint SCUSD by depositing PRISM tokens as collateral at a minimum 150%
 collateralization ratio. The peg to $1 USD is maintained through a combination of
 collateral requirements, liquidation mechanics, and arbitrage incentives.
 
 ## Features
 
-- **Mint SCUSD** -- Deposit SCLONE tokens to mint SCUSD at 150% minimum collateralization
-- **Burn and Redeem** -- Burn SCUSD to unlock deposited SCLONE collateral
-- **Dynamic Collateral Ratio** -- Oracle-fed SCLONE price determines real-time ratio
+- **Mint SCUSD** -- Deposit PRISM tokens to mint SCUSD at 150% minimum collateralization
+- **Burn and Redeem** -- Burn SCUSD to unlock deposited PRISM collateral
+- **Dynamic Collateral Ratio** -- Oracle-fed PRISM price determines real-time ratio
 - **Liquidation** -- Vaults below 150% collateralization can be liquidated
 - **Stability Fee** -- Annual fee accrued on minted SCUSD, paid on redemption
 - **Global Debt Ceiling** -- Protocol-level cap on total SCUSD supply
@@ -50,7 +50,7 @@ cargo build-bpf
 Deploy to devnet:
 
 ```bash
-solclone program deploy target/deploy/scusd.so --url devnet
+prism program deploy target/deploy/scusd.so --url devnet
 ```
 
 ## Program Instructions
@@ -58,7 +58,7 @@ solclone program deploy target/deploy/scusd.so --url devnet
 | Instruction | Description |
 |---|---|
 | `create_vault` | Open a new collateral vault |
-| `deposit_collateral` | Add SCLONE collateral to a vault |
+| `deposit_collateral` | Add PRISM collateral to a vault |
 | `mint_scusd` | Mint SCUSD against vault collateral |
 | `burn_scusd` | Burn SCUSD to reduce vault debt |
 | `withdraw_collateral` | Remove excess collateral from a vault |
@@ -66,8 +66,8 @@ solclone program deploy target/deploy/scusd.so --url devnet
 
 ## Tech Stack
 
-- **On-Chain**: Rust, SolClone BPF program framework
-- **Price Data**: SolClone Price Oracle for SCLONE/USD price
+- **On-Chain**: Rust, Prism BPF program framework
+- **Price Data**: Prism Price Oracle for PRISM/USD price
 - **Math**: u128 fixed-point with 6-decimal precision
 
 ## License

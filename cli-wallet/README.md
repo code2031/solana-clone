@@ -1,6 +1,6 @@
-# SolClone CLI Wallet
+# Prism CLI Wallet
 
-Custom command-line wallet for the SolClone blockchain, part of the SolClone ecosystem. Built with TypeScript using raw JSON-RPC calls (no `@solana/web3.js` dependency).
+Custom command-line wallet for the Prism blockchain, part of the Prism ecosystem. Built with TypeScript using raw JSON-RPC calls (no `@solana/web3.js` dependency).
 
 **Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
 **Location:** `cli-wallet/` within the main monorepo
@@ -16,18 +16,18 @@ Custom command-line wallet for the SolClone blockchain, part of the SolClone eco
 cd cli-wallet
 npm install
 npm run build
-npm link          # Makes 'solclone' available globally
+npm link          # Makes 'prism' available globally
 ```
 
 ## Quick Start
 
 ```bash
-solclone keygen                              # Generate a keypair
-solclone config set --url http://localhost:8899   # Set RPC endpoint
-solclone balance                             # Check balance
-solclone airdrop 2                           # Request airdrop (testnet/devnet)
-solclone transfer <recipient> 1.5            # Send SOL
-solclone address                             # Show address with QR code
+prism keygen                              # Generate a keypair
+prism config set --url http://localhost:8899   # Set RPC endpoint
+prism balance                             # Check balance
+prism airdrop 2                           # Request airdrop (testnet/devnet)
+prism transfer <recipient> 1.5            # Send SOL
+prism address                             # Show address with QR code
 ```
 
 ## Commands
@@ -54,11 +54,11 @@ solclone address                             # Show address with QR code
 
 ## Configuration
 
-Config is stored at `~/.solclone/config.yml`:
+Config is stored at `~/.prism/config.yml`:
 
 ```yaml
 rpc_url: http://localhost:8899
-keypair_path: ~/.solclone/id.json
+keypair_path: ~/.prism/id.json
 commitment: confirmed
 ```
 
@@ -80,8 +80,8 @@ npm run clean             # Remove build output
 
 ## Related Components
 
-- [Validator](https://github.com/code2031/solclone-validator)
-- [Web3.js SDK](https://github.com/code2031/solclone-web3js)
+- [Validator](https://github.com/code2031/prism-validator)
+- [Web3.js SDK](https://github.com/code2031/prism-web3js)
 - [Flutter Wallet](../flutter-wallet/)
 
 ## License

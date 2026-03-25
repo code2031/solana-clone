@@ -39,7 +39,7 @@ export function GrantCard({
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div>
           <div className="text-amber-400 font-semibold">{grant.fundingAmount.toLocaleString()}</div>
-          <div className="text-xs text-[#666688]">SCLONE</div>
+          <div className="text-xs text-[#666688]">PRISM</div>
         </div>
         <div>
           <div className="text-white font-semibold">

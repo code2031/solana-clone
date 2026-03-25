@@ -1,7 +1,7 @@
 /**
- * SolClone <-> Solana Bridge Relayer
+ * Prism <-> Solana Bridge Relayer
  *
- * Watches both SolClone and Solana mainnet for bridge events and relays
+ * Watches both Prism and Solana mainnet for bridge events and relays
  * attestations between the two chains.
  *
  * Since both chains share the same account model and SPL token standard,
@@ -17,9 +17,9 @@ import { Connection, Keypair, PublicKey, Transaction, TransactionInstruction } f
 interface RelayerConfig {
   /** Real Solana mainnet/devnet RPC endpoint */
   solana_rpc: string;
-  /** SolClone validator RPC endpoint */
-  solclone_rpc: string;
-  /** Bridge program ID on SolClone */
+  /** Prism validator RPC endpoint */
+  prism_rpc: string;
+  /** Bridge program ID on Prism */
   bridge_program_id: string;
   /** Path to guardian keypair JSON */
   guardian_keypair: string;
@@ -29,7 +29,7 @@ interface RelayerConfig {
 
 const DEFAULT_CONFIG: RelayerConfig = {
   solana_rpc: "https://api.mainnet-beta.solana.com",
-  solclone_rpc: "http://localhost:8899",
+  prism_rpc: "http://localhost:8899",
   bridge_program_id: "SolBrdg11111111111111111111111111111111111",
   guardian_keypair: "./guardian-keypair.json",
   poll_interval_ms: 2_000,
@@ -182,7 +182,7 @@ class AttestationSubmitter {
   private guardianKeypair: Keypair;
 
   constructor(config: RelayerConfig) {
-    this.connection = new Connection(config.solclone_rpc, "confirmed");
+    this.connection = new Connection(config.prism_rpc, "confirmed");
     this.programId = new PublicKey(config.bridge_program_id);
     this.guardianKeypair = Keypair.generate(); // In production: load from file
     console.log(
@@ -191,10 +191,10 @@ class AttestationSubmitter {
   }
 
   /**
-   * Submit a mint attestation to the SolClone bridge after observing a lock on Solana.
+   * Submit a mint attestation to the Prism bridge after observing a lock on Solana.
    */
   async submitMintAttestation(event: LockEvent): Promise<string> {
-    console.log(`[Submitter] Attesting Solana->SolClone transfer nonce ${event.nonce}`);
+    console.log(`[Submitter] Attesting Solana->Prism transfer nonce ${event.nonce}`);
 
     const [bridgeStatePda] = PublicKey.findProgramAddressSync(
       [Buffer.from("solana_bridge_state")],
@@ -274,7 +274,7 @@ class AttestationSubmitter {
 class SolanaBridgeRelayer {
   private config: RelayerConfig;
   private solanaWatcher: ChainWatcher;
-  private solcloneWatcher: ChainWatcher;
+  private prismWatcher: ChainWatcher;
   private submitter: AttestationSubmitter;
 
   constructor(config: RelayerConfig) {
@@ -284,24 +284,24 @@ class SolanaBridgeRelayer {
       config.bridge_program_id,
       "Solana"
     );
-    this.solcloneWatcher = new ChainWatcher(
-      config.solclone_rpc,
+    this.prismWatcher = new ChainWatcher(
+      config.prism_rpc,
       config.bridge_program_id,
-      "SolClone"
+      "Prism"
     );
     this.submitter = new AttestationSubmitter(config);
   }
 
   async start(): Promise<void> {
     console.log("===========================================");
-    console.log(" SolClone <-> Solana Bridge Relayer");
+    console.log(" Prism <-> Solana Bridge Relayer");
     console.log("===========================================");
     console.log(`Bridge Program: ${this.config.bridge_program_id}`);
     console.log(`Solana RPC:     ${this.config.solana_rpc}`);
-    console.log(`SolClone RPC:   ${this.config.solclone_rpc}`);
+    console.log(`Prism RPC:   ${this.config.prism_rpc}`);
     console.log();
 
-    // Watch Solana for locks -> attest on SolClone to mint
+    // Watch Solana for locks -> attest on Prism to mint
     this.solanaWatcher.watchLockEvents(async (event) => {
       console.log(`[Relayer] Solana lock detected: nonce=${event.nonce}, amount=${event.amount}`);
       try {
@@ -311,16 +311,16 @@ class SolanaBridgeRelayer {
       }
     });
 
-    // Watch SolClone for burns -> release on Solana
-    this.solcloneWatcher.watchBurnEvents(async (event) => {
-      console.log(`[Relayer] SolClone burn detected: nonce=${event.nonce}, amount=${event.amount}`);
+    // Watch Prism for burns -> release on Solana
+    this.prismWatcher.watchBurnEvents(async (event) => {
+      console.log(`[Relayer] Prism burn detected: nonce=${event.nonce}, amount=${event.amount}`);
       // In production: submit release transaction to Solana mainnet
       console.log(`[Relayer] Would release ${event.amount} tokens on Solana to ${event.recipientOnSolana}`);
     });
 
-    // Watch SolClone for locks -> release on Solana
-    this.solcloneWatcher.watchLockEvents(async (event) => {
-      console.log(`[Relayer] SolClone lock detected: nonce=${event.nonce}, amount=${event.amount}`);
+    // Watch Prism for locks -> release on Solana
+    this.prismWatcher.watchLockEvents(async (event) => {
+      console.log(`[Relayer] Prism lock detected: nonce=${event.nonce}, amount=${event.amount}`);
       // In production: release tokens from Solana vault
       console.log(`[Relayer] Would release ${event.amount} tokens on Solana to ${event.recipient}`);
     });
@@ -342,7 +342,7 @@ function loadConfig(): RelayerConfig {
   return {
     ...DEFAULT_CONFIG,
     solana_rpc: process.env.SOLANA_RPC || DEFAULT_CONFIG.solana_rpc,
-    solclone_rpc: process.env.SOLCLONE_RPC || DEFAULT_CONFIG.solclone_rpc,
+    prism_rpc: process.env.PRISM_RPC || DEFAULT_CONFIG.prism_rpc,
     bridge_program_id:
       process.env.BRIDGE_PROGRAM_ID || DEFAULT_CONFIG.bridge_program_id,
     guardian_keypair:

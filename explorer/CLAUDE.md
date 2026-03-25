@@ -1,6 +1,6 @@
-# SolClone Block Explorer
+# Prism Block Explorer
 
-Forked from [solana-foundation/explorer](https://github.com/solana-foundation/explorer). A Next.js web application for browsing blocks, transactions, accounts, and programs on the SolClone blockchain.
+Forked from [solana-foundation/explorer](https://github.com/solana-foundation/explorer). A Next.js web application for browsing blocks, transactions, accounts, and programs on the Prism blockchain.
 
 ## Build
 
@@ -36,6 +36,6 @@ pnpm dev                                 # local dev server on port 3000
 ## Ecosystem Links
 
 - Monorepo: https://github.com/code2031/solana-clone
-- Split repo: https://github.com/code2031/solclone-explorer
-- Validator: https://github.com/code2031/solclone-validator
-- Web3.js SDK: https://github.com/code2031/solclone-web3js
+- Split repo: https://github.com/code2031/prism-explorer
+- Validator: https://github.com/code2031/prism-validator
+- Web3.js SDK: https://github.com/code2031/prism-web3js

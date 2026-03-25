@@ -2,13 +2,13 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Transform the SolClone wallet into a Phantom-quality experience and make the developer experience frictionless — faucet UI, SDK playground, Anchor templates, docs site, and performance benchmarks.
+**Goal:** Transform the Prism wallet into a Phantom-quality experience and make the developer experience frictionless — faucet UI, SDK playground, Anchor templates, docs site, and performance benchmarks.
 
 **Architecture:** Phase 1 has 3 independent workstreams that can be built in parallel: (A) Flutter wallet UX overhaul, (B) Developer experience tools (faucet, playground, templates, docs), (C) Performance baseline (benchmarks, health dashboard). Workstream A modifies `flutter-wallet/`, B creates new top-level directories (`faucet/`, `playground/`, `templates/`, `docs-site/`), and C creates `benchmarks/` and `health-dashboard/`.
 
 **Tech Stack:** Dart/Flutter (wallet), Next.js + Tailwind (faucet, playground, health dashboard), Rust/Anchor (templates), Docusaurus (docs), TypeScript (CLI `init` command), Bash (benchmarks)
 
-**Spec:** `docs/superpowers/specs/2026-03-24-solclone-masterplan-design.md` — Phase 1 section
+**Spec:** `docs/superpowers/specs/2026-03-24-prism-masterplan-design.md` — Phase 1 section
 
 ---
 
@@ -111,7 +111,7 @@ templates/                                 # Anchor program templates
     ├── programs/staking/src/lib.rs        # Deposit, withdraw, distribute rewards
     └── tests/staking.ts
 
-cli-wallet/src/commands/init.ts            # Create: `solclone init` scaffolds Anchor project
+cli-wallet/src/commands/init.ts            # Create: `prism init` scaffolds Anchor project
 
 docs-site/                                 # Docusaurus site
 ├── package.json
@@ -341,10 +341,10 @@ git commit -m "feat(wallet): NFT collectibles tab with grid gallery"
 - [ ] **Step 1: Create transaction_preview.dart**
 
 Bottom sheet widget showing:
-- Human-readable action: "Send 5.2 SCLONE"
+- Human-readable action: "Send 5.2 PRISM"
 - Recipient: truncated address with copy button
-- Network fee: "~0.000005 SCLONE"
-- Total deducted: "5.200005 SCLONE"
+- Network fee: "~0.000005 PRISM"
+- Total deducted: "5.200005 PRISM"
 - "Confirm" gradient button + "Cancel" text button
 
 - [ ] **Step 2: Update send_screen.dart**
@@ -426,7 +426,7 @@ Client component: address input (with paste button), amount selector (1/2/5 SOL 
 
 - [ ] **Step 5: Create page.tsx and layout.tsx**
 
-Dark theme page with SolClone branding, network selector (devnet/testnet), the faucet form centered, and a "powered by SolClone" footer.
+Dark theme page with Prism branding, network selector (devnet/testnet), the faucet form centered, and a "powered by Prism" footer.
 
 - [ ] **Step 6: Test locally**
 
@@ -463,7 +463,7 @@ cd playground && npm install @monaco-editor/react
 
 - [ ] **Step 2: Create code-editor.tsx**
 
-Monaco editor component with TypeScript language, pre-loaded with SolClone SDK type definitions. Default code: `// Connect to SolClone devnet and check balance`.
+Monaco editor component with TypeScript language, pre-loaded with Prism SDK type definitions. Default code: `// Connect to Prism devnet and check balance`.
 
 - [ ] **Step 3: Create output-panel.tsx**
 
@@ -479,7 +479,7 @@ Executes code in an iframe sandbox. Injects a mock `solana` object that makes re
 
 - [ ] **Step 6: Create page.tsx**
 
-Split-pane layout: editor on left (70%), output on right (30%). Top bar: "SolClone Playground" + network selector + "Run" button. Pre-loaded examples dropdown.
+Split-pane layout: editor on left (70%), output on right (30%). Top bar: "Prism Playground" + network selector + "Run" button. Pre-loaded examples dropdown.
 
 - [ ] **Step 7: Test with a real RPC call**
 
@@ -541,7 +541,7 @@ git commit -m "feat: add 5 Anchor program templates (token, NFT, escrow, voting,
 
 ---
 
-### Task 10: `solclone init` CLI Command
+### Task 10: `prism init` CLI Command
 
 **Files:**
 - Create: `cli-wallet/src/commands/init.ts`
@@ -549,7 +549,7 @@ git commit -m "feat: add 5 Anchor program templates (token, NFT, escrow, voting,
 
 - [ ] **Step 1: Create init.ts**
 
-Command: `solclone init <project-name> [--template token|nft|escrow|voting|staking]`. Copies the selected template from `templates/` to the target directory. Updates `Anchor.toml` with SolClone network URLs. Runs `npm install` if package.json exists.
+Command: `prism init <project-name> [--template token|nft|escrow|voting|staking]`. Copies the selected template from `templates/` to the target directory. Updates `Anchor.toml` with Prism network URLs. Runs `npm install` if package.json exists.
 
 - [ ] **Step 2: Register in index.ts**
 
@@ -559,7 +559,7 @@ Import and register the `init` command in the main CLI entry point.
 
 ```bash
 cd cli-wallet && npm run build
-npx solclone init my-token-project --template token
+npx prism init my-token-project --template token
 ls my-token-project/  # Verify files copied
 ```
 
@@ -567,7 +567,7 @@ ls my-token-project/  # Verify files copied
 
 ```bash
 git add cli-wallet/src/commands/init.ts cli-wallet/src/index.ts
-git commit -m "feat(cli): add solclone init command for project scaffolding"
+git commit -m "feat(cli): add prism init command for project scaffolding"
 ```
 
 ---
@@ -585,16 +585,16 @@ npx create-docusaurus@latest docs-site classic --typescript
 
 - [ ] **Step 2: Configure branding**
 
-Update `docusaurus.config.js`: title "SolClone Docs", tagline, logo from `branding/logo.svg`, dark theme default, navbar links (Docs, API, Tutorials, GitHub).
+Update `docusaurus.config.js`: title "Prism Docs", tagline, logo from `branding/logo.svg`, dark theme default, navbar links (Docs, API, Tutorials, GitHub).
 
 - [ ] **Step 3: Write core docs**
 
 Migrate and adapt content from existing `docs/` directory:
-- `docs/intro.md` — What is SolClone, architecture overview
+- `docs/intro.md` — What is Prism, architecture overview
 - `docs/getting-started.md` — Install, build validator, start testnet, first transaction
-- `docs/cli-reference.md` — All `solclone` CLI commands
+- `docs/cli-reference.md` — All `prism` CLI commands
 - `docs/sdk-reference.md` — Web3.js SDK methods with examples
-- `docs/anchor-guide.md` — Building programs with Anchor on SolClone
+- `docs/anchor-guide.md` — Building programs with Anchor on Prism
 - `docs/network-guide.md` — Devnet, testnet, mainnet configs and usage
 
 - [ ] **Step 4: Test locally**
@@ -696,7 +696,7 @@ Table: validator identity (truncated), stake, commission, last vote, status (act
 
 - [ ] **Step 6: Create page.tsx**
 
-Grid layout: 4 stat cards on top (Slot, TPS, Validators, Epoch), TPS chart in middle, validator table at bottom. Auto-refresh, dark theme, SolClone branding.
+Grid layout: 4 stat cards on top (Slot, TPS, Validators, Epoch), TPS chart in middle, validator table at bottom. Auto-refresh, dark theme, Prism branding.
 
 - [ ] **Step 7: Test with local testnet**
 
@@ -728,7 +728,7 @@ git commit -m "feat: add network health dashboard with real-time stats"
 | 7 | Faucet web UI | B: Dev Experience |
 | 8 | SDK playground | B: Dev Experience |
 | 9 | Anchor templates (5 programs) | B: Dev Experience |
-| 10 | `solclone init` CLI | B: Dev Experience |
+| 10 | `prism init` CLI | B: Dev Experience |
 | 11 | Docs site (Docusaurus) | B: Dev Experience |
 | 12 | Benchmark suite | C: Performance |
 | 13 | Health dashboard | C: Performance |

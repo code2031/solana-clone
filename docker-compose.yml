@@ -1,5 +1,5 @@
 # ============================================================================
-# SolClone Network — Docker Compose
+# Prism Network — Docker Compose
 # Usage:
 #   docker compose --profile devnet up     # Start devnet
 #   docker compose --profile testnet up    # Start testnet
@@ -14,7 +14,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.validator
     profiles: ["devnet", "full"]
-    container_name: solclone-devnet-validator
+    container_name: prism-devnet-validator
     ports:
       - "8899:8899"   # RPC
       - "8900:8900"   # WebSocket
@@ -32,7 +32,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.faucet
     profiles: ["devnet", "full"]
-    container_name: solclone-devnet-faucet
+    container_name: prism-devnet-faucet
     ports:
       - "9900:9900"
     environment:
@@ -48,7 +48,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.explorer
     profiles: ["devnet", "full"]
-    container_name: solclone-devnet-explorer
+    container_name: prism-devnet-explorer
     ports:
       - "3000:3000"
     environment:
@@ -65,7 +65,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.validator
     profiles: ["testnet", "full"]
-    container_name: solclone-testnet-validator
+    container_name: prism-testnet-validator
     ports:
       - "8799:8899"
       - "8800:8900"
@@ -83,7 +83,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.faucet
     profiles: ["testnet", "full"]
-    container_name: solclone-testnet-faucet
+    container_name: prism-testnet-faucet
     ports:
       - "9800:9900"
     environment:
@@ -99,7 +99,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.explorer
     profiles: ["testnet", "full"]
-    container_name: solclone-testnet-explorer
+    container_name: prism-testnet-explorer
     ports:
       - "3100:3000"
     environment:
@@ -116,7 +116,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.validator
     profiles: ["mainnet", "full"]
-    container_name: solclone-mainnet-validator
+    container_name: prism-mainnet-validator
     ports:
       - "8699:8899"
       - "8700:8900"
@@ -134,7 +134,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.explorer
     profiles: ["mainnet", "full"]
-    container_name: solclone-mainnet-explorer
+    container_name: prism-mainnet-explorer
     ports:
       - "3200:3000"
     environment:

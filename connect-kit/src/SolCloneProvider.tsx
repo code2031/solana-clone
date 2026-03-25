@@ -1,6 +1,6 @@
 /**
- * SolCloneProvider — React context provider that wraps wallet-adapter
- * with SolClone networks preconfigured.
+ * PrismProvider — React context provider that wraps wallet-adapter
+ * with Prism networks preconfigured.
  *
  * Provides wallet state and methods to all child components via context.
  */
@@ -14,13 +14,13 @@ import React, {
   useRef,
   type ReactNode,
 } from "react";
-import { detectWallets, type DetectedWallet } from "@solclone/wallet-standard";
+import { detectWallets, type DetectedWallet } from "@prism/wallet-standard";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
-export type SolCloneNetwork = "devnet" | "testnet" | "mainnet";
+export type PrismNetwork = "devnet" | "testnet" | "mainnet";
 
-export interface SolCloneContextValue {
+export interface PrismContextValue {
   /** Whether a wallet is connected. */
   connected: boolean;
   /** Whether a connection attempt is in progress. */
@@ -30,7 +30,7 @@ export interface SolCloneContextValue {
   /** The connected wallet's base58 address, or null. */
   address: string | null;
   /** The currently selected network. */
-  network: SolCloneNetwork;
+  network: PrismNetwork;
   /** Info about the connected wallet. */
   wallet: { name: string; icon: string | undefined } | null;
   /** All detected Wallet Standard wallets. */
@@ -48,31 +48,31 @@ export interface SolCloneContextValue {
   sendTransaction: (transaction: Uint8Array) => Promise<string>;
 }
 
-export interface SolCloneProviderProps {
+export interface PrismProviderProps {
   /** Network to connect to. Default: "devnet". */
-  network?: SolCloneNetwork;
+  network?: PrismNetwork;
   /** Child components that will have access to the wallet context. */
   children: ReactNode;
 }
 
 // ── RPC URLs ────────────────────────────────────────────────────────────────
 
-const RPC_URLS: Record<SolCloneNetwork, string> = {
-  mainnet: "https://rpc.solclone.io",
-  testnet: "https://testnet.rpc.solclone.io",
-  devnet: "https://devnet.rpc.solclone.io",
+const RPC_URLS: Record<PrismNetwork, string> = {
+  mainnet: "https://rpc.prism.io",
+  testnet: "https://testnet.rpc.prism.io",
+  devnet: "https://devnet.rpc.prism.io",
 };
 
 // ── Context ─────────────────────────────────────────────────────────────────
 
-const SolCloneContext = createContext<SolCloneContextValue | null>(null);
+const PrismContext = createContext<PrismContextValue | null>(null);
 
 // ── Provider Component ──────────────────────────────────────────────────────
 
-export function SolCloneProvider({
+export function PrismProvider({
   network = "devnet",
   children,
-}: SolCloneProviderProps) {
+}: PrismProviderProps) {
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
   const [publicKey, setPublicKey] = useState<Uint8Array | null>(null);
@@ -88,10 +88,10 @@ export function SolCloneProvider({
   // ── Detect Wallets ──────────────────────────────────────────────────
 
   useEffect(() => {
-    // Detect wallets that support SolClone or Solana chains.
+    // Detect wallets that support Prism or Solana chains.
     const detected = detectWallets({
       chains: [
-        `solclone:${network}`,
+        `prism:${network}`,
         `solana:${network === "mainnet" ? "mainnet" : network}`,
       ],
     });
@@ -251,7 +251,7 @@ export function SolCloneProvider({
 
   // ── Context Value ───────────────────────────────────────────────────
 
-  const value: SolCloneContextValue = {
+  const value: PrismContextValue = {
     connected,
     connecting,
     publicKey,
@@ -267,22 +267,22 @@ export function SolCloneProvider({
   };
 
   return (
-    <SolCloneContext.Provider value={value}>
+    <PrismContext.Provider value={value}>
       {children}
-    </SolCloneContext.Provider>
+    </PrismContext.Provider>
   );
 }
 
 // ── Context Hook ────────────────────────────────────────────────────────────
 
 /**
- * Access the SolClone wallet context. Must be used within a <SolCloneProvider>.
+ * Access the Prism wallet context. Must be used within a <PrismProvider>.
  */
-export function useSolCloneContext(): SolCloneContextValue {
-  const context = useContext(SolCloneContext);
+export function usePrismContext(): PrismContextValue {
+  const context = useContext(PrismContext);
   if (!context) {
     throw new Error(
-      "useSolCloneContext must be used within a <SolCloneProvider>.",
+      "usePrismContext must be used within a <PrismProvider>.",
     );
   }
   return context;

@@ -1,12 +1,12 @@
-# SolClone Tokenomics
+# Prism Tokenomics
 
 ## Overview
 
-**Token Name:** SolClone
-**Token Symbol:** SCLONE
+**Token Name:** Prism
+**Token Symbol:** PRISM
 **Decimals:** 9
-**Total Initial Supply:** 500,000,000 SCLONE
-**Network:** SolClone Layer 1
+**Total Initial Supply:** 500,000,000 PRISM
+**Network:** Prism Layer 1
 
 ---
 
@@ -20,7 +20,7 @@
 | Community        | 10%        |  50,000,000     | Airdrops, bug bounties, governance rewards     |
 
 ```
-Token Distribution (500M SCLONE)
+Token Distribution (500M PRISM)
 ================================================
 
 Validators  [########################################] 40%  200M
@@ -35,14 +35,14 @@ Community   [##########                              ] 10%   50M
 
 ## Vesting Schedules
 
-### Foundation (100M SCLONE) -- 4-Year Linear Vest
+### Foundation (100M PRISM) -- 4-Year Linear Vest
 
 - **Cliff:** 12 months (no tokens released)
 - **Vesting:** Linear monthly release over months 13-48
-- **Monthly Release:** ~2,777,778 SCLONE per month after cliff
+- **Monthly Release:** ~2,777,778 PRISM per month after cliff
 
 ```
-Foundation Vesting Schedule (100M SCLONE)
+Foundation Vesting Schedule (100M PRISM)
 
 Tokens Released (M)
 100 |                                                    ____---
@@ -65,7 +65,7 @@ Tokens Released (M)
 | Month 36     | 2,777,778       | 66,666,672          |
 | Month 48     | 2,777,778       | 100,000,000         |
 
-### Ecosystem (150M SCLONE) -- Milestone-Based Release
+### Ecosystem (150M PRISM) -- Milestone-Based Release
 
 Tokens are released upon reaching ecosystem growth milestones, verified by on-chain governance vote.
 
@@ -79,11 +79,11 @@ Tokens are released upon reaching ecosystem growth milestones, verified by on-ch
 | Cross-chain bridge live            | Milestone 5   | 15,000,000   |
 | Governance-approved proposals      | Ongoing       | 15,000,000   |
 
-### Validators (200M SCLONE)
+### Validators (200M PRISM)
 
 Released as staking rewards over time, governed by the inflation schedule below. No cliff or lockup -- rewards are distributed per epoch.
 
-### Community (50M SCLONE)
+### Community (50M PRISM)
 
 - **Airdrops (20M):** Distributed over 4 quarterly events during Year 1
 - **Bug Bounties (15M):** Released on verified submission
@@ -93,7 +93,7 @@ Released as staking rewards over time, governed by the inflation schedule below.
 
 ## Inflation Model
 
-SolClone uses a disinflationary model where the inflation rate decreases annually.
+Prism uses a disinflationary model where the inflation rate decreases annually.
 
 **Parameters:**
 
@@ -159,25 +159,25 @@ reward = inflation_tokens_per_epoch * (validator_stake / total_staked) * (1 - co
 
 Where:
 - `inflation_tokens_per_epoch` = annual inflation tokens / epochs per year
-- `validator_stake` = total SCLONE delegated to the validator
-- `total_staked` = total SCLONE staked across all validators
+- `validator_stake` = total PRISM delegated to the validator
+- `total_staked` = total PRISM staked across all validators
 - `commission` = validator's commission rate (0.0 to 1.0)
 
 ### Example Calculation
 
 Given:
-- Annual inflation tokens: 40,000,000 SCLONE (Year 0)
+- Annual inflation tokens: 40,000,000 PRISM (Year 0)
 - Epochs per year: 730 (1 epoch ~ 12 hours)
-- Validator stake: 1,000,000 SCLONE
-- Total staked: 300,000,000 SCLONE
+- Validator stake: 1,000,000 PRISM
+- Total staked: 300,000,000 PRISM
 - Commission: 10% (0.10)
 
 ```
-tokens_per_epoch = 40,000,000 / 730 = 54,794.52 SCLONE
+tokens_per_epoch = 40,000,000 / 730 = 54,794.52 PRISM
 reward = 54,794.52 * (1,000,000 / 300,000,000) * (1 - 0.10)
 reward = 54,794.52 * 0.003333 * 0.90
-reward = 164.38 SCLONE per epoch (for delegators)
-validator_commission = 54,794.52 * 0.003333 * 0.10 = 18.26 SCLONE per epoch
+reward = 164.38 PRISM per epoch (for delegators)
+validator_commission = 54,794.52 * 0.003333 * 0.10 = 18.26 PRISM per epoch
 ```
 
 ### Staking APY Estimates
@@ -196,11 +196,11 @@ validator_commission = 54,794.52 * 0.003333 * 0.10 = 18.26 SCLONE per epoch
 
 ### Fee Structure
 
-Every transaction on SolClone incurs a base fee calculated from the computational resources consumed.
+Every transaction on Prism incurs a base fee calculated from the computational resources consumed.
 
 | Component               | Description                                      |
 |--------------------------|--------------------------------------------------|
-| Base Fee                 | 5,000 lamports (0.000005 SCLONE) per signature   |
+| Base Fee                 | 5,000 lamports (0.000005 PRISM) per signature   |
 | Priority Fee (optional)  | Additional lamports per compute unit              |
 | Compute Budget           | Max 200,000 compute units per instruction         |
 
@@ -225,12 +225,12 @@ Transaction Fee Split
 
 ## Rent Economics
 
-Accounts on SolClone must maintain a minimum balance to remain active, covering storage costs.
+Accounts on Prism must maintain a minimum balance to remain active, covering storage costs.
 
 ### Rent Calculation
 
 ```
-rent_per_byte_per_year = 3.48 SCLONE per MB per year
+rent_per_byte_per_year = 3.48 PRISM per MB per year
 rent_per_epoch = rent_per_byte_per_year / epochs_per_year * account_size_bytes
 ```
 
@@ -244,12 +244,12 @@ minimum_balance = rent_per_byte_per_year * account_size_bytes * 2 years
 
 | Account Size | Rent-Exempt Minimum       |
 |--------------|---------------------------|
-| 0 bytes      | 0.00089088 SCLONE         |
-| 128 bytes    | 0.00144768 SCLONE         |
-| 256 bytes    | 0.00200448 SCLONE         |
-| 1 KB         | 0.00713088 SCLONE         |
-| 10 KB        | 0.06729408 SCLONE         |
-| 1 MB         | 6.96096000 SCLONE         |
+| 0 bytes      | 0.00089088 PRISM         |
+| 128 bytes    | 0.00144768 PRISM         |
+| 256 bytes    | 0.00200448 PRISM         |
+| 1 KB         | 0.00713088 PRISM         |
+| 10 KB        | 0.06729408 PRISM         |
+| 1 MB         | 6.96096000 PRISM         |
 
 Accounts falling below the rent-exempt threshold are charged rent each epoch. Accounts reaching zero balance are purged from the ledger.
 
@@ -257,7 +257,7 @@ Accounts falling below the rent-exempt threshold are charged rent each epoch. Ac
 
 ## Deflationary Pressure
 
-SolClone is designed with built-in deflationary mechanisms that counterbalance inflation over time.
+Prism is designed with built-in deflationary mechanisms that counterbalance inflation over time.
 
 ### Sources of Deflation
 
@@ -291,18 +291,18 @@ Rate %
 
 | Scenario            | Daily Txns   | Annual Fees Burned | Net Year 0 Inflation |
 |---------------------|--------------|--------------------|-----------------------|
-| Low Activity        | 100K         | ~91,250 SCLONE     | ~7.98%                |
-| Medium Activity     | 10M          | ~9,125,000 SCLONE  | ~6.18%                |
-| High Activity       | 100M         | ~91,250,000 SCLONE | Net deflationary      |
+| Low Activity        | 100K         | ~91,250 PRISM     | ~7.98%                |
+| Medium Activity     | 10M          | ~9,125,000 PRISM  | ~6.18%                |
+| High Activity       | 100M         | ~91,250,000 PRISM | Net deflationary      |
 
 ---
 
 ## Governance
 
-SCLONE holders can participate in governance:
+PRISM holders can participate in governance:
 
-- **1 SCLONE = 1 vote** (staked tokens retain voting rights)
-- **Proposal threshold:** 1,000,000 SCLONE to submit a proposal
+- **1 PRISM = 1 vote** (staked tokens retain voting rights)
+- **Proposal threshold:** 1,000,000 PRISM to submit a proposal
 - **Quorum:** 10% of circulating supply must vote
 - **Voting period:** 3 epochs (~36 hours)
 - **Timelock:** 2 epochs (~24 hours) after approval before execution
@@ -315,7 +315,7 @@ Governable parameters include inflation rate adjustments, fee split ratios, rent
 
 | Parameter                | Value                              |
 |--------------------------|------------------------------------|
-| Token Symbol             | SCLONE                             |
+| Token Symbol             | PRISM                             |
 | Decimals                 | 9                                  |
 | Initial Supply           | 500,000,000                        |
 | Initial Inflation        | 8%                                 |
@@ -323,5 +323,5 @@ Governable parameters include inflation rate adjustments, fee split ratios, rent
 | Annual Inflation Decay   | 15%                                |
 | Fee Burn Rate            | 50%                                |
 | Epoch Duration           | ~12 hours                          |
-| Base Tx Fee              | 5,000 lamports (0.000005 SCLONE)   |
+| Base Tx Fee              | 5,000 lamports (0.000005 PRISM)   |
 | Rent Exemption           | 2 years of rent as minimum balance |

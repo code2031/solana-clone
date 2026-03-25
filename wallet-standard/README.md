@@ -1,14 +1,14 @@
-# SolClone Wallet Standard
+# Prism Wallet Standard
 
-Implements the [Wallet Standard](https://github.com/wallet-standard/wallet-standard) for the SolClone blockchain, enabling any compliant third-party wallet -- Phantom, Solflare, Backpack, and others -- to connect to SolClone DApps.
+Implements the [Wallet Standard](https://github.com/wallet-standard/wallet-standard) for the Prism blockchain, enabling any compliant third-party wallet -- Phantom, Solflare, Backpack, and others -- to connect to Prism DApps.
 
-Part of the [SolClone](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
 
 ---
 
 ## Features
 
-- Full Wallet Standard compliance for SolClone chain
+- Full Wallet Standard compliance for Prism chain
 - Automatic wallet detection and registration
 - Bridge layer for legacy `@solana/wallet-adapter` compatibility
 - Support for Phantom, Solflare, Backpack, and any Wallet Standard wallet
@@ -17,17 +17,17 @@ Part of the [SolClone](https://github.com/code2031/solana-clone) ecosystem.
 ## Installation
 
 ```bash
-npm install @solclone/wallet-standard
+npm install @prism/wallet-standard
 ```
 
 ## Quick Start
 
 ```typescript
-import { SolCloneWallet } from "@solclone/wallet-standard";
-import { registerSolCloneWallet } from "@solclone/wallet-standard/register";
+import { PrismWallet } from "@prism/wallet-standard";
+import { registerPrismWallet } from "@prism/wallet-standard/register";
 
-const wallet = new SolCloneWallet(keypairProvider, transactionSender);
-registerSolCloneWallet(wallet);
+const wallet = new PrismWallet(keypairProvider, transactionSender);
+registerPrismWallet(wallet);
 ```
 
 ## Build
@@ -43,7 +43,7 @@ npm test          # Run test suite
 
 | File | Description |
 |------|-------------|
-| `src/wallet.ts` | `SolCloneWallet` class implementing the Wallet Standard interface |
+| `src/wallet.ts` | `PrismWallet` class implementing the Wallet Standard interface |
 | `src/adapter.ts` | Bridge between Wallet Standard and legacy wallet-adapter |
 | `src/register.ts` | Wallet registration with the global wallet registry |
 | `src/detect.ts` | Runtime detection of installed wallets |
@@ -57,7 +57,7 @@ DApp  -->  wallet-standard (detect + register)  -->  Wallet (Phantom, Solflare, 
            wallet-adapter (legacy bridge)
 ```
 
-The Wallet Standard acts as the universal interface layer. DApps built with `@solclone/connect-kit` or `@solclone/wallet-adapter` automatically discover any registered wallet through this package. The adapter bridge ensures backward compatibility with older DApps using the legacy wallet-adapter API.
+The Wallet Standard acts as the universal interface layer. DApps built with `@prism/connect-kit` or `@prism/wallet-adapter` automatically discover any registered wallet through this package. The adapter bridge ensures backward compatibility with older DApps using the legacy wallet-adapter API.
 
 ## Supported Wallets
 
@@ -65,7 +65,7 @@ Phantom, Solflare, Backpack, and any wallet implementing the Wallet Standard are
 
 ## Supported Chains
 
-`solclone:mainnet`, `solclone:testnet`, `solclone:devnet`, `solana:mainnet`, `solana:testnet`, `solana:devnet`
+`prism:mainnet`, `prism:testnet`, `prism:devnet`, `solana:mainnet`, `solana:testnet`, `solana:devnet`
 
 ## License
 

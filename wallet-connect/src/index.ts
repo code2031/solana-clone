@@ -1,12 +1,12 @@
 /**
- * @solclone/wallet-connect
+ * @prism/wallet-connect
  *
- * WalletConnect v2 protocol support for SolClone.
+ * WalletConnect v2 protocol support for Prism.
  * Enables mobile wallets to connect to web DApps via QR codes.
  */
 
 // WalletConnect client
-export { SolCloneWalletConnectClient } from "./client";
+export { PrismWalletConnectClient } from "./client";
 export type {
   WalletConnectConfig,
   WalletConnectSession,
@@ -19,9 +19,9 @@ export type { QRCodeOptions, QRCodeResult } from "./qr-modal";
 
 // Chain definitions
 export {
-  SOLCLONE_MAINNET,
-  SOLCLONE_TESTNET,
-  SOLCLONE_DEVNET,
+  PRISM_MAINNET,
+  PRISM_TESTNET,
+  PRISM_DEVNET,
   SOLANA_MAINNET,
   SOLANA_TESTNET,
   SOLANA_DEVNET,

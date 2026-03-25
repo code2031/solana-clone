@@ -1,7 +1,7 @@
 [package]
-name = "solclone-staking-pool"
+name = "prism-staking-pool"
 version = "0.1.0"
-description = "SolClone Staking Pool Program - Stake tokens and earn rewards"
+description = "Prism Staking Pool Program - Stake tokens and earn rewards"
 edition = "2021"
 
 [lib]

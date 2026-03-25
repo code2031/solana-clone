@@ -1,9 +1,9 @@
-# SolClone DApp Scaffold
+# Prism DApp Scaffold
 
-Next.js starter template for building decentralized applications on the SolClone blockchain, forked from [solana-labs/dapp-scaffold](https://github.com/solana-labs/dapp-scaffold).
+Next.js starter template for building decentralized applications on the Prism blockchain, forked from [solana-labs/dapp-scaffold](https://github.com/solana-labs/dapp-scaffold).
 
 **Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
-**Split repo:** [https://github.com/code2031/solclone-dapp-scaffold](https://github.com/code2031/solclone-dapp-scaffold)
+**Split repo:** [https://github.com/code2031/prism-dapp-scaffold](https://github.com/code2031/prism-dapp-scaffold)
 
 ## Prerequisites
 
@@ -13,8 +13,8 @@ Next.js starter template for building decentralized applications on the SolClone
 ## Build
 
 ```bash
-git clone https://github.com/code2031/solclone-dapp-scaffold.git
-cd solclone-dapp-scaffold
+git clone https://github.com/code2031/prism-dapp-scaffold.git
+cd prism-dapp-scaffold
 
 npm install
 npm run build
@@ -26,7 +26,7 @@ npm run build
 npm run dev       # Start dev server on http://localhost:3000
 ```
 
-Set `NEXT_PUBLIC_RPC_URL` to point to your SolClone validator.
+Set `NEXT_PUBLIC_RPC_URL` to point to your Prism validator.
 
 ## Testing
 
@@ -57,9 +57,9 @@ npm run lint
 
 ## Related Components
 
-- [Wallet Adapter](https://github.com/code2031/solclone-wallet-adapter)
-- [Web3.js SDK](https://github.com/code2031/solclone-web3js)
-- [Explorer](https://github.com/code2031/solclone-explorer)
+- [Wallet Adapter](https://github.com/code2031/prism-wallet-adapter)
+- [Web3.js SDK](https://github.com/code2031/prism-web3js)
+- [Explorer](https://github.com/code2031/prism-explorer)
 
 ## License
 

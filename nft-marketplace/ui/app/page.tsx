@@ -165,7 +165,7 @@ export default function MarketplaceHome() {
           <span className="gradient-text">SolMart</span>
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-base text-muted sm:text-lg">
-          Discover, collect, and trade premium NFTs on the SolClone blockchain.
+          Discover, collect, and trade premium NFTs on the Prism blockchain.
           Auctions, instant buys, and creator royalties &mdash; all on-chain.
         </p>
       </section>

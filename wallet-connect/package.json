@@ -1,7 +1,7 @@
 {
-  "name": "@solclone/wallet-connect",
+  "name": "@prism/wallet-connect",
   "version": "1.0.0",
-  "description": "WalletConnect v2 protocol support for SolClone — mobile wallet QR code connections",
+  "description": "WalletConnect v2 protocol support for Prism — mobile wallet QR code connections",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -19,7 +19,7 @@
     "typescript": "^5.3.0"
   },
   "keywords": [
-    "solclone",
+    "prism",
     "solana",
     "walletconnect",
     "wallet",

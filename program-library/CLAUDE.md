@@ -1,6 +1,6 @@
-# SolClone Program Library (SPL)
+# Prism Program Library (SPL)
 
-Forked from [solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library). Collection of Rust on-chain programs deployed to the SolClone blockchain.
+Forked from [solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library). Collection of Rust on-chain programs deployed to the Prism blockchain.
 
 ## Build
 
@@ -35,6 +35,6 @@ Most programs include both unit tests and integration tests using `solana-progra
 ## Ecosystem Links
 
 - Monorepo: https://github.com/code2031/solana-clone
-- Split repo: https://github.com/code2031/solclone-programs
-- Validator: https://github.com/code2031/solclone-validator
-- Web3.js SDK: https://github.com/code2031/solclone-web3js
+- Split repo: https://github.com/code2031/prism-programs
+- Validator: https://github.com/code2031/prism-validator
+- Web3.js SDK: https://github.com/code2031/prism-web3js

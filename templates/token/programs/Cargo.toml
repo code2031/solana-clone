@@ -1,7 +1,7 @@
 [package]
-name = "solclone-token"
+name = "prism-token"
 version = "0.1.0"
-description = "SolClone Token Program - SPL Token template with mint, transfer, and burn"
+description = "Prism Token Program - SPL Token template with mint, transfer, and burn"
 edition = "2021"
 
 [lib]

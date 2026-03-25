@@ -1,17 +1,17 @@
-# SolClone DeFi Suite
+# Prism DeFi Suite
 
-> A complete decentralized finance ecosystem built on the SolClone blockchain.
+> A complete decentralized finance ecosystem built on the Prism blockchain.
 
-Part of the [SolClone](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
 
 ---
 
 ## Overview
 
-The SolClone DeFi Suite is a collection of composable on-chain programs and web
+The Prism DeFi Suite is a collection of composable on-chain programs and web
 interfaces that together provide a full-featured DeFi stack. Each component is
 independently deployable but designed to interoperate through shared token standards
-and the SolClone Price Oracle.
+and the Prism Price Oracle.
 
 ## Components
 
@@ -36,7 +36,7 @@ Oracle (price feeds)
   +---> SCUSD (stablecoin, uses oracle for peg maintenance)
 ```
 
-All programs are written in Rust using the SolClone program framework and compile
+All programs are written in Rust using the Prism program framework and compile
 to BPF bytecode for on-chain execution. Each module includes a Next.js web UI for
 end-user interaction.
 
@@ -60,9 +60,9 @@ cd oracle && npm install && npm run dev    # Oracle dashboard on :3003
 
 ## Shared Dependencies
 
-- **SolClone web3.js SDK** -- RPC and transaction building
+- **Prism web3.js SDK** -- RPC and transaction building
 - **SPL Token** -- Token minting, transfers, and account management
-- **SolClone Price Oracle** -- On-chain price feeds consumed by all protocols
+- **Prism Price Oracle** -- On-chain price feeds consumed by all protocols
 
 ## Security
 

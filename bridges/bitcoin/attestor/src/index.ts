@@ -1,8 +1,8 @@
 /**
- * SolClone <-> Bitcoin Bridge Attestor
+ * Prism <-> Bitcoin Bridge Attestor
  *
  * Monitors the Bitcoin network for deposits to the bridge multisig addresses,
- * submits deposit proofs to the SolClone bridge program, and co-signs
+ * submits deposit proofs to the Prism bridge program, and co-signs
  * withdrawal transactions.
  *
  * In production this would use a Bitcoin Core RPC or Electrum server.
@@ -22,9 +22,9 @@ interface AttestorConfig {
   bitcoin_rpc_user: string;
   /** Bitcoin RPC password */
   bitcoin_rpc_pass: string;
-  /** SolClone validator RPC endpoint */
-  solclone_rpc: string;
-  /** BTC Bridge program ID on SolClone */
+  /** Prism validator RPC endpoint */
+  prism_rpc: string;
+  /** BTC Bridge program ID on Prism */
   bridge_program_id: string;
   /** Path to the attestor keypair JSON file */
   attestor_keypair: string;
@@ -40,7 +40,7 @@ const DEFAULT_CONFIG: AttestorConfig = {
   bitcoin_rpc: "http://localhost:8332",
   bitcoin_rpc_user: "rpcuser",
   bitcoin_rpc_pass: "rpcpassword",
-  solclone_rpc: "http://localhost:8899",
+  prism_rpc: "http://localhost:8899",
   bridge_program_id: "BtcBrdg11111111111111111111111111111111111",
   attestor_keypair: "./attestor-keypair.json",
   watch_addresses: [],
@@ -77,7 +77,7 @@ interface BtcDepositInfo {
   amountSats: bigint;
   confirmations: number;
   destinationAddress: string;
-  /** Extracted from OP_RETURN or a memo field — the SolClone recipient pubkey */
+  /** Extracted from OP_RETURN or a memo field — the Prism recipient pubkey */
   recipientPubkey: string;
 }
 
@@ -119,7 +119,7 @@ class BitcoinWatcher {
     // In production:
     // 1. Call `listsinceblock` to get new transactions
     // 2. Filter for outputs to watched multisig addresses
-    // 3. Parse OP_RETURN data to extract the SolClone recipient pubkey
+    // 3. Parse OP_RETURN data to extract the Prism recipient pubkey
     // 4. Check confirmation count >= min_confirmations
     // 5. Emit deposit event
 
@@ -169,16 +169,16 @@ class BitcoinWatcher {
 }
 
 // ---------------------------------------------------------------------------
-// SolClone Bridge Client
+// Prism Bridge Client
 // ---------------------------------------------------------------------------
 
-class SolCloneBridgeClient {
+class PrismBridgeClient {
   private connection: Connection;
   private programId: PublicKey;
   private attestorKeypair: Keypair;
 
   constructor(config: AttestorConfig) {
-    this.connection = new Connection(config.solclone_rpc, "confirmed");
+    this.connection = new Connection(config.prism_rpc, "confirmed");
     this.programId = new PublicKey(config.bridge_program_id);
     // In production: load from file
     this.attestorKeypair = Keypair.generate();
@@ -188,7 +188,7 @@ class SolCloneBridgeClient {
   }
 
   /**
-   * Submit a deposit proof to the SolClone bridge program.
+   * Submit a deposit proof to the Prism bridge program.
    */
   async submitDepositProof(deposit: BtcDepositInfo): Promise<string> {
     console.log(`[BridgeClient] Submitting deposit proof for txid: ${deposit.txid}`);
@@ -251,7 +251,7 @@ class SolCloneBridgeClient {
   }
 
   /**
-   * Submit a withdrawal co-signature to the SolClone bridge program.
+   * Submit a withdrawal co-signature to the Prism bridge program.
    */
   async processWithdrawal(nonce: bigint, btcTxid: string): Promise<string> {
     console.log(`[BridgeClient] Processing withdrawal nonce ${nonce}, BTC txid: ${btcTxid}`);
@@ -302,7 +302,7 @@ class SolCloneBridgeClient {
   }
 
   /**
-   * Watch for withdrawal requests on SolClone.
+   * Watch for withdrawal requests on Prism.
    */
   async watchWithdrawals(
     handler: (nonce: bigint, amountSats: bigint, destination: string) => Promise<void>
@@ -353,24 +353,24 @@ class SolCloneBridgeClient {
 class BitcoinBridgeAttestor {
   private config: AttestorConfig;
   private btcWatcher: BitcoinWatcher;
-  private bridgeClient: SolCloneBridgeClient;
+  private bridgeClient: PrismBridgeClient;
 
   constructor(config: AttestorConfig) {
     this.config = config;
     this.btcWatcher = new BitcoinWatcher(config);
-    this.bridgeClient = new SolCloneBridgeClient(config);
+    this.bridgeClient = new PrismBridgeClient(config);
   }
 
   async start(): Promise<void> {
     console.log("===========================================");
-    console.log(" SolClone <-> Bitcoin Bridge Attestor");
+    console.log(" Prism <-> Bitcoin Bridge Attestor");
     console.log("===========================================");
     console.log(`Bridge Program: ${this.config.bridge_program_id}`);
     console.log(`Bitcoin RPC:    ${this.config.bitcoin_rpc}`);
-    console.log(`SolClone RPC:   ${this.config.solclone_rpc}`);
+    console.log(`Prism RPC:   ${this.config.prism_rpc}`);
     console.log();
 
-    // 1. Watch Bitcoin for deposits and submit proofs to SolClone
+    // 1. Watch Bitcoin for deposits and submit proofs to Prism
     this.btcWatcher.start(async (deposit) => {
       console.log(`[Attestor] BTC deposit detected: ${deposit.txid}:${deposit.vout}`);
       try {
@@ -381,7 +381,7 @@ class BitcoinBridgeAttestor {
       }
     });
 
-    // 2. Watch SolClone for withdrawal requests and co-sign BTC releases
+    // 2. Watch Prism for withdrawal requests and co-sign BTC releases
     this.bridgeClient.watchWithdrawals(async (nonce, amountSats, destination) => {
       console.log(`[Attestor] Withdrawal request: nonce=${nonce}, ${amountSats} sats`);
       try {
@@ -392,7 +392,7 @@ class BitcoinBridgeAttestor {
           nonce
         );
 
-        // Submit co-signature to SolClone
+        // Submit co-signature to Prism
         await this.bridgeClient.processWithdrawal(nonce, txid);
         console.log(`[Attestor] Withdrawal co-signed for nonce=${nonce}`);
       } catch (err) {
@@ -418,7 +418,7 @@ function loadConfig(): AttestorConfig {
     bitcoin_rpc: process.env.BITCOIN_RPC || DEFAULT_CONFIG.bitcoin_rpc,
     bitcoin_rpc_user: process.env.BITCOIN_RPC_USER || DEFAULT_CONFIG.bitcoin_rpc_user,
     bitcoin_rpc_pass: process.env.BITCOIN_RPC_PASS || DEFAULT_CONFIG.bitcoin_rpc_pass,
-    solclone_rpc: process.env.SOLCLONE_RPC || DEFAULT_CONFIG.solclone_rpc,
+    prism_rpc: process.env.PRISM_RPC || DEFAULT_CONFIG.prism_rpc,
     bridge_program_id:
       process.env.BRIDGE_PROGRAM_ID || DEFAULT_CONFIG.bridge_program_id,
     attestor_keypair:
@@ -447,7 +447,7 @@ main().catch((err) => {
 export {
   BitcoinBridgeAttestor,
   BitcoinWatcher,
-  SolCloneBridgeClient,
+  PrismBridgeClient,
   AttestorConfig,
   BtcDepositInfo,
 };

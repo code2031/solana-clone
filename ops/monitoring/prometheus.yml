@@ -1,5 +1,5 @@
 # =============================================================================
-# SolClone Validator — Prometheus Configuration
+# Prism Validator — Prometheus Configuration
 # =============================================================================
 
 global:
@@ -8,7 +8,7 @@ global:
   scrape_timeout: 10s
 
   external_labels:
-    cluster: "solclone-mainnet"
+    cluster: "prism-mainnet"
     environment: "production"
 
 # ---------------------------------------------------------------------------
@@ -34,8 +34,8 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-  # --- SolClone Validator RPC metrics ---
-  - job_name: "solclone-validator"
+  # --- Prism Validator RPC metrics ---
+  - job_name: "prism-validator"
     metrics_path: /metrics
     scrape_interval: 10s
     scrape_timeout: 8s

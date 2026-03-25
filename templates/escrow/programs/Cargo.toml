@@ -1,7 +1,7 @@
 [package]
-name = "solclone-escrow"
+name = "prism-escrow"
 version = "0.1.0"
-description = "SolClone Escrow Program - Trustless token swap with cancel support"
+description = "Prism Escrow Program - Trustless token swap with cancel support"
 edition = "2021"
 
 [lib]

@@ -1,6 +1,6 @@
-# SolClone Web3.js SDK
+# Prism Web3.js SDK
 
-Forked from [solana-labs/solana-web3.js](https://github.com/solana-labs/solana-web3.js). TypeScript client library for building DApps on the SolClone blockchain.
+Forked from [solana-labs/solana-web3.js](https://github.com/solana-labs/solana-web3.js). TypeScript client library for building DApps on the Prism blockchain.
 
 ## Build
 
@@ -34,6 +34,6 @@ Tests use mocha/chai. Some integration tests expect a local test validator runni
 ## Ecosystem Links
 
 - Monorepo: https://github.com/code2031/solana-clone
-- Split repo: https://github.com/code2031/solclone-web3js
-- Validator: https://github.com/code2031/solclone-validator
-- DApp Scaffold: https://github.com/code2031/solclone-dapp-scaffold
+- Split repo: https://github.com/code2031/prism-web3js
+- Validator: https://github.com/code2031/prism-validator
+- DApp Scaffold: https://github.com/code2031/prism-dapp-scaffold

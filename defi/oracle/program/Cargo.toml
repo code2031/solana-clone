@@ -1,8 +1,8 @@
 [package]
-name = "solclone-oracle"
+name = "prism-oracle"
 version = "0.1.0"
 edition = "2021"
-description = "SolClone Price Oracle - Decentralized price feeds with multi-publisher aggregation"
+description = "Prism Price Oracle - Decentralized price feeds with multi-publisher aggregation"
 
 [dependencies]
 solana-program = "1.17"

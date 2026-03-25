@@ -69,7 +69,7 @@ export default function ValidatorMarketplace() {
     <div className="max-w-7xl mx-auto px-6 py-8">
       <div className="text-center mb-10">
         <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-          SolClone Validators
+          Prism Validators
         </h1>
         <p className="text-[#9999bb] text-lg max-w-2xl mx-auto">
           Explore validators, compare performance, and delegate your stake to secure the network.

@@ -140,7 +140,7 @@ class _SplashScreenState extends State<SplashScreen>
                         shaderCallback: (bounds) =>
                             AppTheme.primaryGradient.createShader(bounds),
                         child: const Text(
-                          'SolClone',
+                          'Prism',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 32,

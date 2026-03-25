@@ -1,11 +1,11 @@
-# SolClone <-> Solana Bridge
+# Prism <-> Solana Bridge
 
-The fastest bridge in the SolClone ecosystem. Since both chains share the same account model, SPL token standard, and transaction format, transfers complete in under 30 seconds.
+The fastest bridge in the Prism ecosystem. Since both chains share the same account model, SPL token standard, and transaction format, transfers complete in under 30 seconds.
 
 ## Architecture
 
 ```
-Solana Mainnet                     SolClone
+Solana Mainnet                     Prism
 +-----------------+                +-----------------+
 | SPL Token Vault |  <--------->   | Bridge Program  |
 | (locked tokens) |  Guardians    | (mint/burn)     |
@@ -19,9 +19,9 @@ Solana Mainnet                     SolClone
 
 ### Components
 
-1. **Bridge Program** (`program/`) - SolClone-side program that locks/mints/burns SPL tokens.
+1. **Bridge Program** (`program/`) - Prism-side program that locks/mints/burns SPL tokens.
 
-2. **Relayer Service** (`relayer/`) - Watches both Solana and SolClone for bridge events and relays attestations.
+2. **Relayer Service** (`relayer/`) - Watches both Solana and Prism for bridge events and relays attestations.
 
 ## Advantages Over Other Bridges
 
@@ -32,19 +32,19 @@ Solana Mainnet                     SolClone
 
 ## How It Works
 
-### Solana -> SolClone
+### Solana -> Prism
 
 1. User locks SPL tokens in the Solana vault
 2. Relayer observes the lock event (1-2 slot confirmations)
-3. Guardian submits mint attestation to SolClone bridge program
-4. After threshold attestations, equivalent tokens are minted on SolClone
+3. Guardian submits mint attestation to Prism bridge program
+4. After threshold attestations, equivalent tokens are minted on Prism
 
-### SolClone -> Solana
+### Prism -> Solana
 
-1. User calls `burn_and_release` on SolClone, burning their tokens
+1. User calls `burn_and_release` on Prism, burning their tokens
 2. Relayer observes the burn event
 3. Guardian releases equivalent tokens from the Solana vault
-4. Transfer record is updated on SolClone
+4. Transfer record is updated on Prism
 
 ## Running the Relayer
 
@@ -54,7 +54,7 @@ npm install
 npm run build
 
 export SOLANA_RPC="https://api.mainnet-beta.solana.com"
-export SOLCLONE_RPC="http://localhost:8899"
+export PRISM_RPC="http://localhost:8899"
 export BRIDGE_PROGRAM_ID="SolBrdg11111111111111111111111111111111111"
 export GUARDIAN_KEYPAIR="./guardian-keypair.json"
 

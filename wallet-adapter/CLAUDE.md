@@ -1,6 +1,6 @@
-# SolClone Wallet Adapter
+# Prism Wallet Adapter
 
-Forked from [anza-xyz/wallet-adapter](https://github.com/anza-xyz/wallet-adapter). TypeScript monorepo providing React hooks and UI components for connecting wallets to SolClone DApps.
+Forked from [anza-xyz/wallet-adapter](https://github.com/anza-xyz/wallet-adapter). TypeScript monorepo providing React hooks and UI components for connecting wallets to Prism DApps.
 
 ## Build
 
@@ -37,6 +37,6 @@ Each package has its own test suite. Tests use Jest.
 ## Ecosystem Links
 
 - Monorepo: https://github.com/code2031/solana-clone
-- Split repo: https://github.com/code2031/solclone-wallet-adapter
-- Backpack Wallet: https://github.com/code2031/solclone-backpack
-- DApp Scaffold: https://github.com/code2031/solclone-dapp-scaffold
+- Split repo: https://github.com/code2031/prism-wallet-adapter
+- Backpack Wallet: https://github.com/code2031/prism-backpack
+- DApp Scaffold: https://github.com/code2031/prism-dapp-scaffold

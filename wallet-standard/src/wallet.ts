@@ -1,9 +1,9 @@
 /**
- * SolCloneWallet — Wallet Standard implementation for SolClone.
+ * PrismWallet — Wallet Standard implementation for Prism.
  *
  * This class implements the Wallet Standard interface so that any DApp
  * using the standard wallet discovery mechanism can detect, connect to,
- * and interact with the SolClone wallet.
+ * and interact with the Prism wallet.
  */
 
 import type {
@@ -29,41 +29,41 @@ import type {
   SolanaSignMessageMethod,
 } from "@solana/wallet-standard-features";
 import {
-  SolCloneConnect,
-  SolCloneDisconnect,
-  SolCloneEvents,
-  SolCloneSignTransaction,
-  SolCloneSignAndSendTransaction,
-  SolCloneSignMessage,
+  PrismConnect,
+  PrismDisconnect,
+  PrismEvents,
+  PrismSignTransaction,
+  PrismSignAndSendTransaction,
+  PrismSignMessage,
 } from "./features";
 
 // ── Constants ───────────────────────────────────────────────────────────────
 
-const SOLCLONE_WALLET_NAME = "SolClone" as const;
+const PRISM_WALLET_NAME = "Prism" as const;
 
 /**
- * SolClone logo encoded as a data URI (purple gradient S emblem).
+ * Prism logo encoded as a data URI (purple gradient S emblem).
  * Wallets must provide an icon in data-URI format per the Wallet Standard spec.
  */
-const SOLCLONE_ICON: WalletIcon =
+const PRISM_ICON: WalletIcon =
   "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjOUIzN0ZGIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNkEwREFEIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIHJ4PSIyNCIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjY0IiB5PSI4OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNzIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Uzwv dGV4dD48L3N2Zz4=" as WalletIcon;
 
-/** All chains the SolClone wallet can operate on. */
-const SOLCLONE_CHAINS = [
+/** All chains the Prism wallet can operate on. */
+const PRISM_CHAINS = [
   "solana:mainnet",
   "solana:testnet",
   "solana:devnet",
-  "solclone:mainnet",
-  "solclone:testnet",
-  "solclone:devnet",
+  "prism:mainnet",
+  "prism:testnet",
+  "prism:devnet",
 ] as const;
 
-type SolCloneChain = (typeof SOLCLONE_CHAINS)[number];
+type PrismChain = (typeof PRISM_CHAINS)[number];
 
-// ── SolClone Wallet Account ─────────────────────────────────────────────────
+// ── Prism Wallet Account ─────────────────────────────────────────────────
 
-/** Represents a single account exposed by the SolClone wallet. */
-export class SolCloneWalletAccount implements WalletAccount {
+/** Represents a single account exposed by the Prism wallet. */
+export class PrismWalletAccount implements WalletAccount {
   readonly address: string;
   readonly publicKey: Uint8Array;
   readonly chains: readonly string[];
@@ -78,14 +78,14 @@ export class SolCloneWalletAccount implements WalletAccount {
   }) {
     this.address = params.address;
     this.publicKey = params.publicKey;
-    this.chains = [...SOLCLONE_CHAINS];
+    this.chains = [...PRISM_CHAINS];
     this.features = [
-      SolCloneSignTransaction,
-      SolCloneSignAndSendTransaction,
-      SolCloneSignMessage,
+      PrismSignTransaction,
+      PrismSignAndSendTransaction,
+      PrismSignMessage,
     ];
     this.label = params.label;
-    this.icon = SOLCLONE_ICON;
+    this.icon = PRISM_ICON;
   }
 }
 
@@ -143,24 +143,24 @@ export interface TransactionSender {
   sendRawTransaction(rawTransaction: Uint8Array): Promise<string>;
 }
 
-// ── SolClone Wallet ─────────────────────────────────────────────────────────
+// ── Prism Wallet ─────────────────────────────────────────────────────────
 
-export class SolCloneWallet
+export class PrismWallet
   implements Wallet
 {
   readonly #keypairProvider: KeypairProvider;
   readonly #transactionSender: TransactionSender;
   readonly #emitter = new WalletEventEmitter();
 
-  #accounts: SolCloneWalletAccount[] = [];
+  #accounts: PrismWalletAccount[] = [];
   #connected = false;
 
   // ── Wallet Standard identity properties ─────────────────────────────────
 
   readonly version = "1.0.0" as const;
-  readonly name = SOLCLONE_WALLET_NAME;
-  readonly icon = SOLCLONE_ICON;
-  readonly chains = SOLCLONE_CHAINS;
+  readonly name = PRISM_WALLET_NAME;
+  readonly icon = PRISM_ICON;
+  readonly chains = PRISM_CHAINS;
 
   get accounts(): readonly WalletAccount[] {
     return this.#accounts;
@@ -175,29 +175,29 @@ export class SolCloneWallet
     SolanaSignAndSendTransactionFeature &
     SolanaSignMessageFeature {
     return {
-      [SolCloneConnect]: {
+      [PrismConnect]: {
         version: "1.0.0",
         connect: this.#connect,
       },
-      [SolCloneDisconnect]: {
+      [PrismDisconnect]: {
         version: "1.0.0",
         disconnect: this.#disconnect,
       },
-      [SolCloneEvents]: {
+      [PrismEvents]: {
         version: "1.0.0",
         on: this.#on,
       },
-      [SolCloneSignTransaction]: {
+      [PrismSignTransaction]: {
         version: "1.0.0",
         supportedTransactionVersions: ["legacy", 0],
         signTransaction: this.#signTransaction,
       },
-      [SolCloneSignAndSendTransaction]: {
+      [PrismSignAndSendTransaction]: {
         version: "1.0.0",
         supportedTransactionVersions: ["legacy", 0],
         signAndSendTransaction: this.#signAndSendTransaction,
       },
-      [SolCloneSignMessage]: {
+      [PrismSignMessage]: {
         version: "1.0.0",
         signMessage: this.#signMessage,
       },
@@ -225,10 +225,10 @@ export class SolCloneWallet
     const address = await this.#keypairProvider.getAddress();
 
     if (!publicKey || !address) {
-      throw new Error("SolClone wallet is locked or has no keypair.");
+      throw new Error("Prism wallet is locked or has no keypair.");
     }
 
-    const account = new SolCloneWalletAccount({
+    const account = new PrismWalletAccount({
       address,
       publicKey,
     });
@@ -257,7 +257,7 @@ export class SolCloneWallet
   #signTransaction: SolanaSignTransactionMethod = async (...inputs) => {
     const secretKey = await this.#keypairProvider.getSecretKey();
     if (!secretKey) {
-      throw new Error("SolClone wallet is locked.");
+      throw new Error("Prism wallet is locked.");
     }
 
     const nacl = await import("tweetnacl");
@@ -293,7 +293,7 @@ export class SolCloneWallet
   ) => {
     const secretKey = await this.#keypairProvider.getSecretKey();
     if (!secretKey) {
-      throw new Error("SolClone wallet is locked.");
+      throw new Error("Prism wallet is locked.");
     }
 
     const nacl = await import("tweetnacl");
@@ -326,7 +326,7 @@ export class SolCloneWallet
   #signMessage: SolanaSignMessageMethod = async (...inputs) => {
     const secretKey = await this.#keypairProvider.getSecretKey();
     if (!secretKey) {
-      throw new Error("SolClone wallet is locked.");
+      throw new Error("Prism wallet is locked.");
     }
 
     const nacl = await import("tweetnacl");

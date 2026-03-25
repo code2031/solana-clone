@@ -1,6 +1,6 @@
-# SolClone Ecosystem Tools
+# Prism Ecosystem Tools
 
-A collection of tools and platforms that support the SolClone ecosystem -- from token launches and validator discovery to on-chain identity and community funding.
+A collection of tools and platforms that support the Prism ecosystem -- from token launches and validator discovery to on-chain identity and community funding.
 
 ## Components
 
@@ -40,7 +40,7 @@ cd profiles/program && cargo build-sbf
 
 ## Grants (`grants/`)
 
-Ecosystem funding platform where the SolClone Foundation and DAOs can post grant opportunities. Applicants submit proposals, reviewers score them, and funds are disbursed on-chain upon milestone completion.
+Ecosystem funding platform where the Prism Foundation and DAOs can post grant opportunities. Applicants submit proposals, reviewers score them, and funds are disbursed on-chain upon milestone completion.
 
 ```bash
 cd grants && npm install && npm run dev
@@ -70,4 +70,4 @@ cd bounties && npm install && npm run dev
 
 ## Integration
 
-Ecosystem tools interact with SolClone via standard JSON-RPC. The launchpad and profiles programs are deployed on devnet for testing. Validator marketplace reads live validator data from the cluster's `getVoteAccounts` RPC method.
+Ecosystem tools interact with Prism via standard JSON-RPC. The launchpad and profiles programs are deployed on devnet for testing. Validator marketplace reads live validator data from the cluster's `getVoteAccounts` RPC method.

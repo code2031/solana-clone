@@ -1,9 +1,9 @@
-# SolClone Brand Guidelines
+# Prism Brand Guidelines
 
 ## Brand Identity
 
-**Name:** SolClone
-**Token Symbol:** SCLONE
+**Name:** Prism
+**Token Symbol:** PRISM
 **Tagline:** High-Performance Blockchain, Redefined
 **Tone:** Technical, trustworthy, cutting-edge
 
@@ -13,7 +13,7 @@
 
 ### Primary Logo
 
-The SolClone logo is a hexagonal mark with a purple-to-green gradient, containing the letters "SC" in clean, bold typography. The hexagon represents the block structure of the chain, while the gradient conveys the energy and speed of the network.
+The Prism logo is a hexagonal mark with a purple-to-green gradient, containing the letters "SC" in clean, bold typography. The hexagon represents the block structure of the chain, while the gradient conveys the energy and speed of the network.
 
 - File: `logo.svg`
 - Minimum size: 32px height
@@ -238,7 +238,7 @@ background: linear-gradient(135deg, #9945FF 0%, #14F195 100%);
 | Lamports          | Wei / Gwei           |
 | Validator         | Miner                |
 | Epoch             | Period               |
-| SCLONE            | Token / Coin         |
+| PRISM            | Token / Coin         |
 
 ---
 
@@ -252,13 +252,13 @@ background: linear-gradient(135deg, #9945FF 0%, #14F195 100%);
 ### Banner Images
 
 - Use the full gradient as background
-- Place the SolClone wordmark centered
+- Place the Prism wordmark centered
 - Recommended dimensions: 1500x500px (Twitter/X), 1584x396px (LinkedIn)
 
 ### Hashtags
 
-- Primary: `#SolClone`
-- Secondary: `#SCLONE`, `#BuildOnSolClone`
+- Primary: `#Prism`
+- Secondary: `#PRISM`, `#BuildOnPrism`
 
 ---
 

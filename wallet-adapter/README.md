@@ -1,9 +1,9 @@
-# SolClone Wallet Adapter
+# Prism Wallet Adapter
 
-Modular TypeScript wallet adapters and React components for SolClone DApps, forked from [anza-xyz/wallet-adapter](https://github.com/anza-xyz/wallet-adapter).
+Modular TypeScript wallet adapters and React components for Prism DApps, forked from [anza-xyz/wallet-adapter](https://github.com/anza-xyz/wallet-adapter).
 
 **Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
-**Split repo:** [https://github.com/code2031/solclone-wallet-adapter](https://github.com/code2031/solclone-wallet-adapter)
+**Split repo:** [https://github.com/code2031/prism-wallet-adapter](https://github.com/code2031/prism-wallet-adapter)
 
 ## Prerequisites
 
@@ -13,8 +13,8 @@ Modular TypeScript wallet adapters and React components for SolClone DApps, fork
 ## Build
 
 ```bash
-git clone https://github.com/code2031/solclone-wallet-adapter.git
-cd solclone-wallet-adapter
+git clone https://github.com/code2031/prism-wallet-adapter.git
+cd prism-wallet-adapter
 
 pnpm install
 pnpm build
@@ -47,9 +47,9 @@ pnpm lint         # Lint check
 
 ## Related Components
 
-- [Backpack Wallet](https://github.com/code2031/solclone-backpack)
-- [DApp Scaffold](https://github.com/code2031/solclone-dapp-scaffold)
-- [Web3.js SDK](https://github.com/code2031/solclone-web3js)
+- [Backpack Wallet](https://github.com/code2031/prism-backpack)
+- [DApp Scaffold](https://github.com/code2031/prism-dapp-scaffold)
+- [Web3.js SDK](https://github.com/code2031/prism-web3js)
 
 ## License
 

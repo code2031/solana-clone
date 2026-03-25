@@ -8,9 +8,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone Faucet — Get Free Devnet & Testnet Tokens",
+  title: "Prism Faucet — Get Free Devnet & Testnet Tokens",
   description:
-    "Request free SCLONE tokens on devnet or testnet for development and testing on the SolClone blockchain.",
+    "Request free PRISM tokens on devnet or testnet for development and testing on the Prism blockchain.",
 };
 
 export default function RootLayout({

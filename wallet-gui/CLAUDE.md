@@ -1,4 +1,4 @@
-# SolClone Backpack Wallet
+# Prism Backpack Wallet
 
 Forked from [coral-xyz/backpack](https://github.com/coral-xyz/backpack). A cross-platform wallet application supporting both web and React Native (mobile). Uses yarn workspaces and turborepo for monorepo orchestration.
 
@@ -37,6 +37,6 @@ yarn lint
 ## Ecosystem Links
 
 - Monorepo: https://github.com/code2031/solana-clone
-- Split repo: https://github.com/code2031/solclone-backpack
-- Wallet Adapter: https://github.com/code2031/solclone-wallet-adapter
-- Explorer: https://github.com/code2031/solclone-explorer
+- Split repo: https://github.com/code2031/prism-backpack
+- Wallet Adapter: https://github.com/code2031/prism-wallet-adapter
+- Explorer: https://github.com/code2031/prism-explorer

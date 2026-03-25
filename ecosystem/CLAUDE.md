@@ -1,8 +1,8 @@
-# CLAUDE.md -- SolClone Ecosystem Tools
+# CLAUDE.md -- Prism Ecosystem Tools
 
 ## Overview
 
-Five sub-projects supporting the SolClone ecosystem. Two have on-chain Rust programs (launchpad, profiles). Three are UI-only (validator-marketplace, grants, bounties).
+Five sub-projects supporting the Prism ecosystem. Two have on-chain Rust programs (launchpad, profiles). Three are UI-only (validator-marketplace, grants, bounties).
 
 ## Structure
 

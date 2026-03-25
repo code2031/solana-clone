@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# genesis-ceremony.sh — Production genesis ceremony for SolClone.
+# genesis-ceremony.sh — Production genesis ceremony for Prism.
 #
 # Orchestrates a multi-party genesis ceremony where validator operators
 # submit their pubkeys, stake is distributed according to policy, and
@@ -35,8 +35,8 @@ CLUSTER="mainnet"
 TOTAL_SUPPLY="500000000000000000"       # 500M SOL in lamports
 VERIFY_ONLY=false
 DRY_RUN=false
-SOLCLONE_KEYGEN="${SOLCLONE_KEYGEN:-solclone-keygen}"
-SOLCLONE_GENESIS="${SOLCLONE_GENESIS:-solclone-genesis}"
+PRISM_KEYGEN="${PRISM_KEYGEN:-prism-keygen}"
+PRISM_GENESIS="${PRISM_GENESIS:-prism-genesis}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Inflation configuration
@@ -108,7 +108,7 @@ exec > >(tee -a "$CEREMONY_LOG") 2>&1
 # PHASE 1: Collect and validate participant pubkeys
 # =========================================================================
 log "============================================"
-log " SolClone Genesis Ceremony"
+log " Prism Genesis Ceremony"
 log " Cluster: ${CLUSTER}"
 log " Date:    $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 log "============================================"
@@ -226,7 +226,7 @@ else
     BOOTSTRAP_KEYS_DIR="${OUTPUT_DIR}/bootstrap-keys"
     mkdir -p "$BOOTSTRAP_KEYS_DIR"
 
-    # Write pubkey files for genesis (solclone-genesis accepts pubkey files)
+    # Write pubkey files for genesis (prism-genesis accepts pubkey files)
     echo "${IDENTITY_PUBKEYS[0]}" > "$BOOTSTRAP_KEYS_DIR/identity.pubkey"
     echo "${VOTE_PUBKEYS[0]}" > "$BOOTSTRAP_KEYS_DIR/vote.pubkey"
     echo "${STAKE_PUBKEYS[0]}" > "$BOOTSTRAP_KEYS_DIR/stake.pubkey"
@@ -256,7 +256,7 @@ else
     log ""
 
     log "Creating genesis block..."
-    run "$SOLCLONE_GENESIS" "${GENESIS_ARGS[@]}"
+    run "$PRISM_GENESIS" "${GENESIS_ARGS[@]}"
     log "Genesis block created at: $LEDGER_DIR"
 fi
 
@@ -267,7 +267,7 @@ log ""
 log "=== Phase 4: Hash verification ==="
 
 # Compute genesis hash
-GENESIS_HASH=$(run "$SOLCLONE_GENESIS" hash --ledger "$LEDGER_DIR" 2>/dev/null || echo "UNAVAILABLE")
+GENESIS_HASH=$(run "$PRISM_GENESIS" hash --ledger "$LEDGER_DIR" 2>/dev/null || echo "UNAVAILABLE")
 log "Genesis hash: $GENESIS_HASH"
 
 # Compute SHA-256 of the genesis bin file
@@ -283,7 +283,7 @@ fi
 # Write verification file
 VERIFICATION_FILE="${OUTPUT_DIR}/genesis-verification.txt"
 cat > "$VERIFICATION_FILE" <<VERIFY_EOF
-SolClone Genesis Ceremony Verification
+Prism Genesis Ceremony Verification
 ========================================
 Date:              $(date -u '+%Y-%m-%d %H:%M:%S UTC')
 Cluster:           ${CLUSTER}
@@ -322,7 +322,7 @@ log ""
 log "=== Phase 5: Distributing genesis artifacts ==="
 
 # Create distributable tarball
-TARBALL="${OUTPUT_DIR}/solclone-genesis-${CLUSTER}-$(date -u +%Y%m%d).tar.gz"
+TARBALL="${OUTPUT_DIR}/prism-genesis-${CLUSTER}-$(date -u +%Y%m%d).tar.gz"
 tar -czf "$TARBALL" -C "$LEDGER_DIR" genesis.bin 2>/dev/null || \
     warn "Could not create genesis tarball (genesis.bin may not exist in dry-run)"
 
@@ -334,7 +334,7 @@ if [[ -f "$TARBALL" ]]; then
     # Write distribution instructions
     DIST_FILE="${OUTPUT_DIR}/distribution-instructions.txt"
     cat > "$DIST_FILE" <<DIST_EOF
-SolClone Genesis Distribution Instructions
+Prism Genesis Distribution Instructions
 =============================================
 Date: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
 
@@ -352,11 +352,11 @@ Each validator operator should:
    echo "${TARBALL_SHA256}  $(basename "$TARBALL")" | sha256sum --check
 
 3. Extract to the ledger directory:
-   mkdir -p /var/solclone/ledger
-   tar -xzf $(basename "$TARBALL") -C /var/solclone/ledger/
+   mkdir -p /var/prism/ledger
+   tar -xzf $(basename "$TARBALL") -C /var/prism/ledger/
 
 4. Verify the genesis hash:
-   solclone-genesis hash --ledger /var/solclone/ledger
+   prism-genesis hash --ledger /var/prism/ledger
    # Expected: ${GENESIS_HASH}
 
 5. Start your validator with --expected-genesis-hash ${GENESIS_HASH}

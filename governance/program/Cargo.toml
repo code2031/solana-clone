@@ -1,8 +1,8 @@
 [package]
-name = "solclone-governance"
+name = "prism-governance"
 version = "0.1.0"
 edition = "2021"
-description = "SolClone DAO Governance - Token-weighted voting with proposal lifecycle and timelocks"
+description = "Prism DAO Governance - Token-weighted voting with proposal lifecycle and timelocks"
 
 [dependencies]
 solana-program = "1.17"

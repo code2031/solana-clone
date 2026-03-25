@@ -2,8 +2,8 @@
   "cluster_type": "devnet",
   "genesis_time": "2024-01-01T00:00:00Z",
   "native_token": {
-    "name": "SolClone",
-    "symbol": "SCLONE",
+    "name": "Prism",
+    "symbol": "PRISM",
     "decimals": 9,
     "initial_supply": 500000000,
     "max_supply": null

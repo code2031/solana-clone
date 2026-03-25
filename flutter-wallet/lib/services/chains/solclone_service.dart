@@ -2,18 +2,18 @@ import '../../utils/constants.dart';
 import '../rpc_service.dart';
 import 'chain_service.dart';
 
-/// SolClone chain service -- wraps the existing RpcService to conform to
+/// Prism chain service -- wraps the existing RpcService to conform to
 /// the ChainService interface.
 ///
 /// This is the default chain and delegates all operations to the original
-/// SolClone RPC infrastructure.
-class SolCloneService extends ChainService {
+/// Prism RPC infrastructure.
+class PrismService extends ChainService {
   final RpcService _rpcService;
 
-  SolCloneService(this._rpcService);
+  PrismService(this._rpcService);
 
   @override
-  String get chainName => 'SolClone';
+  String get chainName => 'Prism';
 
   @override
   String get chainSymbol => 'SOL';
@@ -36,16 +36,16 @@ class SolCloneService extends ChainService {
       final lamports = await _rpcService.getBalance(address);
       return lamports / AppConstants.lamportsPerSol;
     } catch (e) {
-      throw Exception('Failed to fetch SolClone balance: $e');
+      throw Exception('Failed to fetch Prism balance: $e');
     }
   }
 
   @override
   Future<String> sendTransaction(String to, double amount) async {
-    // Delegates to the existing SolClone RPC service.
+    // Delegates to the existing Prism RPC service.
     // The actual transaction building/signing is handled by WalletProvider.
     throw UnimplementedError(
-      'Use WalletProvider.sendSol() for SolClone transactions. '
+      'Use WalletProvider.sendSol() for Prism transactions. '
       'Amount: $amount SOL to $to.',
     );
   }
@@ -72,7 +72,7 @@ class SolCloneService extends ChainService {
               : DateTime.now().toIso8601String(),
           'slot': sig['slot'],
           'memo': sig['memo'],
-          'chain': 'solclone',
+          'chain': 'prism',
         };
       }).toList();
     } catch (e) {
@@ -82,7 +82,7 @@ class SolCloneService extends ChainService {
 
   @override
   String generateAddress(List<int> seed) {
-    // SolClone uses the same derivation as Solana (m/44'/501'/0'/0').
+    // Prism uses the same derivation as Solana (m/44'/501'/0'/0').
     // The actual address generation is handled by CryptoUtils.
     const base58Chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
     final buffer = StringBuffer();
@@ -111,7 +111,7 @@ class SolCloneService extends ChainService {
 
   @override
   Future<double> estimateFee() async {
-    // SolClone base fee: 5000 lamports
+    // Prism base fee: 5000 lamports
     return 0.000005;
   }
 }

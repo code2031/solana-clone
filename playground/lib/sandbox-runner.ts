@@ -1,9 +1,9 @@
 /**
- * Sandbox Runner for SolClone Playground
+ * Sandbox Runner for Prism Playground
  *
  * NOTE: This module intentionally uses `new Function()` to execute user-provided
  * code in the playground. This is the core purpose of the playground -- to let
- * developers test and experiment with SolClone RPC calls interactively. The
+ * developers test and experiment with Prism RPC calls interactively. The
  * execution is client-side only and does not run on the server.
  */
 
@@ -13,7 +13,7 @@ export interface ExecutionResult {
   duration: number;
 }
 
-export interface SolCloneHelper {
+export interface PrismHelper {
   rpcUrl: string;
   call: (method: string, params?: unknown[]) => Promise<unknown>;
   getBalance: (address: string) => Promise<unknown>;
@@ -25,7 +25,7 @@ export interface SolCloneHelper {
   requestAirdrop: (address: string, lamports: number) => Promise<unknown>;
 }
 
-function createSolCloneHelper(rpcUrl: string): SolCloneHelper {
+function createPrismHelper(rpcUrl: string): PrismHelper {
   const call = async (method: string, params: unknown[] = []): Promise<unknown> => {
     const response = await fetch(rpcUrl, {
       method: "POST",
@@ -79,7 +79,7 @@ export async function runCode(code: string, rpcUrl: string): Promise<ExecutionRe
     },
   };
 
-  const solclone = createSolCloneHelper(rpcUrl);
+  const prism = createPrismHelper(rpcUrl);
 
   try {
     // Intentional use of Function constructor: this is a code playground
@@ -89,8 +89,8 @@ export async function runCode(code: string, rpcUrl: string): Promise<ExecutionRe
         ${code}
       })();
     `;
-    const fn = new Function("console", "solclone", wrappedCode); // eslint-disable-line no-new-func
-    await fn(mockConsole, solclone);
+    const fn = new Function("console", "prism", wrappedCode); // eslint-disable-line no-new-func
+    await fn(mockConsole, prism);
 
     const duration = performance.now() - start;
     return { output, error: null, duration };

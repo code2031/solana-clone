@@ -8,8 +8,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone Network Health",
-  description: "Real-time SolClone network statistics dashboard",
+  title: "Prism Network Health",
+  description: "Real-time Prism network statistics dashboard",
 };
 
 export default function RootLayout({

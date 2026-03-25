@@ -7,7 +7,7 @@ export default function CreatePage() {
       <div className="mb-10 text-center animate-fade-in">
         <h1 className="text-3xl font-bold text-foreground">Create an NFT</h1>
         <p className="mt-2 text-sm text-muted">
-          Upload your artwork, set attributes, and mint directly to SolClone
+          Upload your artwork, set attributes, and mint directly to Prism
         </p>
       </div>
 

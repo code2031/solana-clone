@@ -52,11 +52,11 @@ pub struct GlobalState {
     pub authority: Pubkey,
     /// Mint address of the SCUSD token
     pub scusd_mint: Pubkey,
-    /// Mint address of the SCLONE collateral token
-    pub sclone_mint: Pubkey,
+    /// Mint address of the PRISM collateral token
+    pub prism_mint: Pubkey,
     /// Program-owned token account holding collateral
     pub collateral_pool: Pubkey,
-    /// Total SCLONE collateral locked across all vaults
+    /// Total PRISM collateral locked across all vaults
     pub total_collateral: u64,
     /// Total SCUSD debt outstanding
     pub total_debt: u64,
@@ -80,7 +80,7 @@ impl GlobalState {
 pub struct Vault {
     /// Owner of this vault
     pub owner: Pubkey,
-    /// Amount of SCLONE deposited as collateral
+    /// Amount of PRISM deposited as collateral
     pub collateral_amount: u64,
     /// Amount of SCUSD debt minted against this vault
     pub debt_amount: u64,
@@ -109,7 +109,7 @@ pub enum ScusdInstruction {
     ///   0. `[signer]`  Authority
     ///   1. `[writable]` Global state PDA
     ///   2. `[writable]` SCUSD mint (to be created)
-    ///   3. `[]`         SCLONE mint
+    ///   3. `[]`         PRISM mint
     ///   4. `[writable]` Collateral pool token account
     ///   5. `[]`         Token program
     ///   6. `[]`         System program
@@ -124,12 +124,12 @@ pub enum ScusdInstruction {
     ///   3. `[]`         System program
     OpenVault,
 
-    /// Deposit SCLONE collateral into a vault.
+    /// Deposit PRISM collateral into a vault.
     /// Accounts:
     ///   0. `[signer]`  Vault owner
     ///   1. `[writable]` Vault PDA
     ///   2. `[writable]` Global state PDA
-    ///   3. `[writable]` Owner's SCLONE token account
+    ///   3. `[writable]` Owner's PRISM token account
     ///   4. `[writable]` Collateral pool token account
     ///   5. `[]`         Token program
     ///   6. `[]`         Clock sysvar
@@ -164,7 +164,7 @@ pub enum ScusdInstruction {
     ///   1. `[writable]` Vault PDA
     ///   2. `[writable]` Global state PDA
     ///   3. `[writable]` Collateral pool token account
-    ///   4. `[writable]` Owner's SCLONE token account
+    ///   4. `[writable]` Owner's PRISM token account
     ///   5. `[]`         Oracle price feed account
     ///   6. `[]`         Token program
     ///   7. `[]`         Clock sysvar
@@ -178,7 +178,7 @@ pub enum ScusdInstruction {
     ///   2. `[writable]` Global state PDA
     ///   3. `[writable]` SCUSD mint
     ///   4. `[writable]` Liquidator's SCUSD token account
-    ///   5. `[writable]` Liquidator's SCLONE token account
+    ///   5. `[writable]` Liquidator's PRISM token account
     ///   6. `[writable]` Collateral pool token account
     ///   7. `[]`         Oracle price feed account
     ///   8. `[]`         Token program
@@ -226,7 +226,7 @@ fn process_initialize(program_id: &Pubkey, accounts: &[AccountInfo]) -> ProgramR
     let authority = next_account_info(account_iter)?;
     let global_state_info = next_account_info(account_iter)?;
     let scusd_mint_info = next_account_info(account_iter)?;
-    let sclone_mint_info = next_account_info(account_iter)?;
+    let prism_mint_info = next_account_info(account_iter)?;
     let collateral_pool_info = next_account_info(account_iter)?;
     let _token_program = next_account_info(account_iter)?;
     let system_program = next_account_info(account_iter)?;
@@ -269,7 +269,7 @@ fn process_initialize(program_id: &Pubkey, accounts: &[AccountInfo]) -> ProgramR
     let state = GlobalState {
         authority: *authority.key,
         scusd_mint: *scusd_mint_info.key,
-        sclone_mint: *sclone_mint_info.key,
+        prism_mint: *prism_mint_info.key,
         collateral_pool: *collateral_pool_info.key,
         total_collateral: 0,
         total_debt: 0,
@@ -356,7 +356,7 @@ fn process_deposit_collateral(
     let owner = next_account_info(account_iter)?;
     let vault_info = next_account_info(account_iter)?;
     let global_state_info = next_account_info(account_iter)?;
-    let owner_sclone_account = next_account_info(account_iter)?;
+    let owner_prism_account = next_account_info(account_iter)?;
     let collateral_pool = next_account_info(account_iter)?;
     let token_program = next_account_info(account_iter)?;
     let _clock_sysvar = next_account_info(account_iter)?;
@@ -377,18 +377,18 @@ fn process_deposit_collateral(
     let clock = Clock::get()?;
     accrue_stability_fee(&mut vault, &global_state, clock.unix_timestamp);
 
-    // Transfer SCLONE from owner to collateral pool
+    // Transfer PRISM from owner to collateral pool
     invoke(
         &spl_token::instruction::transfer(
             token_program.key,
-            owner_sclone_account.key,
+            owner_prism_account.key,
             collateral_pool.key,
             owner.key,
             &[],
             amount,
         )?,
         &[
-            owner_sclone_account.clone(),
+            owner_prism_account.clone(),
             collateral_pool.clone(),
             owner.clone(),
             token_program.clone(),
@@ -405,7 +405,7 @@ fn process_deposit_collateral(
     vault.serialize(&mut &mut vault_info.data.borrow_mut()[..])?;
     global_state.serialize(&mut &mut global_state_info.data.borrow_mut()[..])?;
 
-    msg!("Deposited {} SCLONE collateral", amount);
+    msg!("Deposited {} PRISM collateral", amount);
     Ok(())
 }
 
@@ -438,14 +438,14 @@ fn process_mint_scusd(
     let clock = Clock::get()?;
     accrue_stability_fee(&mut vault, &global_state, clock.unix_timestamp);
 
-    // Read SCLONE/USD price from oracle
-    let sclone_price = read_oracle_price(oracle_feed)?;
+    // Read PRISM/USD price from oracle
+    let prism_price = read_oracle_price(oracle_feed)?;
 
     // Check that minting `amount` keeps the vault above 150 %
     let new_debt = vault.debt_amount.checked_add(amount)
         .ok_or(ProgramError::ArithmeticOverflow)?;
 
-    let ratio = calculate_collateral_ratio(vault.collateral_amount, new_debt, sclone_price);
+    let ratio = calculate_collateral_ratio(vault.collateral_amount, new_debt, prism_price);
     if ratio < global_state.collateral_ratio_min {
         msg!(
             "Error: collateral ratio {} bps would fall below minimum {} bps",
@@ -560,7 +560,7 @@ fn process_withdraw_collateral(
     let vault_info = next_account_info(account_iter)?;
     let global_state_info = next_account_info(account_iter)?;
     let collateral_pool = next_account_info(account_iter)?;
-    let owner_sclone_account = next_account_info(account_iter)?;
+    let owner_prism_account = next_account_info(account_iter)?;
     let oracle_feed = next_account_info(account_iter)?;
     let token_program = next_account_info(account_iter)?;
     let _clock_sysvar = next_account_info(account_iter)?;
@@ -589,8 +589,8 @@ fn process_withdraw_collateral(
 
     // If there is outstanding debt, ensure ratio stays above 150 %
     if vault.debt_amount > 0 {
-        let sclone_price = read_oracle_price(oracle_feed)?;
-        let ratio = calculate_collateral_ratio(new_collateral, vault.debt_amount, sclone_price);
+        let prism_price = read_oracle_price(oracle_feed)?;
+        let ratio = calculate_collateral_ratio(new_collateral, vault.debt_amount, prism_price);
         if ratio < global_state.collateral_ratio_min {
             msg!(
                 "Error: withdrawal would drop ratio to {} bps (min {})",
@@ -602,19 +602,19 @@ fn process_withdraw_collateral(
         vault.collateral_ratio = ratio;
     }
 
-    // Transfer SCLONE from pool back to owner — signed by global state PDA
+    // Transfer PRISM from pool back to owner — signed by global state PDA
     invoke_signed(
         &spl_token::instruction::transfer(
             token_program.key,
             collateral_pool.key,
-            owner_sclone_account.key,
+            owner_prism_account.key,
             global_state_info.key,
             &[],
             amount,
         )?,
         &[
             collateral_pool.clone(),
-            owner_sclone_account.clone(),
+            owner_prism_account.clone(),
             global_state_info.clone(),
             token_program.clone(),
         ],
@@ -630,7 +630,7 @@ fn process_withdraw_collateral(
     vault.serialize(&mut &mut vault_info.data.borrow_mut()[..])?;
     global_state.serialize(&mut &mut global_state_info.data.borrow_mut()[..])?;
 
-    msg!("Withdrew {} SCLONE collateral", amount);
+    msg!("Withdrew {} PRISM collateral", amount);
     Ok(())
 }
 
@@ -641,7 +641,7 @@ fn process_liquidate_vault(program_id: &Pubkey, accounts: &[AccountInfo]) -> Pro
     let global_state_info = next_account_info(account_iter)?;
     let scusd_mint = next_account_info(account_iter)?;
     let liquidator_scusd_account = next_account_info(account_iter)?;
-    let liquidator_sclone_account = next_account_info(account_iter)?;
+    let liquidator_prism_account = next_account_info(account_iter)?;
     let collateral_pool = next_account_info(account_iter)?;
     let oracle_feed = next_account_info(account_iter)?;
     let token_program = next_account_info(account_iter)?;
@@ -661,10 +661,10 @@ fn process_liquidate_vault(program_id: &Pubkey, accounts: &[AccountInfo]) -> Pro
     let clock = Clock::get()?;
     accrue_stability_fee(&mut vault, &global_state, clock.unix_timestamp);
 
-    let sclone_price = read_oracle_price(oracle_feed)?;
+    let prism_price = read_oracle_price(oracle_feed)?;
 
     // Check the vault is undercollateralized (< 120 %)
-    let ratio = calculate_collateral_ratio(vault.collateral_amount, vault.debt_amount, sclone_price);
+    let ratio = calculate_collateral_ratio(vault.collateral_amount, vault.debt_amount, prism_price);
     if ratio >= global_state.liquidation_ratio {
         msg!(
             "Error: vault ratio {} bps is above liquidation threshold {} bps",
@@ -678,8 +678,8 @@ fn process_liquidate_vault(program_id: &Pubkey, accounts: &[AccountInfo]) -> Pro
 
     // Collateral the liquidator receives = debt_value / (price * (1 - discount))
     // With 5 % discount the liquidator pays debt_value for collateral worth debt_value / 0.95
-    // collateral_tokens = (debt_to_repay * PRICE_DECIMALS) / (sclone_price * 9500 / 10000)
-    let discounted_price = sclone_price
+    // collateral_tokens = (debt_to_repay * PRICE_DECIMALS) / (prism_price * 9500 / 10000)
+    let discounted_price = prism_price
         .checked_mul(10_000 - LIQUIDATION_DISCOUNT_BPS)
         .ok_or(ProgramError::ArithmeticOverflow)?
         / 10_000;
@@ -714,14 +714,14 @@ fn process_liquidate_vault(program_id: &Pubkey, accounts: &[AccountInfo]) -> Pro
         &spl_token::instruction::transfer(
             token_program.key,
             collateral_pool.key,
-            liquidator_sclone_account.key,
+            liquidator_prism_account.key,
             global_state_info.key,
             &[],
             collateral_to_liquidate,
         )?,
         &[
             collateral_pool.clone(),
-            liquidator_sclone_account.clone(),
+            liquidator_prism_account.clone(),
             global_state_info.clone(),
             token_program.clone(),
         ],
@@ -744,7 +744,7 @@ fn process_liquidate_vault(program_id: &Pubkey, accounts: &[AccountInfo]) -> Pro
     global_state.serialize(&mut &mut global_state_info.data.borrow_mut()[..])?;
 
     msg!(
-        "Liquidated vault: repaid {} SCUSD, seized {} SCLONE collateral",
+        "Liquidated vault: repaid {} SCUSD, seized {} PRISM collateral",
         debt_to_repay,
         collateral_to_liquidate
     );
@@ -757,15 +757,15 @@ fn process_liquidate_vault(program_id: &Pubkey, accounts: &[AccountInfo]) -> Pro
 
 /// Calculate the collateral ratio in basis points.
 ///
-/// ratio_bps = (collateral_amount * sclone_price * 10_000) / (debt_amount * PRICE_DECIMALS)
+/// ratio_bps = (collateral_amount * prism_price * 10_000) / (debt_amount * PRICE_DECIMALS)
 ///
 /// A result of 15_000 means 150 %.
-pub fn calculate_collateral_ratio(collateral: u64, debt: u64, sclone_price: u64) -> u64 {
+pub fn calculate_collateral_ratio(collateral: u64, debt: u64, prism_price: u64) -> u64 {
     if debt == 0 {
         return u64::MAX; // infinite ratio when no debt
     }
     let collateral_value = (collateral as u128)
-        .checked_mul(sclone_price as u128)
+        .checked_mul(prism_price as u128)
         .unwrap_or(0);
     let debt_value = (debt as u128)
         .checked_mul(PRICE_DECIMALS as u128)
@@ -781,15 +781,15 @@ pub fn calculate_collateral_ratio(collateral: u64, debt: u64, sclone_price: u64)
 
 /// Maximum SCUSD that can be minted given collateral at the minimum ratio.
 ///
-/// max_mint = (collateral * sclone_price * 10_000) / (PRICE_DECIMALS * collateral_ratio_min) - current_debt
+/// max_mint = (collateral * prism_price * 10_000) / (PRICE_DECIMALS * collateral_ratio_min) - current_debt
 pub fn calculate_max_mint(
     collateral: u64,
     current_debt: u64,
-    sclone_price: u64,
+    prism_price: u64,
     min_ratio_bps: u64,
 ) -> u64 {
     let collateral_value = (collateral as u128)
-        .checked_mul(sclone_price as u128)
+        .checked_mul(prism_price as u128)
         .unwrap_or(0);
 
     let max_debt = collateral_value
@@ -860,7 +860,7 @@ mod tests {
 
     #[test]
     fn test_collateral_ratio() {
-        // 1000 SCLONE at $2.00 (2_0000_0000 fixed-point) backing 1000 SCUSD
+        // 1000 PRISM at $2.00 (2_0000_0000 fixed-point) backing 1000 SCUSD
         let ratio = calculate_collateral_ratio(1_000, 1_000, 200_000_000);
         assert_eq!(ratio, 20_000); // 200 %
     }
@@ -873,7 +873,7 @@ mod tests {
 
     #[test]
     fn test_max_mint() {
-        // 1500 SCLONE at $1.00, min ratio 150 %
+        // 1500 PRISM at $1.00, min ratio 150 %
         let max = calculate_max_mint(1_500, 0, 100_000_000, 15_000);
         assert_eq!(max, 1_000);
     }

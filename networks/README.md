@@ -1,12 +1,12 @@
-# SolClone Networks
+# Prism Networks
 
-SolClone runs three separate networks, just like Solana:
+Prism runs three separate networks, just like Solana:
 
 | Network | Purpose | RPC URL | Explorer |
 |---------|---------|---------|----------|
-| **Mainnet** | Production network with real value | `https://api.mainnet.solclone.io` | `https://explorer.solclone.io` |
-| **Testnet** | Staging environment for validators | `https://api.testnet.solclone.io` | `https://explorer.solclone.io?cluster=testnet` |
-| **Devnet** | Development and testing (free airdrop) | `https://api.devnet.solclone.io` | `https://explorer.solclone.io?cluster=devnet` |
+| **Mainnet** | Production network with real value | `https://api.mainnet.prism.io` | `https://explorer.prism.io` |
+| **Testnet** | Staging environment for validators | `https://api.testnet.prism.io` | `https://explorer.prism.io?cluster=testnet` |
+| **Devnet** | Development and testing (free airdrop) | `https://api.devnet.prism.io` | `https://explorer.prism.io?cluster=devnet` |
 | **Localnet** | Local single-node for development | `http://localhost:8899` | `http://localhost:3000` |
 
 ## Running Locally

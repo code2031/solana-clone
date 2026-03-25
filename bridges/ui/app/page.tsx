@@ -10,7 +10,7 @@ import { getBridgeClient, type ChainId } from "@/lib/bridge-client";
 
 export default function BridgePage() {
   const [sourceChain, setSourceChain] = useState<string>("ethereum");
-  const [destChain, setDestChain] = useState<string>("solclone");
+  const [destChain, setDestChain] = useState<string>("prism");
   const [selectedToken, setSelectedToken] = useState<string>("ETH");
   const [amount, setAmount] = useState<string>("");
   const [recipientAddress, setRecipientAddress] = useState<string>("");
@@ -52,8 +52,8 @@ export default function BridgePage() {
       setError("Source and destination chains must be different");
       return;
     }
-    if (sourceChain !== "solclone" && destChain !== "solclone") {
-      setError("One side of the bridge must be SolClone");
+    if (sourceChain !== "prism" && destChain !== "prism") {
+      setError("One side of the bridge must be Prism");
       return;
     }
 
@@ -121,7 +121,7 @@ export default function BridgePage() {
           <span className="gradient-text">Cross-Chain Bridge</span>
         </h2>
         <p style={{ color: "#64748B", fontSize: 15, maxWidth: 480, margin: "0 auto" }}>
-          Transfer assets between Ethereum, Bitcoin, Solana, and SolClone with
+          Transfer assets between Ethereum, Bitcoin, Solana, and Prism with
           guardian-verified security.
         </p>
       </div>

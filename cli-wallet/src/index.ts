@@ -17,16 +17,16 @@ import { registerInitCommand } from './commands/init';
 const VERSION = '1.0.0';
 
 const BANNER = `
-  ${chalk.cyan.bold('SolClone CLI Wallet')} ${chalk.gray(`v${VERSION}`)}
-  ${chalk.gray('A command-line wallet for the SolClone blockchain')}
+  ${chalk.cyan.bold('Prism CLI Wallet')} ${chalk.gray(`v${VERSION}`)}
+  ${chalk.gray('A command-line wallet for the Prism blockchain')}
 `;
 
 const program = new Command();
 
 program
-  .name('solclone')
+  .name('prism')
   .version(VERSION)
-  .description('SolClone CLI Wallet - manage keys, tokens, and transactions')
+  .description('Prism CLI Wallet - manage keys, tokens, and transactions')
   .addHelpText('before', BANNER);
 
 // ─── Register All Commands ──────────────────────────────────────────────────

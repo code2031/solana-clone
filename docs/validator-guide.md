@@ -1,10 +1,10 @@
-# SolClone Validator Operator Guide
+# Prism Validator Operator Guide
 
 ## Getting Started
 
 ### What Is a Validator?
 
-A SolClone validator is a node that participates in consensus by verifying transactions, producing blocks, and voting on the state of the ledger. Validators earn SCLONE rewards through staking and block production.
+A Prism validator is a node that participates in consensus by verifying transactions, producing blocks, and voting on the state of the ledger. Validators earn PRISM rewards through staking and block production.
 
 ### Types of Validators
 
@@ -17,7 +17,7 @@ A SolClone validator is a node that participates in consensus by verifying trans
 
 - A dedicated server meeting the hardware requirements below
 - A funded keypair for voting and identity
-- Minimum stake: 1 SCLONE (for testnet), 10,000 SCLONE (for mainnet)
+- Minimum stake: 1 PRISM (for testnet), 10,000 PRISM (for mainnet)
 - Basic Linux system administration knowledge
 
 ---
@@ -63,18 +63,18 @@ sudo apt install -y build-essential pkg-config libssl-dev libudev-dev \
   clang cmake protobuf-compiler libprotobuf-dev curl git
 ```
 
-### 2. Install the SolClone CLI
+### 2. Install the Prism CLI
 
 ```bash
-sh -c "$(curl -sSfL https://release.solclone.io/stable/install)"
-export PATH="$HOME/.local/share/solclone/install/active_release/bin:$PATH"
+sh -c "$(curl -sSfL https://release.prism.io/stable/install)"
+export PATH="$HOME/.local/share/prism/install/active_release/bin:$PATH"
 ```
 
 Verify the installation:
 
 ```bash
-solclone --version
-solclone-validator --version
+prism --version
+prism-validator --version
 ```
 
 ### 3. Create Keypairs
@@ -83,13 +83,13 @@ Generate the required keypairs:
 
 ```bash
 # Validator identity keypair
-solclone-keygen new -o ~/validator-keypair.json
+prism-keygen new -o ~/validator-keypair.json
 
 # Vote account keypair
-solclone-keygen new -o ~/vote-account-keypair.json
+prism-keygen new -o ~/vote-account-keypair.json
 
 # Authorized withdrawer keypair (keep offline and secure)
-solclone-keygen new -o ~/authorized-withdrawer-keypair.json
+prism-keygen new -o ~/authorized-withdrawer-keypair.json
 ```
 
 > **Security Warning:** The authorized withdrawer keypair controls withdrawal of staking rewards. Store it offline in a secure location. Never keep it on the validator server.
@@ -98,13 +98,13 @@ solclone-keygen new -o ~/authorized-withdrawer-keypair.json
 
 ```bash
 # Check your validator identity address
-solclone-keygen pubkey ~/validator-keypair.json
+prism-keygen pubkey ~/validator-keypair.json
 
 # For testnet, request an airdrop
-solclone airdrop 100 ~/validator-keypair.json --url https://api.testnet.solclone.io
+prism airdrop 100 ~/validator-keypair.json --url https://api.testnet.prism.io
 
-# For mainnet, transfer SCLONE from a funded wallet
-solclone transfer <VALIDATOR_PUBKEY> 100 --from <FUNDED_KEYPAIR>
+# For mainnet, transfer PRISM from a funded wallet
+prism transfer <VALIDATOR_PUBKEY> 100 --from <FUNDED_KEYPAIR>
 ```
 
 ---
@@ -117,19 +117,19 @@ Set the cluster RPC URL:
 
 ```bash
 # Testnet
-solclone config set --url https://api.testnet.solclone.io
+prism config set --url https://api.testnet.prism.io
 
 # Mainnet
-solclone config set --url https://api.mainnet.solclone.io
+prism config set --url https://api.mainnet.prism.io
 
 # Set your keypair
-solclone config set --keypair ~/validator-keypair.json
+prism config set --keypair ~/validator-keypair.json
 ```
 
 ### Create a Vote Account
 
 ```bash
-solclone create-vote-account \
+prism create-vote-account \
   ~/vote-account-keypair.json \
   ~/validator-keypair.json \
   ~/authorized-withdrawer-keypair.json \
@@ -159,8 +159,8 @@ sudo ufw enable
 Apply recommended system settings:
 
 ```bash
-# /etc/sysctl.d/21-solclone-validator.conf
-sudo tee /etc/sysctl.d/21-solclone-validator.conf <<EOF
+# /etc/sysctl.d/21-prism-validator.conf
+sudo tee /etc/sysctl.d/21-prism-validator.conf <<EOF
 net.core.rmem_default=134217728
 net.core.rmem_max=134217728
 net.core.wmem_default=134217728
@@ -172,7 +172,7 @@ EOF
 sudo sysctl --system
 
 # Increase file descriptor limits
-sudo tee /etc/security/limits.d/90-solclone.conf <<EOF
+sudo tee /etc/security/limits.d/90-prism.conf <<EOF
 * - nofile 1000000
 * - nproc 1000000
 EOF
@@ -187,7 +187,7 @@ Log out and back in for limits to take effect.
 ### Basic Startup Command
 
 ```bash
-solclone-validator \
+prism-validator \
   --identity ~/validator-keypair.json \
   --vote-account ~/vote-account-keypair.json \
   --known-validator <KNOWN_VALIDATOR_PUBKEY_1> \
@@ -197,20 +197,20 @@ solclone-validator \
   --accounts ~/validator-accounts \
   --rpc-port 8899 \
   --dynamic-port-range 8000-8020 \
-  --entrypoint entrypoint.mainnet.solclone.io:8001 \
+  --entrypoint entrypoint.mainnet.prism.io:8001 \
   --expected-genesis-hash <GENESIS_HASH> \
   --wal-recovery-mode skip_any_corrupted_record \
   --limit-ledger-size 50000000 \
-  --log ~/solclone-validator.log
+  --log ~/prism-validator.log
 ```
 
 ### Running as a systemd Service
 
-Create `/etc/systemd/system/solclone-validator.service`:
+Create `/etc/systemd/system/prism-validator.service`:
 
 ```ini
 [Unit]
-Description=SolClone Validator
+Description=Prism Validator
 After=network.target
 StartLimitIntervalSec=0
 
@@ -221,7 +221,7 @@ RestartSec=5
 User=sol
 LimitNOFILE=1000000
 LogRateLimitIntervalSec=0
-Environment="PATH=/home/sol/.local/share/solclone/install/active_release/bin:/usr/bin:/bin"
+Environment="PATH=/home/sol/.local/share/prism/install/active_release/bin:/usr/bin:/bin"
 ExecStart=/home/sol/bin/validator.sh
 ExecReload=/bin/kill -s HUP $MAINPID
 
@@ -230,8 +230,8 @@ WantedBy=multi-user.target
 ```
 
 ```bash
-sudo systemctl enable solclone-validator
-sudo systemctl start solclone-validator
+sudo systemctl enable prism-validator
+sudo systemctl start prism-validator
 ```
 
 ### Catching Up
@@ -240,7 +240,7 @@ After first start, the validator must download a snapshot and catch up to the cl
 
 ```bash
 # Monitor catch-up progress
-solclone catchup ~/validator-keypair.json --url https://api.mainnet.solclone.io
+prism catchup ~/validator-keypair.json --url https://api.mainnet.prism.io
 ```
 
 This can take 15 minutes to several hours depending on network speed and how far behind the validator is.
@@ -252,7 +252,7 @@ This can take 15 minutes to several hours depending on network speed and how far
 ### Create a Stake Account
 
 ```bash
-solclone create-stake-account \
+prism create-stake-account \
   ~/stake-account-keypair.json \
   50000 \
   --from ~/validator-keypair.json
@@ -261,7 +261,7 @@ solclone create-stake-account \
 ### Delegate Stake
 
 ```bash
-solclone delegate-stake \
+prism delegate-stake \
   ~/stake-account-keypair.json \
   <VOTE_ACCOUNT_PUBKEY> \
   --keypair ~/validator-keypair.json
@@ -270,7 +270,7 @@ solclone delegate-stake \
 ### Set Commission
 
 ```bash
-solclone vote-update-commission \
+prism vote-update-commission \
   ~/vote-account-keypair.json \
   10 \
   ~/authorized-withdrawer-keypair.json
@@ -281,7 +281,7 @@ Commission is the percentage of staking rewards kept by the validator (0-100).
 ### Withdraw Rewards
 
 ```bash
-solclone withdraw-from-vote-account \
+prism withdraw-from-vote-account \
   ~/vote-account-keypair.json \
   <RECIPIENT_PUBKEY> \
   ALL \
@@ -291,9 +291,9 @@ solclone withdraw-from-vote-account \
 ### Deactivate Stake
 
 ```bash
-solclone deactivate-stake ~/stake-account-keypair.json
+prism deactivate-stake ~/stake-account-keypair.json
 # Wait one full epoch for deactivation
-solclone withdraw-stake ~/stake-account-keypair.json <RECIPIENT_PUBKEY> ALL
+prism withdraw-stake ~/stake-account-keypair.json <RECIPIENT_PUBKEY> ALL
 ```
 
 ---
@@ -304,16 +304,16 @@ solclone withdraw-stake ~/stake-account-keypair.json <RECIPIENT_PUBKEY> ALL
 
 ```bash
 # Check if the validator is running and voting
-solclone validators --url https://api.mainnet.solclone.io | grep <IDENTITY_PUBKEY>
+prism validators --url https://api.mainnet.prism.io | grep <IDENTITY_PUBKEY>
 
 # Check vote account status
-solclone vote-account ~/vote-account-keypair.json
+prism vote-account ~/vote-account-keypair.json
 
 # Check stake account
-solclone stake-account ~/stake-account-keypair.json
+prism stake-account ~/stake-account-keypair.json
 
 # Check validator catch-up status
-solclone catchup ~/validator-keypair.json
+prism catchup ~/validator-keypair.json
 
 # Check the local node health
 curl http://localhost:8899 -X POST -H "Content-Type: application/json" \
@@ -324,9 +324,9 @@ curl http://localhost:8899 -X POST -H "Content-Type: application/json" \
 
 | Metric                  | Healthy Range         | Check Command                         |
 |-------------------------|-----------------------|---------------------------------------|
-| Slot behind             | < 100 slots           | `solclone catchup`                    |
-| Vote success rate       | > 95%                 | `solclone validators`                 |
-| Skip rate               | < 5%                  | `solclone validators`                 |
+| Slot behind             | < 100 slots           | `prism catchup`                    |
+| Vote success rate       | > 95%                 | `prism validators`                 |
+| Skip rate               | < 5%                  | `prism validators`                 |
 | CPU usage               | < 80%                 | `htop`, `mpstat`                      |
 | RAM usage               | < 90%                 | `free -h`                             |
 | Disk I/O latency        | < 5ms                 | `iostat -x 1`                         |
@@ -345,7 +345,7 @@ Sample Prometheus scrape configuration:
 
 ```yaml
 scrape_configs:
-  - job_name: 'solclone-validator'
+  - job_name: 'prism-validator'
     static_configs:
       - targets: ['localhost:8899']
     metrics_path: '/metrics'
@@ -372,7 +372,7 @@ Recommended panels for a Grafana dashboard:
 
 | Symptom                        | Possible Cause                | Solution                                  |
 |--------------------------------|-------------------------------|-------------------------------------------|
-| `insufficient funds`           | Identity account has no SCLONE | Fund the identity keypair                 |
+| `insufficient funds`           | Identity account has no PRISM | Fund the identity keypair                 |
 | `Too many open files`          | File descriptor limit too low  | Update `/etc/security/limits.d/`          |
 | `OutOfMemory`                  | Insufficient RAM               | Upgrade to 256 GB+ RAM                   |
 | `Snapshot download failed`     | Network issue or no snapshot   | Retry or use `--no-snapshot-fetch`        |
@@ -382,7 +382,7 @@ Recommended panels for a Grafana dashboard:
 
 ```bash
 # Check the current slot delta
-solclone catchup ~/validator-keypair.json
+prism catchup ~/validator-keypair.json
 
 # If consistently behind, check:
 # 1. CPU usage -- may need faster CPU
@@ -395,10 +395,10 @@ solclone catchup ~/validator-keypair.json
 
 ```bash
 # Verify the vote account is properly configured
-solclone vote-account <VOTE_ACCOUNT_PUBKEY>
+prism vote-account <VOTE_ACCOUNT_PUBKEY>
 
 # Re-authorize the voter if needed
-solclone vote-authorize-voter \
+prism vote-authorize-voter \
   <VOTE_ACCOUNT_PUBKEY> \
   ~/authorized-withdrawer-keypair.json \
   <NEW_VOTER_PUBKEY>
@@ -408,26 +408,26 @@ solclone vote-authorize-voter \
 
 ```bash
 # Stop the validator
-sudo systemctl stop solclone-validator
+sudo systemctl stop prism-validator
 
 # Delete the corrupted ledger (snapshot will be re-downloaded)
 rm -rf ~/validator-ledger
 
 # Restart -- validator will download a fresh snapshot
-sudo systemctl start solclone-validator
+sudo systemctl start prism-validator
 ```
 
 ### Log Analysis
 
 ```bash
 # View recent logs
-journalctl -u solclone-validator -f
+journalctl -u prism-validator -f
 
 # Search for errors
-journalctl -u solclone-validator --since "1 hour ago" | grep -i error
+journalctl -u prism-validator --since "1 hour ago" | grep -i error
 
 # Check vote landing rate
-journalctl -u solclone-validator --since "1 hour ago" | grep "vote landed"
+journalctl -u prism-validator --since "1 hour ago" | grep "vote landed"
 ```
 
 ---
@@ -438,16 +438,16 @@ journalctl -u solclone-validator --since "1 hour ago" | grep "vote landed"
 
 ```bash
 # 1. Install the new version
-solclone-install update
+prism-install update
 
 # 2. Verify the new version
-solclone --version
+prism --version
 
 # 3. Restart the validator
-sudo systemctl restart solclone-validator
+sudo systemctl restart prism-validator
 
 # 4. Monitor catch-up
-solclone catchup ~/validator-keypair.json
+prism catchup ~/validator-keypair.json
 ```
 
 ### Rolling Restart (Zero Downtime)
@@ -457,11 +457,11 @@ For cluster-wide upgrades, validators coordinate rolling restarts:
 ```bash
 # 1. Wait for your scheduled restart slot (announced in Discord/forums)
 # 2. Set the validator to exit at the next restart slot
-solclone-validator --wait-for-supermajority <TARGET_SLOT> \
+prism-validator --wait-for-supermajority <TARGET_SLOT> \
   --expected-bank-hash <EXPECTED_HASH>
 
 # 3. Monitor the restart
-solclone catchup ~/validator-keypair.json
+prism catchup ~/validator-keypair.json
 ```
 
 ### Version Pinning
@@ -469,9 +469,9 @@ solclone catchup ~/validator-keypair.json
 To pin a specific version:
 
 ```bash
-solclone-install init <VERSION_TAG>
+prism-install init <VERSION_TAG>
 # Example:
-solclone-install init v1.18.0
+prism-install init v1.18.0
 ```
 
 ### Rollback
@@ -480,11 +480,11 @@ If an upgrade causes issues:
 
 ```bash
 # List installed versions
-solclone-install info
+prism-install info
 
 # Revert to previous version
-solclone-install init <PREVIOUS_VERSION>
-sudo systemctl restart solclone-validator
+prism-install init <PREVIOUS_VERSION>
+sudo systemctl restart prism-validator
 ```
 
 ---
@@ -506,14 +506,14 @@ sudo systemctl restart solclone-validator
 
 | Command | Description |
 |---------|-------------|
-| `solclone validators` | List all validators and their status |
-| `solclone catchup <IDENTITY>` | Show catch-up progress |
-| `solclone vote-account <PUBKEY>` | Show vote account details |
-| `solclone stake-account <PUBKEY>` | Show stake account details |
-| `solclone balance <PUBKEY>` | Check account balance |
-| `solclone epoch-info` | Current epoch information |
-| `solclone leader-schedule` | View leader schedule |
-| `solclone block-production` | View block production stats |
-| `solclone gossip` | Show gossip network nodes |
-| `solclone-validator exit` | Gracefully stop the validator |
-| `solclone-validator monitor` | Monitor validator performance |
+| `prism validators` | List all validators and their status |
+| `prism catchup <IDENTITY>` | Show catch-up progress |
+| `prism vote-account <PUBKEY>` | Show vote account details |
+| `prism stake-account <PUBKEY>` | Show stake account details |
+| `prism balance <PUBKEY>` | Check account balance |
+| `prism epoch-info` | Current epoch information |
+| `prism leader-schedule` | View leader schedule |
+| `prism block-production` | View block production stats |
+| `prism gossip` | Show gossip network nodes |
+| `prism-validator exit` | Gracefully stop the validator |
+| `prism-validator monitor` | Monitor validator performance |

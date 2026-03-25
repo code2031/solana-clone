@@ -237,7 +237,7 @@ class _MintNftScreenState extends State<MintNftScreen>
           const SizedBox(height: 8),
           const Center(
             child: Text(
-              'Create a unique non-fungible token on SolClone',
+              'Create a unique non-fungible token on Prism',
               style: TextStyle(color: AppTheme.textTertiary, fontSize: 14),
             ),
           ),
@@ -250,7 +250,7 @@ class _MintNftScreenState extends State<MintNftScreen>
             controller: _nameController,
             style: const TextStyle(color: AppTheme.textPrimary),
             decoration: const InputDecoration(
-              hintText: 'e.g. SolClone Punk #001',
+              hintText: 'e.g. Prism Punk #001',
               prefixIcon: Icon(Icons.badge_outlined, color: AppTheme.textTertiary),
             ),
             validator: (v) =>

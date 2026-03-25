@@ -1,4 +1,4 @@
-# Contributing to SolClone
+# Contributing to Prism
 
 ## Development Setup
 

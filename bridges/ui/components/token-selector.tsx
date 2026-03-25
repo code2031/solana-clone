@@ -11,14 +11,14 @@ export interface Token {
 }
 
 export const BRIDGE_TOKENS: Token[] = [
-  { symbol: "ETH", name: "Ethereum", chains: ["ethereum", "solclone"], decimals: 18, icon: "E" },
-  { symbol: "WBTC", name: "Wrapped Bitcoin", chains: ["ethereum", "solclone"], decimals: 8, icon: "B" },
-  { symbol: "BTC", name: "Bitcoin", chains: ["bitcoin", "solclone"], decimals: 8, icon: "B" },
-  { symbol: "SOL", name: "Solana", chains: ["solana", "solclone"], decimals: 9, icon: "S" },
-  { symbol: "USDC", name: "USD Coin", chains: ["ethereum", "solana", "solclone"], decimals: 6, icon: "U" },
-  { symbol: "USDT", name: "Tether", chains: ["ethereum", "solana", "solclone"], decimals: 6, icon: "T" },
-  { symbol: "scBTC", name: "SolClone Bitcoin", chains: ["solclone"], decimals: 8, icon: "B" },
-  { symbol: "scETH", name: "SolClone Ethereum", chains: ["solclone"], decimals: 18, icon: "E" },
+  { symbol: "ETH", name: "Ethereum", chains: ["ethereum", "prism"], decimals: 18, icon: "E" },
+  { symbol: "WBTC", name: "Wrapped Bitcoin", chains: ["ethereum", "prism"], decimals: 8, icon: "B" },
+  { symbol: "BTC", name: "Bitcoin", chains: ["bitcoin", "prism"], decimals: 8, icon: "B" },
+  { symbol: "SOL", name: "Solana", chains: ["solana", "prism"], decimals: 9, icon: "S" },
+  { symbol: "USDC", name: "USD Coin", chains: ["ethereum", "solana", "prism"], decimals: 6, icon: "U" },
+  { symbol: "USDT", name: "Tether", chains: ["ethereum", "solana", "prism"], decimals: 6, icon: "T" },
+  { symbol: "scBTC", name: "Prism Bitcoin", chains: ["prism"], decimals: 8, icon: "B" },
+  { symbol: "scETH", name: "Prism Ethereum", chains: ["prism"], decimals: 18, icon: "E" },
 ];
 
 /** Mock balances for demo */
@@ -27,7 +27,7 @@ function getMockBalance(token: Token, chain: string): string {
     ethereum: { ETH: "2.4531", WBTC: "0.0842", USDC: "5,230.00", USDT: "1,850.00" },
     bitcoin: { BTC: "0.1523" },
     solana: { SOL: "142.87", USDC: "3,100.00", USDT: "980.00" },
-    solclone: {
+    prism: {
       scBTC: "0.0500", scETH: "1.2000", SOL: "50.00",
       USDC: "10,000.00", USDT: "2,500.00", ETH: "0.5000", WBTC: "0.0200", BTC: "0.0100",
     },

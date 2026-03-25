@@ -1,4 +1,4 @@
-# SolClone DAO Governance
+# Prism DAO Governance
 
 Repository: https://github.com/code2031/solana-clone
 
@@ -35,7 +35,7 @@ npm run lint                           # ESLint
 
 Rust BPF on-chain program with a Next.js App Router frontend. Proposals store
 executable instruction sets that run after timelock expiry. Vote weight is determined
-by SCLONE token balance at the proposal creation slot, captured via a snapshot
+by PRISM token balance at the proposal creation slot, captured via a snapshot
 mechanism. The timelock is enforced by comparing `Clock::unix_timestamp` against
 the queued timestamp plus the configured delay.
 

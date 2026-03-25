@@ -1,5 +1,5 @@
 /**
- * Latency Benchmark for SolClone
+ * Latency Benchmark for Prism
  *
  * Sends 50 sequential transactions and measures the time from send to
  * confirmation for each. Reports min, max, median, p95, and average.
@@ -55,7 +55,7 @@ function percentile(sorted: number[], p: number): number {
 }
 
 async function main() {
-  console.log("=== SolClone Latency Benchmark ===\n");
+  console.log("=== Prism Latency Benchmark ===\n");
   console.log(`RPC URL: ${RPC_URL}`);
   console.log(`Total transactions: ${TOTAL_TRANSACTIONS}\n`);
 

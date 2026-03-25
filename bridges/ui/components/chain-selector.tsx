@@ -33,8 +33,8 @@ export const CHAINS: Chain[] = [
     network: "Mainnet-Beta",
   },
   {
-    id: "solclone",
-    name: "SolClone",
+    id: "prism",
+    name: "Prism",
     color: "linear-gradient(135deg, #8B5CF6, #10B981)",
     shortLabel: "SC",
     network: "Mainnet",

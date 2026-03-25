@@ -30,10 +30,10 @@ export interface Launch {
 const MOCK_LAUNCHES: Launch[] = [
   {
     id: "1",
-    tokenName: "SolClone AI",
+    tokenName: "Prism AI",
     tokenSymbol: "SCAI",
     tokenMint: "ScAi1111111111111111111111111111111111111111",
-    description: "AI-powered trading assistant and analytics for the SolClone ecosystem. Providing machine learning based insights for DeFi participants.",
+    description: "AI-powered trading assistant and analytics for the Prism ecosystem. Providing machine learning based insights for DeFi participants.",
     price: 0.005,
     targetRaise: 500,
     totalRaised: 320,
@@ -54,7 +54,7 @@ const MOCK_LAUNCHES: Launch[] = [
     tokenName: "DeFi Shield",
     tokenSymbol: "DSHLD",
     tokenMint: "DShd1111111111111111111111111111111111111111",
-    description: "Insurance protocol protecting SolClone DeFi users from smart contract exploits, oracle failures, and liquidity crises.",
+    description: "Insurance protocol protecting Prism DeFi users from smart contract exploits, oracle failures, and liquidity crises.",
     price: 0.002,
     targetRaise: 300,
     totalRaised: 300,
@@ -75,7 +75,7 @@ const MOCK_LAUNCHES: Launch[] = [
     tokenName: "MetaVerse Land",
     tokenSymbol: "MVLD",
     tokenMint: "MvLd1111111111111111111111111111111111111111",
-    description: "Virtual land tokens for the SolClone metaverse. Own, build, and trade virtual real estate in a decentralized world.",
+    description: "Virtual land tokens for the Prism metaverse. Own, build, and trade virtual real estate in a decentralized world.",
     price: 0.01,
     targetRaise: 1000,
     totalRaised: 780,
@@ -93,10 +93,10 @@ const MOCK_LAUNCHES: Launch[] = [
   },
   {
     id: "4",
-    tokenName: "SolClone Gaming",
+    tokenName: "Prism Gaming",
     tokenSymbol: "SCGM",
     tokenMint: "ScGm1111111111111111111111111111111111111111",
-    description: "Gaming platform token for play-to-earn games built on SolClone. Stake to earn rewards and access exclusive content.",
+    description: "Gaming platform token for play-to-earn games built on Prism. Stake to earn rewards and access exclusive content.",
     price: 0.001,
     targetRaise: 200,
     totalRaised: 200,
@@ -117,7 +117,7 @@ const MOCK_LAUNCHES: Launch[] = [
     tokenName: "Cross-Chain Bridge",
     tokenSymbol: "XBRD",
     tokenMint: "XBrd1111111111111111111111111111111111111111",
-    description: "Governance token for the SolClone cross-chain bridge, enabling trustless asset transfers between major blockchains.",
+    description: "Governance token for the Prism cross-chain bridge, enabling trustless asset transfers between major blockchains.",
     price: 0.008,
     targetRaise: 800,
     totalRaised: 800,
@@ -176,7 +176,7 @@ export default function LaunchpadHome() {
     <div className="max-w-7xl mx-auto px-6 py-8">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-          SolClone Launchpad
+          Prism Launchpad
         </h1>
         <p className="text-[#9999bb] text-lg max-w-2xl mx-auto mb-6">
           Discover and participate in fair token launches. Fixed-price sales, lottery draws, and price-discovery auctions.

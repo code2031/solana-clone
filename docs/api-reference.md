@@ -1,8 +1,8 @@
-# SolClone JSON-RPC API Reference
+# Prism JSON-RPC API Reference
 
 ## Overview
 
-SolClone nodes expose a JSON-RPC 2.0 API on port **8899** (HTTP) and **8900** (WebSocket).
+Prism nodes expose a JSON-RPC 2.0 API on port **8899** (HTTP) and **8900** (WebSocket).
 
 **Base URL:**
 ```
@@ -20,7 +20,7 @@ http://localhost:8899
 ```
 
 **Common Conventions:**
-- All token amounts are in **lamports** (1 SCLONE = 1,000,000,000 lamports)
+- All token amounts are in **lamports** (1 PRISM = 1,000,000,000 lamports)
 - Public keys are base58-encoded strings
 - Commitment levels: `finalized`, `confirmed`, `processed`
 - Optional configuration objects are passed as the last parameter
@@ -449,7 +449,7 @@ Returns transaction details for a confirmed transaction signature.
 | `getGenesisHash` | Returns the genesis hash | none |
 | `getHealth` | Returns the current health of the node | none |
 | `getHighestSnapshotSlot` | Returns the highest slot information for which a snapshot is available | none |
-| `getVersion` | Returns the current SolClone version running on the node | none |
+| `getVersion` | Returns the current Prism version running on the node | none |
 | `getRecentPerformanceSamples` | Returns recent performance samples | `limit: usize` (optional) |
 
 ### Inflation Methods

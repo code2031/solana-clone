@@ -52,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
                 shaderCallback: (bounds) =>
                     AppTheme.primaryGradient.createShader(bounds),
                 child: const Text(
-                  'Welcome to SolClone',
+                  'Welcome to Prism',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 28,

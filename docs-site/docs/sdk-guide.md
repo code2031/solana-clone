@@ -4,18 +4,18 @@ sidebar_position: 4
 
 # SDK Guide
 
-The SolClone Web3.js SDK provides a TypeScript/JavaScript interface for interacting with the SolClone blockchain. It follows the same patterns as `@solana/web3.js` for maximum compatibility.
+The Prism Web3.js SDK provides a TypeScript/JavaScript interface for interacting with the Prism blockchain. It follows the same patterns as `@solana/web3.js` for maximum compatibility.
 
 ## Installation
 
 ```bash
-npm install @solclone/web3.js
+npm install @prism/web3.js
 ```
 
 ## Connecting to the Network
 
 ```typescript
-import { Connection, clusterApiUrl } from '@solclone/web3.js';
+import { Connection, clusterApiUrl } from '@prism/web3.js';
 
 // Connect to local devnet
 const connection = new Connection('http://localhost:8899', 'confirmed');
@@ -25,13 +25,13 @@ const connection = new Connection('http://localhost:8799', 'confirmed');
 
 // Check connection
 const version = await connection.getVersion();
-console.log('Connected to SolClone:', version);
+console.log('Connected to Prism:', version);
 ```
 
 ## Keypairs and Wallets
 
 ```typescript
-import { Keypair } from '@solclone/web3.js';
+import { Keypair } from '@prism/web3.js';
 
 // Generate a new keypair
 const keypair = Keypair.generate();
@@ -42,14 +42,14 @@ const loaded = Keypair.fromSecretKey(secretKeyBytes);
 
 // Load from file (Node.js)
 import fs from 'fs';
-const secretKey = JSON.parse(fs.readFileSync('~/.config/solclone/id.json', 'utf-8'));
+const secretKey = JSON.parse(fs.readFileSync('~/.config/prism/id.json', 'utf-8'));
 const wallet = Keypair.fromSecretKey(Uint8Array.from(secretKey));
 ```
 
 ## Checking Balances
 
 ```typescript
-import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@solclone/web3.js';
+import { Connection, PublicKey, LAMPORTS_PER_SOL } from '@prism/web3.js';
 
 const connection = new Connection('http://localhost:8899');
 const publicKey = new PublicKey('YOUR_ADDRESS_HERE');
@@ -81,7 +81,7 @@ import {
   Transaction,
   sendAndConfirmTransaction,
   LAMPORTS_PER_SOL,
-} from '@solclone/web3.js';
+} from '@prism/web3.js';
 
 const connection = new Connection('http://localhost:8899');
 const sender = Keypair.generate();
@@ -109,7 +109,7 @@ console.log('Transaction confirmed:', signature);
 ## Working with Tokens
 
 ```typescript
-import { Token, TOKEN_PROGRAM_ID } from '@solclone/web3.js';
+import { Token, TOKEN_PROGRAM_ID } from '@prism/web3.js';
 
 // Create a new token mint
 const mint = await Token.createMint(
@@ -187,7 +187,7 @@ await connection.removeAccountChangeListener(subscriptionId);
 ## Error Handling
 
 ```typescript
-import { SendTransactionError } from '@solclone/web3.js';
+import { SendTransactionError } from '@prism/web3.js';
 
 try {
   await sendAndConfirmTransaction(connection, transaction, [signer]);
@@ -201,7 +201,7 @@ try {
 
 ## Using with the Playground
 
-The [SolClone Playground](/playground) provides an interactive environment where you can test SDK calls directly in your browser. The `solclone` helper object wraps the RPC client for quick experimentation.
+The [Prism Playground](/playground) provides an interactive environment where you can test SDK calls directly in your browser. The `prism` helper object wraps the RPC client for quick experimentation.
 
 ## Next Steps
 

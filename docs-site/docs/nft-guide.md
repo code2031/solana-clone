@@ -4,7 +4,7 @@ sidebar_position: 7
 
 # NFT Guide
 
-SolClone includes a full NFT stack: the **Metaplex-compatible program library** for minting NFTs and the **SolMart marketplace** for listing, buying, and selling.
+Prism includes a full NFT stack: the **Metaplex-compatible program library** for minting NFTs and the **SolMart marketplace** for listing, buying, and selling.
 
 ## Overview
 
@@ -19,8 +19,8 @@ SolClone includes a full NFT stack: the **Metaplex-compatible program library** 
 ### Using the SDK
 
 ```typescript
-import { Connection, Keypair, LAMPORTS_PER_SOL } from '@solclone/web3.js';
-import { Metaplex, keypairIdentity } from '@solclone/metaplex';
+import { Connection, Keypair, LAMPORTS_PER_SOL } from '@prism/web3.js';
+import { Metaplex, keypairIdentity } from '@prism/metaplex';
 
 const connection = new Connection('http://localhost:8899');
 const wallet = Keypair.generate();
@@ -37,7 +37,7 @@ const metaplex = Metaplex.make(connection)
 
 ```typescript
 const { nft } = await metaplex.nfts().create({
-  name: 'SolClone Genesis #1',
+  name: 'Prism Genesis #1',
   symbol: 'SCG',
   uri: 'https://arweave.net/your-metadata-uri',
   sellerFeeBasisPoints: 500,  // 5% royalty
@@ -54,9 +54,9 @@ Host your metadata JSON at the URI specified during minting:
 
 ```json
 {
-  "name": "SolClone Genesis #1",
+  "name": "Prism Genesis #1",
   "symbol": "SCG",
-  "description": "The first NFT on the SolClone blockchain",
+  "description": "The first NFT on the Prism blockchain",
   "image": "https://arweave.net/your-image-uri",
   "attributes": [
     { "trait_type": "Background", "value": "Cosmic Purple" },
@@ -86,7 +86,7 @@ Host your metadata JSON at the URI specified during minting:
 
 ```typescript
 const { nft: collectionNft } = await metaplex.nfts().create({
-  name: 'SolClone Founders',
+  name: 'Prism Founders',
   symbol: 'SCF',
   uri: 'https://arweave.net/collection-metadata-uri',
   sellerFeeBasisPoints: 750,  // 7.5% royalty
@@ -123,7 +123,7 @@ for (let i = 1; i <= 100; i++) {
 For custom NFT logic, use the built-in template:
 
 ```bash
-solclone init my-nft-project --template nft
+prism init my-nft-project --template nft
 cd my-nft-project
 anchor build
 anchor test
@@ -133,12 +133,12 @@ The template provides `create_collection`, `mint_nft`, and `transfer_nft` instru
 
 ## SolMart Marketplace
 
-SolMart is the built-in NFT marketplace for SolClone. Access it at [http://localhost:3001](http://localhost:3001) when running the full stack.
+SolMart is the built-in NFT marketplace for Prism. Access it at [http://localhost:3001](http://localhost:3001) when running the full stack.
 
 ### Listing an NFT for Sale
 
 ```typescript
-import { SolMart } from '@solclone/marketplace';
+import { SolMart } from '@prism/marketplace';
 
 const marketplace = new SolMart(connection, wallet);
 
@@ -211,7 +211,7 @@ await marketplace.acceptOffer({
 
 ## Royalty Enforcement
 
-SolClone NFTs enforce royalties at the protocol level:
+Prism NFTs enforce royalties at the protocol level:
 
 - Royalties are set during minting (`sellerFeeBasisPoints`)
 - Marketplace sales automatically distribute royalties to creators
@@ -222,16 +222,16 @@ SolClone NFTs enforce royalties at the protocol level:
 
 ```bash
 # Mint an NFT
-solclone nft mint --name "My NFT" --uri "https://metadata-uri" --royalty 500
+prism nft mint --name "My NFT" --uri "https://metadata-uri" --royalty 500
 
 # List on marketplace
-solclone nft list --mint <NFT_MINT> --price 2.5
+prism nft list --mint <NFT_MINT> --price 2.5
 
 # View your NFTs
-solclone nft list-owned
+prism nft list-owned
 
 # Transfer an NFT
-solclone nft transfer --mint <NFT_MINT> --to <RECIPIENT>
+prism nft transfer --mint <NFT_MINT> --to <RECIPIENT>
 ```
 
 ## Next Steps

@@ -1,7 +1,7 @@
 {
-  "name": "solclone-bitcoin-bridge-attestor",
+  "name": "prism-bitcoin-bridge-attestor",
   "version": "0.1.0",
-  "description": "Attestor service for the SolClone <-> Bitcoin cross-chain bridge",
+  "description": "Attestor service for the Prism <-> Bitcoin cross-chain bridge",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

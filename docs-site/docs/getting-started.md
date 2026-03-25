@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Getting Started
 
-This guide walks you through building SolClone from source, starting a local testnet, and sending your first transaction.
+This guide walks you through building Prism from source, starting a local testnet, and sending your first transaction.
 
 ## Prerequisites
 
@@ -28,14 +28,14 @@ cargo --version
 
 ```bash
 # Clone the repository
-git clone https://github.com/solclone/solclone.git
+git clone https://github.com/prism/prism.git
 cd solana-clone
 
 # Build the validator in release mode
 cd validator
 cargo build --release
 
-# The binary will be at target/release/solclone-validator
+# The binary will be at target/release/prism-validator
 ```
 
 ## Start a Local Testnet
@@ -69,7 +69,7 @@ docker-compose logs -f validator
 
 ```bash
 # Start the validator directly
-./validator/target/release/solclone-validator \
+./validator/target/release/prism-validator \
   --rpc-port 8899 \
   --ledger ./ledger \
   --log-level info
@@ -82,44 +82,44 @@ docker-compose logs -f validator
 cd cli-wallet
 npm install
 npm run build
-npm link  # Makes 'solclone' available globally
+npm link  # Makes 'prism' available globally
 
 # Verify
-solclone --version
+prism --version
 ```
 
 ## Generate a Keypair
 
 ```bash
-# Generate a new keypair (saved to ~/.config/solclone/id.json)
-solclone keygen
+# Generate a new keypair (saved to ~/.config/prism/id.json)
+prism keygen
 
 # View your address
-solclone address
+prism address
 ```
 
 ## Get Test SOL
 
 ```bash
 # Request an airdrop from the faucet
-solclone airdrop 10
+prism airdrop 10
 
 # Check your balance
-solclone balance
+prism balance
 ```
 
 ## Send Your First Transaction
 
 ```bash
 # Generate a second keypair for the recipient
-solclone keygen --outfile recipient.json
+prism keygen --outfile recipient.json
 
 # Transfer 2 SOL
-solclone transfer <RECIPIENT_ADDRESS> 2
+prism transfer <RECIPIENT_ADDRESS> 2
 
 # Verify the transfer
-solclone balance
-solclone balance <RECIPIENT_ADDRESS>
+prism balance
+prism balance <RECIPIENT_ADDRESS>
 ```
 
 ## Explore the Chain

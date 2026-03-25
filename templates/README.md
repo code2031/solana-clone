@@ -1,4 +1,4 @@
-# SolClone Anchor Templates
+# Prism Anchor Templates
 
 Five pre-built Anchor program templates for common on-chain use cases. Each template is a complete, buildable Anchor project with program logic, account structures, and a README.
 
@@ -17,7 +17,7 @@ Five pre-built Anchor program templates for common on-chain use cases. Each temp
 ### Initialize a New Project from a Template
 
 ```bash
-solclone init my-project --template token
+prism init my-project --template token
 ```
 
 This copies the template into `my-project/`, updates `Cargo.toml` with your project name, and generates a fresh program ID.

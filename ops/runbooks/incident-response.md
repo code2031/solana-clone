@@ -1,6 +1,6 @@
 # Incident Response Runbook
 
-This runbook covers response procedures for common SolClone network incidents. Each section includes symptoms, diagnosis steps, resolution procedures, and escalation paths.
+This runbook covers response procedures for common Prism network incidents. Each section includes symptoms, diagnosis steps, resolution procedures, and escalation paths.
 
 ---
 
@@ -61,27 +61,27 @@ When an incident is declared:
 
 ```bash
 # 1. Check if the validator process is running
-systemctl status solclone-validator
-journalctl -u solclone-validator --since "10 minutes ago" --no-pager
+systemctl status prism-validator
+journalctl -u prism-validator --since "10 minutes ago" --no-pager
 
 # 2. Check system resources
 free -h                        # Memory
-df -h /var/solclone             # Disk space
+df -h /var/prism             # Disk space
 top -bn1 | head -20            # CPU / load
 dmesg | tail -50               # Kernel messages (OOM killer, disk errors)
 
 # 3. Check validator logs for errors
-tail -500 /var/log/solclone/validator.log | grep -i "error\|panic\|fatal"
+tail -500 /var/log/prism/validator.log | grep -i "error\|panic\|fatal"
 
 # 4. Check if RPC is responding
 curl -s http://127.0.0.1:8899 -X POST -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"getHealth"}' | jq .
 
 # 5. Check network connectivity to entrypoints
-solclone gossip --url http://127.0.0.1:8899 | head -20
+prism gossip --url http://127.0.0.1:8899 | head -20
 
 # 6. Check vote account status
-solclone vote-account <VOTE_PUBKEY> --url http://127.0.0.1:8899
+prism vote-account <VOTE_PUBKEY> --url http://127.0.0.1:8899
 ```
 
 ### Resolution
@@ -89,13 +89,13 @@ solclone vote-account <VOTE_PUBKEY> --url http://127.0.0.1:8899
 **Process crashed (restart):**
 ```bash
 # Restart the validator
-sudo systemctl restart solclone-validator
+sudo systemctl restart prism-validator
 
 # Monitor startup
-journalctl -u solclone-validator -f
+journalctl -u prism-validator -f
 
 # Verify catchup
-solclone catchup <IDENTITY_PUBKEY> --url http://127.0.0.1:8899
+prism catchup <IDENTITY_PUBKEY> --url http://127.0.0.1:8899
 ```
 
 **Out of memory (OOM killed):**
@@ -108,35 +108,35 @@ journalctl -k | grep -i oom
 
 # If accounts DB grew too large, consider --limit-ledger-size
 # Restart with adjusted parameters
-sudo systemctl restart solclone-validator
+sudo systemctl restart prism-validator
 ```
 
 **Disk full:**
 ```bash
 # Check disk usage
-du -sh /var/solclone/ledger/*
-du -sh /var/solclone/snapshots/*
+du -sh /var/prism/ledger/*
+du -sh /var/prism/snapshots/*
 
 # Prune old snapshots (keep last 2)
-ls -t /var/solclone/snapshots/snapshot-*.tar.* | tail -n +3 | xargs rm -f
+ls -t /var/prism/snapshots/snapshot-*.tar.* | tail -n +3 | xargs rm -f
 
 # Clean old ledger data
-solclone-ledger-tool purge --ledger /var/solclone/ledger --before <SLOT>
+prism-ledger-tool purge --ledger /var/prism/ledger --before <SLOT>
 
 # Restart
-sudo systemctl restart solclone-validator
+sudo systemctl restart prism-validator
 ```
 
 **Corrupted ledger:**
 ```bash
 # Stop the validator
-sudo systemctl stop solclone-validator
+sudo systemctl stop prism-validator
 
 # Remove ledger and re-download from snapshot
-rm -rf /var/solclone/ledger/rocksdb
+rm -rf /var/prism/ledger/rocksdb
 
 # Restart -- validator will download a fresh snapshot
-sudo systemctl start solclone-validator
+sudo systemctl start prism-validator
 ```
 
 ### Escalation
@@ -161,27 +161,27 @@ sudo systemctl start solclone-validator
 
 ```bash
 # 1. Check current slot progression
-solclone slot --url <RPC_URL>
+prism slot --url <RPC_URL>
 sleep 5
-solclone slot --url <RPC_URL>
+prism slot --url <RPC_URL>
 # Slots should advance by ~12 in 5 seconds (400ms per slot)
 
 # 2. Check cluster-wide validator status
-solclone validators --url <RPC_URL>
+prism validators --url <RPC_URL>
 
 # 3. Check how much stake is active
-solclone validators --url <RPC_URL> | grep "Active Stake"
+prism validators --url <RPC_URL> | grep "Active Stake"
 # Consensus requires >66% of stake to be voting
 
 # 4. Check for delinquent validators (not voting)
-solclone validators --url <RPC_URL> --output json | \
+prism validators --url <RPC_URL> --output json | \
   jq '.validators[] | select(.delinquent == true) | {identity, activatedStake}'
 
 # 5. Check leader schedule gaps
-solclone leader-schedule --url <RPC_URL> | grep "SKIP"
+prism leader-schedule --url <RPC_URL> | grep "SKIP"
 
 # 6. Check if the issue is gossip-related
-solclone gossip --url <RPC_URL> | wc -l
+prism gossip --url <RPC_URL> | wc -l
 # Compare with expected cluster size
 ```
 
@@ -190,7 +190,7 @@ solclone gossip --url <RPC_URL> | wc -l
 **Insufficient voting stake (< 66%):**
 ```bash
 # Identify delinquent high-stake validators
-solclone validators --url <RPC_URL> --output json | \
+prism validators --url <RPC_URL> --output json | \
   jq -r '.validators[] | select(.delinquent == true) | "\(.identityPubkey) stake=\(.activatedStake)"' | \
   sort -t= -k2 -rn | head -20
 
@@ -204,8 +204,8 @@ solclone validators --url <RPC_URL> --output json | \
 ```bash
 # Compare bank hashes across validators at the same slot
 # On each validator:
-solclone slot --url http://<VALIDATOR_IP>:8899
-solclone block-time <SLOT> --url http://<VALIDATOR_IP>:8899
+prism slot --url http://<VALIDATOR_IP>:8899
+prism block-time <SLOT> --url http://<VALIDATOR_IP>:8899
 
 # If bank hashes differ at the same slot, validators have diverged
 # This indicates a consensus bug -- escalate immediately to SEV-1
@@ -229,7 +229,7 @@ See [Section 5: Network Partition](#5-network-partition).
 
 - No new blocks are produced for > 2 minutes
 - All transactions fail or time out
-- `solclone slot` returns the same value repeatedly
+- `prism slot` returns the same value repeatedly
 - Validators report "tower is not making progress"
 
 ### Diagnosis
@@ -237,20 +237,20 @@ See [Section 5: Network Partition](#5-network-partition).
 ```bash
 # 1. Confirm the halt is real (check multiple RPC endpoints)
 for rpc in <RPC_1> <RPC_2> <RPC_3>; do
-  echo "=== $rpc ===" && solclone slot --url "$rpc"
+  echo "=== $rpc ===" && prism slot --url "$rpc"
 done
 
 # 2. Determine when the halt started
-solclone block-time $(solclone slot --url <RPC_URL>) --url <RPC_URL>
+prism block-time $(prism slot --url <RPC_URL>) --url <RPC_URL>
 
 # 3. Check total active/delinquent stake
-solclone validators --url <RPC_URL>
+prism validators --url <RPC_URL>
 
 # 4. Check if this is a known software bug
 # Review recent GitHub issues, Discord, and release notes
 
 # 5. Gather diagnostic data from bootstrap/trusted validators
-solclone-validator --ledger /var/solclone/ledger wait-for-restart-window \
+prism-validator --ledger /var/prism/ledger wait-for-restart-window \
   --min-idle-time 1 --skip-new-snapshot-check
 ```
 
@@ -262,7 +262,7 @@ If > 66% of stake comes back online, the chain will resume automatically. This i
 
 ```bash
 # Monitor stake recovery
-watch -n 10 'solclone validators --url <RPC_URL> 2>/dev/null | tail -5'
+watch -n 10 'prism validators --url <RPC_URL> 2>/dev/null | tail -5'
 ```
 
 **Option B: Coordinated restart (if natural recovery fails)**
@@ -271,18 +271,18 @@ This requires coordination among validators holding > 66% of stake.
 
 ```bash
 # 1. All participating validators stop
-sudo systemctl stop solclone-validator
+sudo systemctl stop prism-validator
 
 # 2. Core team generates a restart snapshot
-solclone-ledger-tool create-snapshot \
-  --ledger /var/solclone/ledger \
+prism-ledger-tool create-snapshot \
+  --ledger /var/prism/ledger \
   --snapshot-slot <LAST_CONFIRMED_SLOT> \
-  --output-dir /var/solclone/restart-snapshot
+  --output-dir /var/prism/restart-snapshot
 
 # 3. Distribute the restart snapshot to all validators
 
 # 4. All validators restart with --wait-for-supermajority
-solclone-validator \
+prism-validator \
   --wait-for-supermajority <RESTART_SLOT> \
   --expected-bank-hash <BANK_HASH> \
   --expected-genesis-hash <GENESIS_HASH> \
@@ -332,14 +332,14 @@ During a chain halt:
 # === FOR COMPROMISED VALIDATOR IDENTITY ===
 
 # 1. IMMEDIATELY stop the validator to prevent further signing
-sudo systemctl stop solclone-validator
+sudo systemctl stop prism-validator
 
 # 2. Rotate the identity keypair
-solclone-keygen new --outfile /secure/new-identity.json --no-passphrase
+prism-keygen new --outfile /secure/new-identity.json --no-passphrase
 
 # 3. Set the new identity (requires authorized withdrawer)
 # This must be done from a SECURE machine with the withdrawer key
-solclone vote-update-validator \
+prism vote-update-validator \
   <VOTE_PUBKEY> \
   /secure/new-identity.json \
   /secure/withdrawer.json \
@@ -351,14 +351,14 @@ solclone vote-update-validator \
 # === FOR COMPROMISED VOTE ACCOUNT ===
 
 # 1. If the authorized withdrawer is NOT compromised:
-solclone vote-authorize-withdrawer \
+prism vote-authorize-withdrawer \
   <VOTE_PUBKEY> \
   /secure/current-withdrawer.json \
   <NEW_WITHDRAWER_PUBKEY>
 
 # 2. Create a new vote account
-solclone-keygen new --outfile /secure/new-vote.json
-solclone create-vote-account \
+prism-keygen new --outfile /secure/new-vote.json
+prism create-vote-account \
   /secure/new-vote.json \
   /secure/identity.json \
   <NEW_WITHDRAWER_PUBKEY> \
@@ -372,13 +372,13 @@ solclone create-vote-account \
 # Act as fast as possible.
 
 # 1. From ANY machine with the current withdrawer key:
-solclone vote-authorize-withdrawer \
+prism vote-authorize-withdrawer \
   <VOTE_PUBKEY> \
   /secure/compromised-withdrawer.json \
   <NEW_SAFE_WITHDRAWER_PUBKEY>
 
 # 2. Move all funds out of the vote account immediately
-solclone withdraw-from-vote-account \
+prism withdraw-from-vote-account \
   <VOTE_PUBKEY> \
   <SAFE_DESTINATION> \
   ALL \
@@ -389,11 +389,11 @@ solclone withdraw-from-vote-account \
 
 ```bash
 # 1. Gather all transactions involving the compromised key
-solclone transaction-history <COMPROMISED_PUBKEY> --url <RPC_URL> --limit 100
+prism transaction-history <COMPROMISED_PUBKEY> --url <RPC_URL> --limit 100
 
 # 2. Check for unauthorized authority changes
-solclone vote-account <VOTE_PUBKEY> --url <RPC_URL>
-solclone stake-account <STAKE_PUBKEY> --url <RPC_URL>
+prism vote-account <VOTE_PUBKEY> --url <RPC_URL>
+prism stake-account <STAKE_PUBKEY> --url <RPC_URL>
 
 # 3. Review server access logs
 journalctl --since "48 hours ago" | grep -i "ssh\|login\|auth"
@@ -401,7 +401,7 @@ last -20
 cat /var/log/auth.log | tail -100
 
 # 4. Check for unauthorized file access
-find /home/solclone/keys -newer /home/solclone/keys/identity.json -ls
+find /home/prism/keys -newer /home/prism/keys/identity.json -ls
 
 # 5. Review running processes for suspicious activity
 ps auxf
@@ -414,7 +414,7 @@ netstat -tlnp
 - [ ] Rotate SSH keys and revoke old ones
 - [ ] Audit server for backdoors or malware
 - [ ] Consider rebuilding the server from scratch
-- [ ] Report the incident to security@solclone.io
+- [ ] Report the incident to security@prism.io
 - [ ] If fund loss occurred, coordinate with the Foundation
 - [ ] Document the incident timeline and root cause
 
@@ -435,8 +435,8 @@ netstat -tlnp
 
 ```bash
 # 1. Check gossip from multiple vantage points
-solclone gossip --url http://<VALIDATOR_A>:8899 | wc -l
-solclone gossip --url http://<VALIDATOR_B>:8899 | wc -l
+prism gossip --url http://<VALIDATOR_A>:8899 | wc -l
+prism gossip --url http://<VALIDATOR_B>:8899 | wc -l
 
 # 2. Test network connectivity between validators
 # From validator A:
@@ -485,8 +485,8 @@ journalctl -k --since "1 hour ago" | grep -i oom
 ps aux --sort=-%mem | head -10
 
 # 4. Check accounts DB size
-du -sh /var/solclone/accounts/
-du -sh /var/solclone/ledger/
+du -sh /var/prism/accounts/
+du -sh /var/prism/ledger/
 
 # 5. Check for memory leaks (rising RSS over time)
 # Use monitoring graphs if available
@@ -496,7 +496,7 @@ du -sh /var/solclone/ledger/
 
 ```bash
 # 1. Restart the validator (may be sufficient if transient)
-sudo systemctl restart solclone-validator
+sudo systemctl restart prism-validator
 
 # 2. If accounts DB is too large, reduce with --limit-ledger-size
 # Edit start-validator.sh to add/adjust --limit-ledger-size
@@ -563,10 +563,10 @@ After every SEV-1 or SEV-2 incident:
 |---|---|---|
 | On-call engineer | PagerDuty rotation | Auto-escalates after 15 min |
 | Core engineering lead | [Name] — Slack / Phone | SEV-1 and SEV-2 |
-| Security team | security@solclone.io | Key compromise, exploits |
-| Foundation | foundation@solclone.io | Chain halt, governance |
-| Validator relations | validators@solclone.io | Validator coordination |
-| Communications | comms@solclone.io | Public statements |
+| Security team | security@prism.io | Key compromise, exploits |
+| Foundation | foundation@prism.io | Chain halt, governance |
+| Validator relations | validators@prism.io | Validator coordination |
+| Communications | comms@prism.io | Public statements |
 
 ### Communication Channels
 
@@ -574,5 +574,5 @@ After every SEV-1 or SEV-2 incident:
 |---|---|
 | #incidents (Slack) | Real-time incident coordination |
 | #validator-announcements (Discord) | Validator operator notifications |
-| @solclone (Twitter/X) | Public status updates |
-| status.solclone.io | Status page updates |
+| @prism (Twitter/X) | Public status updates |
+| status.prism.io | Status page updates |

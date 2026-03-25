@@ -1,8 +1,8 @@
 class AppConstants {
-  static const String appName = 'SolClone Wallet';
+  static const String appName = 'Prism Wallet';
   static const String appVersion = '1.0.0';
 
-  // ── SolClone / Solana RPC URLs ──
+  // ── Prism / Solana RPC URLs ──
   static const String mainnetRpcUrl = 'https://api.mainnet-beta.solana.com';
   static const String testnetRpcUrl = 'https://api.testnet.solana.com';
   static const String devnetRpcUrl = 'https://api.devnet.solana.com';
@@ -22,7 +22,7 @@ class AppConstants {
   static const String ethereumRpcUrl = 'https://eth.llamarpc.com';
   static const String ethereumGoerliRpcUrl = 'https://rpc.ankr.com/eth_goerli';
 
-  // Solana (real mainnet / devnet, distinct from SolClone local)
+  // Solana (real mainnet / devnet, distinct from Prism local)
   static const String solanaMainnetRpcUrl = 'https://api.mainnet-beta.solana.com';
   static const String solanaDevnetRpcUrl = 'https://api.devnet.solana.com';
 
@@ -41,7 +41,7 @@ class AppConstants {
   static const String polygonExplorer = 'https://polygonscan.com';
   static const String bnbExplorer = 'https://bscscan.com';
 
-  // ── Program IDs (SolClone / Solana) ──
+  // ── Program IDs (Prism / Solana) ──
   static const String systemProgramId = '11111111111111111111111111111111';
   static const String tokenProgramId = 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA';
   static const String associatedTokenProgramId = 'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL';

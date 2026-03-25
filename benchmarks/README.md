@@ -1,6 +1,6 @@
-# SolClone Benchmark Suite
+# Prism Benchmark Suite
 
-Performance benchmarks for the SolClone network measuring transactions per second (TPS) and transaction latency against a local test validator.
+Performance benchmarks for the Prism network measuring transactions per second (TPS) and transaction latency against a local test validator.
 
 ## What It Measures
 
@@ -20,7 +20,7 @@ bash run.sh
 
 The `run.sh` script will:
 
-1. Start a local SolClone test validator (if not already running)
+1. Start a local Prism test validator (if not already running)
 2. Fund benchmark accounts via airdrop
 3. Run the TPS benchmark
 4. Run the latency benchmark
@@ -53,7 +53,7 @@ Edit `run.sh` or pass environment variables:
 After running, `RESULTS.md` is generated with a summary:
 
 ```
-# SolClone Benchmark Results - 2026-03-24
+# Prism Benchmark Results - 2026-03-24
 
 ## TPS Benchmark
 - Sustained TPS: 4,250
@@ -83,5 +83,5 @@ benchmarks/
 ## Prerequisites
 
 - Node.js 18+
-- SolClone validator (built from `validator/` or running via Docker)
+- Prism validator (built from `validator/` or running via Docker)
 - `tsx` is included as a dev dependency

@@ -1,6 +1,6 @@
 # Security Policy
 
-The SolClone team takes security seriously. We appreciate the security research community's efforts in helping us maintain a secure network. This document outlines our security policy, responsible disclosure process, and bug bounty program.
+The Prism team takes security seriously. We appreciate the security research community's efforts in helping us maintain a secure network. This document outlines our security policy, responsible disclosure process, and bug bounty program.
 
 ---
 
@@ -8,12 +8,12 @@ The SolClone team takes security seriously. We appreciate the security research 
 
 **Do not open a public GitHub issue for security vulnerabilities.**
 
-If you discover a security vulnerability in the SolClone protocol, validator software, or related infrastructure, please report it through our responsible disclosure process.
+If you discover a security vulnerability in the Prism protocol, validator software, or related infrastructure, please report it through our responsible disclosure process.
 
 ### Contact
 
-- **Email**: security@solclone.io
-- **PGP Key**: Available at [https://solclone.io/.well-known/security-pgp.asc](https://solclone.io/.well-known/security-pgp.asc)
+- **Email**: security@prism.io
+- **PGP Key**: Available at [https://prism.io/.well-known/security-pgp.asc](https://prism.io/.well-known/security-pgp.asc)
 - **PGP Fingerprint**: `XXXX XXXX XXXX XXXX XXXX  XXXX XXXX XXXX XXXX XXXX`
 
 Please encrypt sensitive reports with our PGP key.
@@ -45,7 +45,7 @@ Please encrypt sensitive reports with our PGP key.
 The following components are eligible for the bug bounty program:
 
 - **Consensus protocol**: Tower BFT, PoH, fork choice, block production
-- **Validator software**: `solclone-validator`, `solclone`, `solclone-keygen`, `solclone-genesis`
+- **Validator software**: `prism-validator`, `prism`, `prism-keygen`, `prism-genesis`
 - **Runtime**: Transaction processing, program execution, SBF/BPF VM
 - **Networking**: Gossip protocol, Turbine (block propagation), Repair protocol
 - **Cryptography**: Signature verification, hash functions, key derivation
@@ -60,7 +60,7 @@ The following components are eligible for the bug bounty program:
 
 The following are **not** eligible:
 
-- Third-party applications built on SolClone (unless they expose a protocol-level flaw)
+- Third-party applications built on Prism (unless they expose a protocol-level flaw)
 - Social engineering or phishing attacks
 - Denial of service attacks that do not exploit a software vulnerability
 - Issues in dependencies that are already publicly known (check CVE databases first)
@@ -126,11 +126,11 @@ Examples:
 
 Published security advisories are available at:
 
-- GitHub: [https://github.com/solclone/solclone/security/advisories](https://github.com/solclone/solclone/security/advisories)
-- Website: [https://solclone.io/security/advisories](https://solclone.io/security/advisories)
+- GitHub: [https://github.com/prism/prism/security/advisories](https://github.com/prism/prism/security/advisories)
+- Website: [https://prism.io/security/advisories](https://prism.io/security/advisories)
 
 Subscribe to the security mailing list for notifications:
-- Email `security-announce-subscribe@solclone.io` with subject "subscribe"
+- Email `security-announce-subscribe@prism.io` with subject "subscribe"
 
 ---
 
@@ -149,8 +149,8 @@ Subscribe to the security mailing list for notifications:
 
 ## Contact
 
-- **Security reports**: security@solclone.io
-- **General inquiries**: hello@solclone.io
-- **Discord**: [https://discord.gg/solclone](https://discord.gg/solclone) (do not report vulnerabilities in Discord)
+- **Security reports**: security@prism.io
+- **General inquiries**: hello@prism.io
+- **Discord**: [https://discord.gg/prism](https://discord.gg/prism) (do not report vulnerabilities in Discord)
 
-Thank you for helping keep SolClone secure.
+Thank you for helping keep Prism secure.

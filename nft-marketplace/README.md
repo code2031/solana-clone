@@ -1,14 +1,14 @@
 # SolMart -- NFT Marketplace
 
-> Mint, list, buy, auction, and trade NFTs on the SolClone blockchain.
+> Mint, list, buy, auction, and trade NFTs on the Prism blockchain.
 
-Part of the [SolClone](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
 
 ---
 
 ## Overview
 
-SolMart is a full-featured NFT marketplace built on SolClone. It provides an on-chain
+SolMart is a full-featured NFT marketplace built on Prism. It provides an on-chain
 Rust program for all marketplace operations and a Next.js web interface for browsing
 collections, minting new NFTs, listing items for sale, placing bids in auctions, and
 making offers. Creator royalties are enforced on-chain for every secondary sale.
@@ -16,7 +16,7 @@ making offers. Creator royalties are enforced on-chain for every secondary sale.
 ## Features
 
 - **Minting** -- Create NFTs with metadata, image URI, and optional collection assignment
-- **Fixed-Price Listings** -- List NFTs at a set price in SCLONE tokens
+- **Fixed-Price Listings** -- List NFTs at a set price in PRISM tokens
 - **English Auctions** -- Time-bound auctions with minimum bid increments
 - **Offers** -- Make and accept offers on any NFT, even unlisted ones
 - **Collections** -- Group NFTs into verified collections with on-chain association
@@ -66,7 +66,7 @@ The SolMart interface will be available at `http://localhost:3000`.
 
 ## Tech Stack
 
-- **On-Chain**: Rust, SolClone BPF program framework, Metaplex token metadata
+- **On-Chain**: Rust, Prism BPF program framework, Metaplex token metadata
 - **Frontend**: Next.js 14, Tailwind CSS, wallet-adapter
 - **Storage**: Metadata and images stored on Arweave / IPFS
 - **Indexing**: Event-based indexer for marketplace activity

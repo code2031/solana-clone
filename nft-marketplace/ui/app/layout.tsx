@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SolMart — NFT Marketplace",
   description:
-    "Discover, collect, and trade NFTs on the SolClone blockchain. Premium marketplace with auctions, collections, and royalty enforcement.",
+    "Discover, collect, and trade NFTs on the Prism blockchain. Premium marketplace with auctions, collections, and royalty enforcement.",
 };
 
 export default function RootLayout({
@@ -101,7 +101,7 @@ export default function RootLayout({
         <footer className="border-t border-card-border/30 bg-surface/50">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row sm:px-6 lg:px-8">
             <p className="text-sm text-muted">
-              SolMart &mdash; Built on SolClone
+              SolMart &mdash; Built on Prism
             </p>
             <div className="flex items-center gap-6">
               <Link

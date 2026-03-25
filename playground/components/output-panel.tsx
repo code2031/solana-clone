@@ -44,18 +44,18 @@ export default function OutputPanel({ result, isRunning }: OutputPanelProps) {
             Click &quot;Run&quot; to execute your code.
             <br />
             <br />
-            The <code className="rounded bg-[var(--surface)] px-1.5 py-0.5 text-[var(--accent)]">solclone</code> object is available with these methods:
+            The <code className="rounded bg-[var(--surface)] px-1.5 py-0.5 text-[var(--accent)]">prism</code> object is available with these methods:
             <br />
             <br />
             <code className="text-xs text-[var(--foreground)]">
-              solclone.getBalance(address)<br />
-              solclone.getBlockHeight()<br />
-              solclone.getBlock(slot)<br />
-              solclone.getTransaction(sig)<br />
-              solclone.getTokenAccountsByOwner(owner, mint)<br />
-              solclone.sendTransaction(from, to, lamports)<br />
-              solclone.requestAirdrop(address, lamports)<br />
-              solclone.call(method, params)
+              prism.getBalance(address)<br />
+              prism.getBlockHeight()<br />
+              prism.getBlock(slot)<br />
+              prism.getTransaction(sig)<br />
+              prism.getTokenAccountsByOwner(owner, mint)<br />
+              prism.sendTransaction(from, to, lamports)<br />
+              prism.requestAirdrop(address, lamports)<br />
+              prism.call(method, params)
             </code>
           </div>
         )}

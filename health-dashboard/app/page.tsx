@@ -18,7 +18,7 @@ export default function HomePage() {
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#9945FF] to-[#14F195]" />
             <h1 className="text-xl font-bold tracking-tight">
-              SolClone Network
+              Prism Network
             </h1>
           </div>
           <div className="flex items-center gap-3">
@@ -52,7 +52,7 @@ export default function HomePage() {
             <div className="flex flex-col items-center gap-4">
               <div className="h-10 w-10 animate-spin rounded-full border-2 border-[#9945FF] border-t-transparent" />
               <p className="text-gray-400 text-sm">
-                Connecting to SolClone network...
+                Connecting to Prism network...
               </p>
             </div>
           </div>
@@ -108,7 +108,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t border-white/10 px-6 py-4 mt-8">
         <div className="mx-auto max-w-7xl flex items-center justify-between text-xs text-gray-500">
-          <span>SolClone Network Health Dashboard</span>
+          <span>Prism Network Health Dashboard</span>
           <span>Polling every 2s via Solana JSON-RPC</span>
         </div>
       </footer>

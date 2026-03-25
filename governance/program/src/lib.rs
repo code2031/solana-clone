@@ -23,7 +23,7 @@ const DEFAULT_VOTING_PERIOD_SLOTS: u64 = 648_000;
 /// Quorum: 10 % of total supply (1000 basis points)
 const DEFAULT_QUORUM_BPS: u64 = 1_000;
 
-/// Minimum SCLONE tokens required to create a proposal
+/// Minimum PRISM tokens required to create a proposal
 const DEFAULT_PROPOSAL_THRESHOLD: u64 = 100_000;
 
 /// Timelock: ~2 days in slots after a proposal passes before it can be executed
@@ -53,7 +53,7 @@ pub enum ProposalStatus {
 pub struct DaoState {
     /// Authority that initialized the DAO
     pub authority: Pubkey,
-    /// SCLONE governance token mint
+    /// PRISM governance token mint
     pub governance_token_mint: Pubkey,
     /// Treasury account (program-owned)
     pub treasury: Pubkey,
@@ -174,7 +174,7 @@ pub enum GovernanceInstruction {
     /// Accounts:
     ///   0. `[signer]`   Authority / payer
     ///   1. `[writable]` DAO state PDA
-    ///   2. `[]`         Governance token mint (SCLONE)
+    ///   2. `[]`         Governance token mint (PRISM)
     ///   3. `[writable]` Treasury account
     ///   4. `[]`         System program
     InitializeDao {

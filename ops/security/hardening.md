@@ -1,4 +1,4 @@
-# SolClone Validator — Security Hardening Guide
+# Prism Validator — Security Hardening Guide
 
 ## 1. SSH Configuration
 
@@ -50,8 +50,8 @@ Or manually:
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow 2222/tcp comment "SSH"
-sudo ufw allow 8000:8020/tcp comment "SolClone gossip TCP"
-sudo ufw allow 8000:8020/udp comment "SolClone gossip UDP"
+sudo ufw allow 8000:8020/tcp comment "Prism gossip TCP"
+sudo ufw allow 8000:8020/udp comment "Prism gossip UDP"
 # RPC and WS should only be exposed behind a reverse proxy
 sudo ufw enable
 ```
@@ -96,17 +96,17 @@ Edit `/etc/apt/apt.conf.d/50unattended-upgrades` to enable only security updates
 2. **Withdrawer keypair must be stored offline** (air-gapped machine, hardware wallet, or encrypted USB in a safe).
 3. Set file permissions to `600` (owner read/write only):
    ```bash
-   chmod 600 /home/solclone/*-keypair.json
+   chmod 600 /home/prism/*-keypair.json
    ```
 4. **Back up all keypairs** to at least two separate secure, encrypted locations.
-5. Use `solclone-keygen verify` to confirm a keypair matches its expected public key before use.
+5. Use `prism-keygen verify` to confirm a keypair matches its expected public key before use.
 6. Rotate the identity keypair periodically and update the on-chain vote account authority.
 
 ### Keypair File Permissions Audit
 
 ```bash
-# Should show -rw------- solclone solclone for each file
-ls -la /home/solclone/*-keypair.json
+# Should show -rw------- prism prism for each file
+ls -la /home/prism/*-keypair.json
 ```
 
 ## 6. System Hardening
@@ -116,7 +116,7 @@ ls -la /home/solclone/*-keypair.json
 Applied automatically by `setup-validator.sh`, but verify:
 
 ```bash
-# /etc/sysctl.d/90-solclone.conf
+# /etc/sysctl.d/90-prism.conf
 net.core.rmem_default = 134217728
 net.core.rmem_max     = 134217728
 net.core.wmem_default = 134217728
@@ -128,7 +128,7 @@ fs.nr_open            = 1000000
 ### File System
 
 - Mount `/tmp` with `noexec,nosuid,nodev` in `/etc/fstab`.
-- Use separate partitions for `/home/solclone/validator-ledger` and `/home/solclone/validator-accounts` (ideally NVMe).
+- Use separate partitions for `/home/prism/validator-ledger` and `/home/prism/validator-accounts` (ideally NVMe).
 
 ### Process Isolation
 
@@ -148,7 +148,7 @@ sudo systemctl enable --now fail2ban
 
 # Install and configure auditd
 sudo apt install auditd
-sudo auditctl -w /home/solclone/ -p wa -k solclone_keys
+sudo auditctl -w /home/prism/ -p wa -k prism_keys
 ```
 
 ## 8. Network Security
@@ -157,12 +157,12 @@ sudo auditctl -w /home/solclone/ -p wa -k solclone_keys
 - Use a reverse proxy (nginx/caddy) with rate limiting for any public RPC access.
 - Enable TCP SYN cookies:
   ```bash
-  echo "net.ipv4.tcp_syncookies = 1" | sudo tee -a /etc/sysctl.d/90-solclone.conf
-  sudo sysctl -p /etc/sysctl.d/90-solclone.conf
+  echo "net.ipv4.tcp_syncookies = 1" | sudo tee -a /etc/sysctl.d/90-prism.conf
+  sudo sysctl -p /etc/sysctl.d/90-prism.conf
   ```
 - Disable ICMP redirects:
   ```bash
-  echo "net.ipv4.conf.all.accept_redirects = 0" | sudo tee -a /etc/sysctl.d/90-solclone.conf
+  echo "net.ipv4.conf.all.accept_redirects = 0" | sudo tee -a /etc/sysctl.d/90-prism.conf
   ```
 
 ## 9. Checklist

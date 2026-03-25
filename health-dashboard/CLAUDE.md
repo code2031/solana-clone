@@ -1,4 +1,4 @@
-# SolClone Health Dashboard
+# Prism Health Dashboard
 
 Repository: https://github.com/code2031/solana-clone
 
@@ -20,7 +20,7 @@ npm test             # run test suite
 - `components/EpochProgress.tsx` -- Epoch progress bar with time estimate
 - `components/PerformanceChart.tsx` -- Historical TPS and slot time charts (Recharts)
 - `hooks/useClusterStats.ts` -- SWR hook polling RPC every 2 seconds
-- `lib/rpc-client.ts` -- SolClone RPC client wrapper
+- `lib/rpc-client.ts` -- Prism RPC client wrapper
 - `next.config.ts` -- Next.js configuration
 
 ## Architecture
@@ -35,6 +35,6 @@ chart rendering. The network selector switches the RPC URL and clears the buffer
 
 ## Environment Variables
 
-- `RPC_URL` -- SolClone RPC endpoint (default: `http://localhost:8899`)
+- `RPC_URL` -- Prism RPC endpoint (default: `http://localhost:8899`)
 - `POLL_INTERVAL` -- Polling interval in ms (default: `2000`)
 - `HISTORY_WINDOW` -- Data points retained for charts (default: `300`)

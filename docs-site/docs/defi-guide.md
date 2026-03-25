@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # DeFi Guide
 
-SolClone ships with a complete DeFi suite: **SolSwap** (AMM/DEX), **SolLend** (lending protocol), and **SCUSD** (algorithmic stablecoin). This guide covers how to use each protocol.
+Prism ships with a complete DeFi suite: **SolSwap** (AMM/DEX), **SolLend** (lending protocol), and **SCUSD** (algorithmic stablecoin). This guide covers how to use each protocol.
 
 ## Overview
 
@@ -21,7 +21,7 @@ SolSwap implements a Uniswap-style constant product AMM for token swaps.
 ### Creating a Liquidity Pool
 
 ```typescript
-import { SolSwap } from '@solclone/defi';
+import { SolSwap } from '@prism/defi';
 
 const swap = new SolSwap(connection, wallet);
 
@@ -88,7 +88,7 @@ SolLend enables supplying tokens to earn interest and borrowing against collater
 ### Supplying Tokens
 
 ```typescript
-import { SolLend } from '@solclone/defi';
+import { SolLend } from '@prism/defi';
 
 const lend = new SolLend(connection, wallet);
 
@@ -152,7 +152,7 @@ SCUSD is an algorithmic stablecoin that maintains its peg through overcollateral
 ### Minting SCUSD
 
 ```typescript
-import { SCUSD } from '@solclone/defi';
+import { SCUSD } from '@prism/defi';
 
 const stablecoin = new SCUSD(connection, wallet);
 
@@ -212,16 +212,16 @@ All DeFi operations are also available via the CLI:
 
 ```bash
 # SolSwap
-solclone swap create-pool --token-a <MINT> --token-b <MINT> --amount-a 10000 --amount-b 50000
-solclone swap trade --pool <POOL> --input-mint <MINT> --amount 100
+prism swap create-pool --token-a <MINT> --token-b <MINT> --amount-a 10000 --amount-b 50000
+prism swap trade --pool <POOL> --input-mint <MINT> --amount 100
 
 # SolLend
-solclone lend supply --mint <MINT> --amount 10
-solclone lend borrow --mint <MINT> --amount 500
+prism lend supply --mint <MINT> --amount 10
+prism lend borrow --mint <MINT> --amount 500
 
 # SCUSD
-solclone stablecoin mint --collateral 5 --amount 200
-solclone stablecoin repay --vault <VAULT> --amount 100
+prism stablecoin mint --collateral 5 --amount 200
+prism stablecoin repay --vault <VAULT> --amount 100
 ```
 
 ## Next Steps

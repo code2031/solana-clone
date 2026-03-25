@@ -118,7 +118,7 @@ export function CreateBounty() {
           <h2 className="text-lg font-semibold mb-4">Reward &amp; Deadline</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-[#9999bb] mb-2">Reward Amount (SCLONE)</label>
+              <label className="block text-sm text-[#9999bb] mb-2">Reward Amount (PRISM)</label>
               <input
                 type="number"
                 value={reward}

@@ -2,7 +2,7 @@
 // SolSwap AMM DEX — On-chain Program
 // =============================================================================
 //
-// A constant-product automated market maker (x * y = k) for the SolClone
+// A constant-product automated market maker (x * y = k) for the Prism
 // blockchain.  Supports pool creation, bilateral liquidity provision,
 // proportional withdrawal, and fee-aware token swaps with slippage protection.
 //

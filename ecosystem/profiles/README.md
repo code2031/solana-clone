@@ -1,10 +1,10 @@
-# SolClone On-Chain Profiles
+# Prism On-Chain Profiles
 
-Decentralized identity profiles stored on-chain for the SolClone ecosystem.
+Decentralized identity profiles stored on-chain for the Prism ecosystem.
 
 ## Overview
 
-The Profiles program allows any wallet holder to create, update, and delete a public profile that is stored directly on-chain as a Program Derived Address (PDA). This provides a permissionless identity layer for the entire SolClone ecosystem, enabling display names, avatars, and bios to be attached to wallet addresses.
+The Profiles program allows any wallet holder to create, update, and delete a public profile that is stored directly on-chain as a Program Derived Address (PDA). This provides a permissionless identity layer for the entire Prism ecosystem, enabling display names, avatars, and bios to be attached to wallet addresses.
 
 ## Architecture
 
@@ -37,7 +37,7 @@ Each profile is derived from `["profile", owner_pubkey]` ensuring one profile pe
 
 ### Integration
 
-Other programs in the SolClone ecosystem can perform CPI calls to resolve a wallet's profile by deriving the PDA with `["profile", wallet_pubkey]` and reading the account data.
+Other programs in the Prism ecosystem can perform CPI calls to resolve a wallet's profile by deriving the PDA with `["profile", wallet_pubkey]` and reading the account data.
 
 ## Building
 

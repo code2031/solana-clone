@@ -1,4 +1,4 @@
-# SolClone
+# Prism
 
 A high-performance Layer 1 blockchain forked from [Solana](https://github.com/anza-xyz/agave). Complete ecosystem including validator, CLI wallet, Flutter GUI wallet, block explorer, SDK, SPL programs, DApp framework, and multi-network infrastructure.
 
@@ -10,7 +10,7 @@ A high-performance Layer 1 blockchain forked from [Solana](https://github.com/an
 
 ```
                           ┌─────────────────────────────────────────┐
-                          │              SolClone Network            │
+                          │              Prism Network            │
                           │                                         │
    ┌──────────┐          │  ┌───────────┐    ┌─────────────────┐  │
    │ CLI      │──RPC────▶│  │ Validator  │◀──▶│  Gossip Network │  │
@@ -74,26 +74,26 @@ A high-performance Layer 1 blockchain forked from [Solana](https://github.com/an
 
 ## Third-Party Wallet Support
 
-SolClone implements the [Wallet Standard](https://github.com/wallet-standard/wallet-standard), which means **any compliant wallet works out of the box** with SolClone DApps -- no custom integration required.
+Prism implements the [Wallet Standard](https://github.com/wallet-standard/wallet-standard), which means **any compliant wallet works out of the box** with Prism DApps -- no custom integration required.
 
 | Wallet | Connection Method |
 |--------|-------------------|
 | **Phantom** | Browser extension (Wallet Standard) |
 | **Solflare** | Browser extension (Wallet Standard) |
 | **Backpack** | Browser extension (Wallet Standard) |
-| **Any Wallet Standard wallet** | Auto-detected via `@solclone/wallet-standard` |
-| **Any mobile wallet** | QR code pairing via `@solclone/wallet-connect` |
+| **Any Wallet Standard wallet** | Auto-detected via `@prism/wallet-standard` |
+| **Any mobile wallet** | QR code pairing via `@prism/wallet-connect` |
 
-DApp developers can add full wallet support in three lines of code using `@solclone/connect-kit`:
+DApp developers can add full wallet support in three lines of code using `@prism/connect-kit`:
 
 ```tsx
-import { SolCloneProvider, ConnectButton } from "@solclone/connect-kit";
+import { PrismProvider, ConnectButton } from "@prism/connect-kit";
 
 function App() {
   return (
-    <SolCloneProvider network="devnet">
+    <PrismProvider network="devnet">
       <ConnectButton />
-    </SolCloneProvider>
+    </PrismProvider>
   );
 }
 ```
@@ -118,7 +118,7 @@ See [`wallet-standard/`](./wallet-standard/), [`wallet-connect/`](./wallet-conne
 
 ## Networks
 
-SolClone runs three networks, matching Solana's architecture:
+Prism runs three networks, matching Solana's architecture:
 
 | Network | RPC Port | Faucet | Use Case |
 |---------|----------|--------|----------|
@@ -170,16 +170,16 @@ docker compose --profile full up
 cd cli-wallet && npm install && npm run build
 
 # Generate a keypair
-npx solclone keygen
+npx prism keygen
 
 # Check balance
-npx solclone balance
+npx prism balance
 
 # Request airdrop (devnet)
-npx solclone airdrop 5
+npx prism airdrop 5
 
 # Send tokens
-npx solclone transfer <address> 1.5
+npx prism transfer <address> 1.5
 ```
 
 ### Option 5: Flutter Wallet
@@ -221,7 +221,7 @@ make all             # Build everything
 ## Project Structure
 
 ```
-solclone/
+prism/
 ├── validator/            # Solana validator (Rust) — forked from anza-xyz/agave
 │   ├── cli/              #   Solana CLI tool
 │   ├── core/             #   Consensus, PoH, Tower BFT
@@ -327,7 +327,7 @@ See `docs/validator-guide.md` for the full operator guide and `networks/mainnet/
 | Document | Description |
 |----------|-------------|
 | [Whitepaper](./WHITEPAPER.md) | Technical architecture, consensus, tokenomics |
-| [Tokenomics](./docs/tokenomics.md) | SCLONE supply, distribution, inflation, staking |
+| [Tokenomics](./docs/tokenomics.md) | PRISM supply, distribution, inflation, staking |
 | [API Reference](./docs/api-reference.md) | Complete JSON-RPC API documentation |
 | [Validator Guide](./docs/validator-guide.md) | Operator setup, monitoring, troubleshooting |
 | [Developer Guide](./docs/developer-guide.md) | Building programs, deploying DApps, SDK usage |

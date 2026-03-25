@@ -1,5 +1,5 @@
 /**
- * WalletModal — Wallet selection modal for SolClone DApps.
+ * WalletModal — Wallet selection modal for Prism DApps.
  *
  * Features:
  *   - Lists all detected Wallet Standard wallets with icons
@@ -10,8 +10,8 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { detectWallets, type DetectedWallet } from "@solclone/wallet-standard";
-import { useSolCloneContext } from "./SolCloneProvider";
+import { detectWallets, type DetectedWallet } from "@prism/wallet-standard";
+import { usePrismContext } from "./PrismProvider";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -57,7 +57,7 @@ const POPULAR_WALLETS: PopularWallet[] = [
   },
 ];
 
-const RECENT_WALLET_KEY = "solclone:recent-wallet";
+const RECENT_WALLET_KEY = "prism:recent-wallet";
 
 // ── Styles ──────────────────────────────────────────────────────────────────
 
@@ -200,7 +200,7 @@ export function WalletModal({
   theme = "dark",
   walletConnectProjectId,
 }: WalletModalProps) {
-  const { connect: connectWallet } = useSolCloneContext();
+  const { connect: connectWallet } = usePrismContext();
   const [search, setSearch] = useState("");
   const [wallets, setWallets] = useState<DetectedWallet[]>([]);
   const [recentWalletName, setRecentWalletName] = useState<string | null>(null);
@@ -274,10 +274,10 @@ export function WalletModal({
     setShowQR(true);
 
     try {
-      const { SolCloneWalletConnectClient, WalletConnectQRModal } =
-        await import("@solclone/wallet-connect");
+      const { PrismWalletConnectClient, WalletConnectQRModal } =
+        await import("@prism/wallet-connect");
 
-      const client = new SolCloneWalletConnectClient({
+      const client = new PrismWalletConnectClient({
         projectId: walletConnectProjectId,
       });
 

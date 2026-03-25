@@ -23,7 +23,7 @@ export function FundedProject({ project }: { project: FundedProjectData }) {
 
       <div className="flex items-center justify-between text-sm mb-3">
         <span className="text-[#9999bb]">Funded</span>
-        <span className="text-amber-400 font-medium">{project.amountFunded.toLocaleString()} SCLONE</span>
+        <span className="text-amber-400 font-medium">{project.amountFunded.toLocaleString()} PRISM</span>
       </div>
 
       {/* Milestones Progress */}

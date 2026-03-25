@@ -4,7 +4,7 @@ use anchor_spl::token::{self, Burn, MintTo, Token, TokenAccount, Transfer};
 declare_id!("TokenProg1111111111111111111111111111111111");
 
 #[program]
-pub mod solclone_token {
+pub mod prism_token {
     use super::*;
 
     /// Initialize a new token mint with the given decimals and authority.

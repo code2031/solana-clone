@@ -50,7 +50,7 @@ body {
 .chain-ethereum { color: #627EEA; }
 .chain-bitcoin { color: #F7931A; }
 .chain-solana { color: #9945FF; }
-.chain-solclone {
+.chain-prism {
   background: linear-gradient(135deg, #8B5CF6, #10B981);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

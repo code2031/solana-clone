@@ -1,7 +1,7 @@
 {
-  "name": "solclone-ethereum-bridge-relayer",
+  "name": "prism-ethereum-bridge-relayer",
   "version": "0.1.0",
-  "description": "Relayer service for the SolClone <-> Ethereum cross-chain bridge",
+  "description": "Relayer service for the Prism <-> Ethereum cross-chain bridge",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

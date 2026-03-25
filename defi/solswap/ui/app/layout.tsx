@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolSwap | SolClone DEX",
+  title: "SolSwap | Prism DEX",
   description:
-    "Trade tokens instantly on SolClone with near-zero fees. The fastest AMM DEX on the SolClone blockchain.",
+    "Trade tokens instantly on Prism with near-zero fees. The fastest AMM DEX on the Prism blockchain.",
 };
 
 export default function RootLayout({
@@ -85,7 +85,7 @@ export default function RootLayout({
           <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <span className="gradient-text font-semibold">SolSwap</span>
-              <span>by SolClone</span>
+              <span>by Prism</span>
             </div>
             <div className="flex items-center gap-4 text-xs text-gray-600">
               <a href="#" className="transition hover:text-gray-400">Docs</a>

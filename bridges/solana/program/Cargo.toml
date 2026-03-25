@@ -1,8 +1,8 @@
 [package]
-name = "solclone-solana-bridge"
+name = "prism-solana-bridge"
 version = "0.1.0"
 edition = "2021"
-description = "SolClone <-> Solana cross-chain bridge program"
+description = "Prism <-> Solana cross-chain bridge program"
 license = "MIT"
 
 [dependencies]
@@ -13,7 +13,7 @@ thiserror = "1.0"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "solclone_solana_bridge"
+name = "prism_solana_bridge"
 
 [features]
 no-entrypoint = []

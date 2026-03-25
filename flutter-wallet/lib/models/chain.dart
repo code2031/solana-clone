@@ -1,5 +1,5 @@
 /// Supported blockchain types.
-enum ChainType { solclone, solana, bitcoin, ethereum, polygon, bnb }
+enum ChainType { prism, solana, bitcoin, ethereum, polygon, bnb }
 
 /// Represents a blockchain network with its current state.
 class Chain {
@@ -67,9 +67,9 @@ class Chain {
 
   /// Default chain configurations.
   static const Map<ChainType, Chain> defaults = {
-    ChainType.solclone: Chain(
-      type: ChainType.solclone,
-      name: 'SolClone',
+    ChainType.prism: Chain(
+      type: ChainType.prism,
+      name: 'Prism',
       symbol: 'SOL',
       iconEmoji: '\u{1F7E3}', // purple circle
       color: 'FF9945FF',

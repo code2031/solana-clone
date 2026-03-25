@@ -1,4 +1,4 @@
-# CLAUDE.md -- SolClone Bridges
+# CLAUDE.md -- Prism Bridges
 
 ## Overview
 
@@ -55,7 +55,7 @@ cd bridges/solana/program && cargo test
 ## Key Files
 
 - `ethereum/program/src/lib.rs` -- ERC-20 mint/burn logic
-- `ethereum/relayer/src/index.ts` -- Ethereum event watcher + SolClone submitter
+- `ethereum/relayer/src/index.ts` -- Ethereum event watcher + Prism submitter
 - `bitcoin/attestor/src/index.ts` -- Bitcoin TX monitor + multi-sig attestation
 - `ui/app/page.tsx` -- Unified bridge interface entry point
 - `privacy/program/src/lib.rs` -- Shielded pool program (repo root)

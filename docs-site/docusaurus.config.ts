@@ -3,19 +3,19 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'SolClone Docs',
-  tagline: 'Build on the SolClone blockchain - a Solana-compatible L1 for learning and experimentation',
+  title: 'Prism Docs',
+  tagline: 'Build on the Prism blockchain - a Solana-compatible L1 for learning and experimentation',
   favicon: 'img/favicon.ico',
 
   future: {
     v4: true,
   },
 
-  url: 'https://docs.solclone.dev',
+  url: 'https://docs.prism.dev',
   baseUrl: '/',
 
-  organizationName: 'solclone',
-  projectName: 'solclone',
+  organizationName: 'prism',
+  projectName: 'prism',
 
   onBrokenLinks: 'throw',
 
@@ -30,7 +30,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/solclone/solclone/tree/main/docs-site/',
+          editUrl: 'https://github.com/prism/prism/tree/main/docs-site/',
         },
         blog: false,
         theme: {
@@ -41,15 +41,15 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: 'img/solclone-social-card.jpg',
+    image: 'img/prism-social-card.jpg',
     colorMode: {
       defaultMode: 'dark',
       respectPrefersColorScheme: false,
     },
     navbar: {
-      title: 'SolClone',
+      title: 'Prism',
       logo: {
-        alt: 'SolClone Logo',
+        alt: 'Prism Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -70,7 +70,7 @@ const config: Config = {
           position: 'left',
         },
         {
-          href: 'https://github.com/solclone/solclone',
+          href: 'https://github.com/prism/prism',
           label: 'GitHub',
           position: 'right',
         },
@@ -122,16 +122,16 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/solclone/solclone',
+              href: 'https://github.com/prism/prism',
             },
             {
               label: 'Discord',
-              href: 'https://discord.gg/solclone',
+              href: 'https://discord.gg/prism',
             },
           ],
         },
       ],
-      copyright: `Copyright ${new Date().getFullYear()} SolClone Project. Built with Docusaurus.`,
+      copyright: `Copyright ${new Date().getFullYear()} Prism Project. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

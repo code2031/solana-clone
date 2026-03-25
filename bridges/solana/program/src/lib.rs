@@ -22,7 +22,7 @@ solana_program::declare_id!("SolBrdg11111111111111111111111111111111111");
 // State
 // ---------------------------------------------------------------------------
 
-/// Bridge state for SolClone <-> Solana.
+/// Bridge state for Prism <-> Solana.
 /// Since both chains use the same account model and SPL token standard,
 /// this bridge is simpler than the Ethereum or Bitcoin bridges.
 #[derive(BorshSerialize, BorshDeserialize, Debug, Clone)]
@@ -36,7 +36,7 @@ pub struct SolanaBridgeState {
     pub guardian_set: Vec<Pubkey>,
     /// Guardian signature threshold
     pub guardian_threshold: u8,
-    /// Token mappings: (SolClone mint, Solana mint) pairs
+    /// Token mappings: (Prism mint, Solana mint) pairs
     pub token_mappings: Vec<TokenMapping>,
     /// Monotonically increasing nonce
     pub nonce: u64,
@@ -46,8 +46,8 @@ pub struct SolanaBridgeState {
 
 #[derive(BorshSerialize, BorshDeserialize, Debug, Clone)]
 pub struct TokenMapping {
-    /// SPL Token mint on SolClone
-    pub solclone_mint: Pubkey,
+    /// SPL Token mint on Prism
+    pub prism_mint: Pubkey,
     /// Corresponding SPL Token mint on Solana mainnet
     pub solana_mint: Pubkey,
     /// Whether this mapping is active
@@ -66,7 +66,7 @@ pub enum TransferStatus {
 #[derive(BorshSerialize, BorshDeserialize, Debug, Clone)]
 pub struct TransferRecord {
     pub nonce: u64,
-    /// 3 = Solana, 4 = SolClone
+    /// 3 = Solana, 4 = Prism
     pub from_chain: u8,
     pub to_chain: u8,
     pub token_mint: Pubkey,
@@ -98,7 +98,7 @@ pub enum SolanaBridgeInstruction {
         guardian_threshold: u8,
     },
 
-    /// Lock an SPL token on SolClone and emit a transfer event.
+    /// Lock an SPL token on Prism and emit a transfer event.
     /// The relayer on Solana-side will observe this and mint/release the equivalent.
     ///
     /// Accounts:
@@ -115,13 +115,13 @@ pub enum SolanaBridgeInstruction {
     },
 
     /// After guardian attestation of a lock on Solana, mint the equivalent
-    /// SPL token on SolClone.
+    /// SPL token on Prism.
     ///
     /// Accounts:
     ///   0. `[signer]`          Guardian
     ///   1. `[writable]`        SolanaBridgeState PDA
     ///   2. `[writable]`        TransferRecord PDA
-    ///   3. `[writable]`        Token mint PDA (SolClone side)
+    ///   3. `[writable]`        Token mint PDA (Prism side)
     ///   4. `[writable]`        Recipient token account
     ///   5. `[]`                Mint authority PDA
     ///   6. `[]`                SPL Token program
@@ -134,7 +134,7 @@ pub enum SolanaBridgeInstruction {
         token_solana_mint: Pubkey,
     },
 
-    /// Burn tokens on SolClone, triggering a release on Solana.
+    /// Burn tokens on Prism, triggering a release on Solana.
     ///
     /// Accounts:
     ///   0. `[signer]`          User
@@ -341,7 +341,7 @@ fn process_lock_token(
 
     let record = TransferRecord {
         nonce,
-        from_chain: 4, // SolClone
+        from_chain: 4, // Prism
         to_chain: 3,   // Solana
         token_mint: *vault_token_account.key,
         amount,
@@ -377,7 +377,7 @@ fn process_lock_token(
     bridge_state.serialize(&mut &mut bridge_state_account.data.borrow_mut()[..])?;
 
     msg!(
-        "Locked {} tokens on SolClone for Solana transfer, nonce {}",
+        "Locked {} tokens on Prism for Solana transfer, nonce {}",
         amount,
         nonce
     );
@@ -433,7 +433,7 @@ fn process_mint_token(
         let new_record = TransferRecord {
             nonce,
             from_chain: 3, // Solana
-            to_chain: 4,   // SolClone
+            to_chain: 4,   // Prism
             token_mint: *mint_account.key,
             amount,
             sender: sender_on_solana,
@@ -506,7 +506,7 @@ fn process_mint_token(
         bridge_state.total_transfers += 1;
 
         msg!(
-            "Minted {} tokens on SolClone for Solana->SolClone transfer nonce {}",
+            "Minted {} tokens on Prism for Solana->Prism transfer nonce {}",
             amount,
             nonce
         );
@@ -553,7 +553,7 @@ fn process_burn_and_release(
     let mut bridge_state =
         SolanaBridgeState::try_from_slice(&bridge_state_account.data.borrow())?;
 
-    // Burn tokens on SolClone
+    // Burn tokens on Prism
     let burn_ix = spl_token::instruction::burn(
         token_program.key,
         user_token_account.key,
@@ -586,7 +586,7 @@ fn process_burn_and_release(
 
     let record = TransferRecord {
         nonce,
-        from_chain: 4, // SolClone
+        from_chain: 4, // Prism
         to_chain: 3,   // Solana
         token_mint: *mint_account.key,
         amount,
@@ -622,7 +622,7 @@ fn process_burn_and_release(
     bridge_state.serialize(&mut &mut bridge_state_account.data.borrow_mut()[..])?;
 
     msg!(
-        "Burned {} tokens on SolClone for Solana release, nonce {}, recipient {}",
+        "Burned {} tokens on Prism for Solana release, nonce {}, recipient {}",
         amount,
         nonce,
         recipient_on_solana
@@ -649,7 +649,7 @@ mod tests {
     #[test]
     fn test_token_mapping_serialization() {
         let mapping = TokenMapping {
-            solclone_mint: Pubkey::default(),
+            prism_mint: Pubkey::default(),
             solana_mint: Pubkey::default(),
             is_active: true,
         };

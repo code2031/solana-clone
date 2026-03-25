@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# Deploy a custom program to SolClone
+# Deploy a custom program to Prism
 # Usage: ./examples/deploy-program.sh <program.so>
 # ============================================================================
 
@@ -12,7 +12,7 @@ RPC_URL="${RPC_URL:-http://localhost:8899}"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CLI="$ROOT/validator/target/release/solana"
 
-echo "=== Deploy Program to SolClone ==="
+echo "=== Deploy Program to Prism ==="
 echo ""
 
 if [ ! -f "$CLI" ]; then
@@ -66,5 +66,5 @@ echo "Deploying program..."
 echo ""
 echo "=== Program Deployed ==="
 echo ""
-echo "Your program is now live on the SolClone network."
+echo "Your program is now live on the Prism network."
 echo "DApps can interact with it using the web3.js SDK or CLI."

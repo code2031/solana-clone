@@ -1,8 +1,8 @@
-# CLAUDE.md -- SolClone Docs Site
+# CLAUDE.md -- Prism Docs Site
 
 ## Overview
 
-Docusaurus-powered documentation site for the SolClone project. Contains guides, references, and tutorials for developers, validators, and users.
+Docusaurus-powered documentation site for the Prism project. Contains guides, references, and tutorials for developers, validators, and users.
 
 ## Quick Start
 
@@ -20,10 +20,10 @@ npm run build      # Production build to build/
 | **Intro** | `docs/intro.md` | Project overview and goals |
 | **Getting Started** | `docs/getting-started.md` | Installation and first steps |
 | **CLI Reference** | `docs/cli-reference.md` | All CLI wallet commands |
-| **SDK Guide** | `docs/sdk-guide.md` | Using @solclone/web3.js |
+| **SDK Guide** | `docs/sdk-guide.md` | Using @prism/web3.js |
 | **Anchor Guide** | `docs/anchor-guide.md` | Building programs with Anchor |
 | **DeFi Guide** | `docs/defi-guide.md` | Interacting with SolSwap, SolLend, SCUSD |
-| **NFT Guide** | `docs/nft-guide.md` | Minting and trading NFTs on SolClone |
+| **NFT Guide** | `docs/nft-guide.md` | Minting and trading NFTs on Prism |
 
 ## Key Files
 

@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # CLI Reference
 
-The `solclone` CLI wallet provides full command-line access to the SolClone blockchain. Below is a complete reference of all available commands.
+The `prism` CLI wallet provides full command-line access to the Prism blockchain. Below is a complete reference of all available commands.
 
 ## Installation
 
@@ -22,19 +22,19 @@ npm install && npm run build && npm link
 
 ## Commands
 
-### `solclone keygen`
+### `prism keygen`
 
 Generate a new Ed25519 keypair.
 
 ```bash
-# Generate default keypair (~/.config/solclone/id.json)
-solclone keygen
+# Generate default keypair (~/.config/prism/id.json)
+prism keygen
 
 # Generate to a specific file
-solclone keygen --outfile ./my-wallet.json
+prism keygen --outfile ./my-wallet.json
 
 # Generate with BIP-39 mnemonic
-solclone keygen --mnemonic
+prism keygen --mnemonic
 ```
 
 | Option | Description |
@@ -43,56 +43,56 @@ solclone keygen --mnemonic
 | `--mnemonic` | Generate from mnemonic phrase |
 | `--force` | Overwrite existing keypair |
 
-### `solclone address`
+### `prism address`
 
 Display your wallet's public address.
 
 ```bash
-solclone address
+prism address
 # Output: 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU
 ```
 
-### `solclone balance`
+### `prism balance`
 
 Check the SOL balance of an account.
 
 ```bash
 # Check your balance
-solclone balance
+prism balance
 
 # Check another account's balance
-solclone balance 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU
+prism balance 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU
 
 # Display in lamports
-solclone balance --lamports
+prism balance --lamports
 ```
 
 | Option | Description |
 |--------|-------------|
 | `--lamports` | Show balance in lamports instead of SOL |
 
-### `solclone airdrop`
+### `prism airdrop`
 
 Request test SOL from the faucet.
 
 ```bash
 # Request 10 SOL
-solclone airdrop 10
+prism airdrop 10
 
 # Request to a specific address
-solclone airdrop 5 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU
+prism airdrop 5 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU
 ```
 
-### `solclone transfer`
+### `prism transfer`
 
 Send SOL to another account.
 
 ```bash
 # Transfer 2.5 SOL
-solclone transfer <RECIPIENT_ADDRESS> 2.5
+prism transfer <RECIPIENT_ADDRESS> 2.5
 
 # Transfer with memo
-solclone transfer <RECIPIENT_ADDRESS> 1.0 --memo "Payment for services"
+prism transfer <RECIPIENT_ADDRESS> 1.0 --memo "Payment for services"
 ```
 
 | Option | Description |
@@ -100,22 +100,22 @@ solclone transfer <RECIPIENT_ADDRESS> 1.0 --memo "Payment for services"
 | `--memo <text>` | Attach a memo to the transaction |
 | `--fee-payer <path>` | Use a different keypair for fees |
 
-### `solclone token`
+### `prism token`
 
 Manage SPL tokens.
 
 ```bash
 # Create a new token mint
-solclone token create-mint --decimals 9
+prism token create-mint --decimals 9
 
 # Mint tokens
-solclone token mint <MINT_ADDRESS> 1000
+prism token mint <MINT_ADDRESS> 1000
 
 # Get token balance
-solclone token balance <MINT_ADDRESS>
+prism token balance <MINT_ADDRESS>
 
 # Transfer tokens
-solclone token transfer <MINT_ADDRESS> <RECIPIENT> 100
+prism token transfer <MINT_ADDRESS> <RECIPIENT> 100
 ```
 
 | Subcommand | Description |
@@ -125,60 +125,60 @@ solclone token transfer <MINT_ADDRESS> <RECIPIENT> 100
 | `balance` | Check token balance |
 | `transfer` | Transfer tokens |
 
-### `solclone stake`
+### `prism stake`
 
 Manage staking operations.
 
 ```bash
 # Stake SOL
-solclone stake create --amount 100
+prism stake create --amount 100
 
 # View stake accounts
-solclone stake list
+prism stake list
 
 # Deactivate a stake
-solclone stake deactivate <STAKE_ADDRESS>
+prism stake deactivate <STAKE_ADDRESS>
 
 # Withdraw stake
-solclone stake withdraw <STAKE_ADDRESS>
+prism stake withdraw <STAKE_ADDRESS>
 ```
 
-### `solclone config`
+### `prism config`
 
 Manage CLI configuration.
 
 ```bash
 # View current config
-solclone config get
+prism config get
 
 # Set RPC URL
-solclone config set --url http://localhost:8899
+prism config set --url http://localhost:8899
 
 # Set keypair path
-solclone config set --keypair ~/.config/solclone/id.json
+prism config set --keypair ~/.config/prism/id.json
 ```
 
-### `solclone history`
+### `prism history`
 
 View transaction history for an account.
 
 ```bash
 # View recent transactions
-solclone history
+prism history
 
 # View with limit
-solclone history --limit 20
+prism history --limit 20
 
 # View for a specific address
-solclone history <ADDRESS>
+prism history <ADDRESS>
 ```
 
-### `solclone info`
+### `prism info`
 
 Display cluster and node information.
 
 ```bash
-solclone info
+prism info
 # Output:
 #   Cluster:     Devnet
 #   RPC URL:     http://localhost:8899
@@ -187,19 +187,19 @@ solclone info
 #   Epoch:       3
 ```
 
-### `solclone init`
+### `prism init`
 
 Initialize a new project from a template.
 
 ```bash
 # Create a token project
-solclone init my-token --template token
+prism init my-token --template token
 
 # Create an NFT project
-solclone init my-nfts --template nft
+prism init my-nfts --template nft
 
 # Create an escrow project
-solclone init my-escrow --template escrow
+prism init my-escrow --template escrow
 
 # Available templates: token, nft, escrow, voting, staking
 ```

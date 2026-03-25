@@ -4,7 +4,7 @@ use anchor_spl::token::{self, Token, TokenAccount, Transfer, MintTo};
 declare_id!("StakePool1111111111111111111111111111111111");
 
 #[program]
-pub mod solclone_staking_pool {
+pub mod prism_staking_pool {
     use super::*;
 
     /// Initialize a new staking pool with a reward rate.

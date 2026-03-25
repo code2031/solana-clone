@@ -38,7 +38,7 @@ const MOCK_BOUNTIES: Bounty[] = [
     id: "b1",
     title: "Implement Token Transfer History Component",
     description: "Build a reusable React component that displays token transfer history for any SPL token, with pagination and filtering.",
-    fullDescription: "Create a production-ready React component that fetches and displays SPL token transfer history using the SolClone RPC. The component should support pagination, filtering by date range and amount, sorting, and should be fully responsive. Include proper loading states, error handling, and empty states.",
+    fullDescription: "Create a production-ready React component that fetches and displays SPL token transfer history using the Prism RPC. The component should support pagination, filtering by date range and amount, sorting, and should be fully responsive. Include proper loading states, error handling, and empty states.",
     requirements: [
       "Fetch transfers via getSignaturesForAddress + getParsedTransaction",
       "Support pagination with configurable page size",
@@ -80,7 +80,7 @@ const MOCK_BOUNTIES: Bounty[] = [
     id: "b3",
     title: "Prometheus Metrics Exporter for Validators",
     description: "Create a Prometheus metrics exporter that exposes validator performance data for monitoring dashboards.",
-    fullDescription: "Build a lightweight service that connects to a SolClone validator and exposes key metrics (skip rate, vote credits, leader slots, block production, etc.) in Prometheus format. Should be deployable as a Docker container alongside the validator.",
+    fullDescription: "Build a lightweight service that connects to a Prism validator and exposes key metrics (skip rate, vote credits, leader slots, block production, etc.) in Prometheus format. Should be deployable as a Docker container alongside the validator.",
     requirements: [
       "Export key validator metrics (skip rate, credits, slots, etc.)",
       "Prometheus-compatible /metrics endpoint",
@@ -100,8 +100,8 @@ const MOCK_BOUNTIES: Bounty[] = [
   {
     id: "b4",
     title: "Write Program Development Guide",
-    description: "Create a comprehensive guide for developing Solana programs on SolClone, from setup to deployment.",
-    fullDescription: "Write an end-to-end developer guide covering the SolClone program development lifecycle. Cover environment setup, project structure, writing and testing programs in Rust, deploying to devnet/mainnet, and common patterns and pitfalls. Include code samples and diagrams.",
+    description: "Create a comprehensive guide for developing Solana programs on Prism, from setup to deployment.",
+    fullDescription: "Write an end-to-end developer guide covering the Prism program development lifecycle. Cover environment setup, project structure, writing and testing programs in Rust, deploying to devnet/mainnet, and common patterns and pitfalls. Include code samples and diagrams.",
     requirements: [
       "Cover full development lifecycle",
       "Code samples that compile and run",
@@ -121,7 +121,7 @@ const MOCK_BOUNTIES: Bounty[] = [
   {
     id: "b5",
     title: "Integration Test Suite for Token Program",
-    description: "Build a comprehensive integration test suite for the SolClone Token program covering all instructions.",
+    description: "Build a comprehensive integration test suite for the Prism Token program covering all instructions.",
     fullDescription: "Create an integration test suite using the solana-program-test framework that covers all Token program instructions including mint, transfer, burn, freeze, thaw, and close. Tests should cover both success and failure paths with clear assertions.",
     requirements: [
       "Cover all Token program instructions",
@@ -150,12 +150,12 @@ const MOCK_BOUNTIES: Bounty[] = [
   {
     id: "b6",
     title: "Design System Component Library",
-    description: "Design and implement a reusable UI component library following SolClone brand guidelines.",
-    fullDescription: "Create a design system with reusable React components (buttons, inputs, cards, modals, tables, charts) that follow the SolClone dark theme and brand guidelines. Components should be accessible, responsive, and documented with Storybook.",
+    description: "Design and implement a reusable UI component library following Prism brand guidelines.",
+    fullDescription: "Create a design system with reusable React components (buttons, inputs, cards, modals, tables, charts) that follow the Prism dark theme and brand guidelines. Components should be accessible, responsive, and documented with Storybook.",
     requirements: [
       "Core components: Button, Input, Card, Modal, Table, Badge",
       "Chart components for financial data",
-      "Dark theme with SolClone brand colors",
+      "Dark theme with Prism brand colors",
       "Storybook documentation",
       "Accessibility compliance (WCAG 2.1 AA)",
     ],
@@ -224,10 +224,10 @@ export default function BountyBoard() {
     <div className="max-w-7xl mx-auto px-6 py-8">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-red-400 to-rose-400 bg-clip-text text-transparent">
-          SolClone Bounty Board
+          Prism Bounty Board
         </h1>
         <p className="text-[#9999bb] text-lg max-w-2xl mx-auto mb-6">
-          Earn SCLONE tokens by completing development tasks. Browse open bounties, claim work, and get rewarded.
+          Earn PRISM tokens by completing development tasks. Browse open bounties, claim work, and get rewarded.
         </p>
         <button
           onClick={() => setShowCreateForm(true)}
@@ -242,7 +242,7 @@ export default function BountyBoard() {
         {[
           { label: "Total Bounties", value: MOCK_BOUNTIES.length.toString() },
           { label: "Open", value: MOCK_BOUNTIES.filter((b) => b.status === "Open").length.toString() },
-          { label: "Total Rewards", value: `${totalRewards.toLocaleString()} SCLONE` },
+          { label: "Total Rewards", value: `${totalRewards.toLocaleString()} PRISM` },
           { label: "Completed", value: completed.length.toString() },
         ].map((stat) => (
           <div key={stat.label} className="bg-[#1a1a2e] border border-[#2a2a4a] rounded-xl p-5 text-center">

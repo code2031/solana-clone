@@ -199,7 +199,7 @@ export function registerStakeCommand(program: Command): void {
           printSuccess('Stake account deactivated');
           printWarning(
             'Stake will be fully deactivated at the end of the current epoch. ' +
-              'You can then withdraw with: solclone stake withdraw ' +
+              'You can then withdraw with: prism stake withdraw ' +
               stakeAccountAddress
           );
         } catch (err: any) {

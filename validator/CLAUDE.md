@@ -1,6 +1,6 @@
-# SolClone Validator
+# Prism Validator
 
-Forked from [anza-xyz/agave](https://github.com/anza-xyz/agave). This is the core validator node for the SolClone blockchain. It is a Rust monorepo containing 100+ crates.
+Forked from [anza-xyz/agave](https://github.com/anza-xyz/agave). This is the core validator node for the Prism blockchain. It is a Rust monorepo containing 100+ crates.
 
 ## Build
 
@@ -39,6 +39,6 @@ cargo fmt --all -- --check                # Format check
 ## Ecosystem Links
 
 - Monorepo: https://github.com/code2031/solana-clone
-- Split repo: https://github.com/code2031/solclone-validator
-- Explorer: https://github.com/code2031/solclone-explorer
-- Web3.js SDK: https://github.com/code2031/solclone-web3js
+- Split repo: https://github.com/code2031/prism-validator
+- Explorer: https://github.com/code2031/prism-explorer
+- Web3.js SDK: https://github.com/code2031/prism-web3js

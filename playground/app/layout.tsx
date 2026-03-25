@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone Playground",
-  description: "Interactive SDK playground for the SolClone blockchain",
+  title: "Prism Playground",
+  description: "Interactive SDK playground for the Prism blockchain",
 };
 
 export default function RootLayout({

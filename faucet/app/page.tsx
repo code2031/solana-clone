@@ -30,10 +30,10 @@ export default function Home() {
       {/* Title & Description */}
       <div className="mb-10 text-center">
         <h1 className="mb-3 text-4xl font-bold text-white sm:text-5xl">
-          SolClone <span className="text-[#9945FF]">Faucet</span>
+          Prism <span className="text-[#9945FF]">Faucet</span>
         </h1>
         <p className="mx-auto max-w-md text-base text-gray-400 leading-relaxed">
-          Get free SCLONE tokens on devnet or testnet for development and testing.
+          Get free PRISM tokens on devnet or testnet for development and testing.
           Tokens have no real-world value.
         </p>
       </div>
@@ -59,7 +59,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="mt-16 text-center text-xs text-gray-600">
         <p>
-          Built with SolClone &mdash; A Solana-compatible blockchain for learning and development.
+          Built with Prism &mdash; A Solana-compatible blockchain for learning and development.
         </p>
         <p className="mt-1 text-gray-700">
           Faucet tokens are for testing purposes only. They hold no monetary value.

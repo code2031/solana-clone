@@ -1,34 +1,34 @@
 /**
- * @solclone/wallet-standard
+ * @prism/wallet-standard
  *
- * Solana Wallet Standard implementation for SolClone.
+ * Solana Wallet Standard implementation for Prism.
  * Enables bidirectional wallet interoperability:
- *   - Third-party wallets (Phantom, Solflare, Backpack, ...) can connect to SolClone DApps.
- *   - SolClone's own wallet can connect to external Solana DApps.
+ *   - Third-party wallets (Phantom, Solflare, Backpack, ...) can connect to Prism DApps.
+ *   - Prism's own wallet can connect to external Solana DApps.
  */
 
 // Wallet implementation
-export { SolCloneWallet, SolCloneWalletAccount } from "./wallet";
+export { PrismWallet, PrismWalletAccount } from "./wallet";
 export type { KeypairProvider, TransactionSender } from "./wallet";
 
 // Registration
 export {
-  registerSolCloneWallet,
-  registerSolCloneWalletGlobally,
+  registerPrismWallet,
+  registerPrismWalletGlobally,
 } from "./register";
 
 // Feature constants
 export {
-  SolCloneConnect,
-  SolCloneDisconnect,
-  SolCloneEvents,
-  SolCloneSignTransaction,
-  SolCloneSignAndSendTransaction,
-  SolCloneSignMessage,
-  SOLCLONE_FEATURES,
+  PrismConnect,
+  PrismDisconnect,
+  PrismEvents,
+  PrismSignTransaction,
+  PrismSignAndSendTransaction,
+  PrismSignMessage,
+  PRISM_FEATURES,
   ALL_FEATURES,
 } from "./features";
-export type { SolCloneFeature } from "./features";
+export type { PrismFeature } from "./features";
 
 // Wallet detection
 export { detectWallets, onWalletRegistered } from "./detect";
@@ -36,7 +36,7 @@ export type { DetectedWallet, DetectWalletsOptions } from "./detect";
 
 // Wallet adapter bridge
 export {
-  SolCloneWalletAdapter,
-  createSolCloneAdapter,
+  PrismWalletAdapter,
+  createPrismAdapter,
 } from "./adapter";
 export type { WalletAdapterInterface } from "./adapter";

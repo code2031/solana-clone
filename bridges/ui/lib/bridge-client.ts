@@ -1,5 +1,5 @@
 /**
- * SolClone Bridge Client
+ * Prism Bridge Client
  *
  * Unified client that routes bridge operations to the appropriate
  * bridge program based on the source and destination chain selection.
@@ -9,7 +9,7 @@
 // Types
 // ---------------------------------------------------------------------------
 
-export type ChainId = "ethereum" | "bitcoin" | "solana" | "solclone";
+export type ChainId = "ethereum" | "bitcoin" | "solana" | "prism";
 
 export interface BridgeRequest {
   sourceChain: ChainId;
@@ -58,18 +58,18 @@ const BRIDGE_PROGRAMS: Record<string, string> = {
 // ---------------------------------------------------------------------------
 
 export class BridgeClient {
-  private solcloneRpc: string;
+  private prismRpc: string;
 
-  constructor(solcloneRpc: string = "http://localhost:8899") {
-    this.solcloneRpc = solcloneRpc;
+  constructor(prismRpc: string = "http://localhost:8899") {
+    this.prismRpc = prismRpc;
   }
 
   /**
    * Determine which bridge program to use based on the source/dest chain pair.
-   * One side must always be SolClone.
+   * One side must always be Prism.
    */
   private resolveBridgeProgram(source: ChainId, dest: ChainId): string {
-    const otherChain = source === "solclone" ? dest : source;
+    const otherChain = source === "prism" ? dest : source;
 
     const programId = BRIDGE_PROGRAMS[otherChain];
     if (!programId) {
@@ -82,14 +82,14 @@ export class BridgeClient {
    * Initiate a bridge transfer.
    */
   async bridge(request: BridgeRequest): Promise<BridgeResult> {
-    // Validate that one side is SolClone
-    if (request.sourceChain !== "solclone" && request.destChain !== "solclone") {
+    // Validate that one side is Prism
+    if (request.sourceChain !== "prism" && request.destChain !== "prism") {
       return {
         success: false,
         nonce: 0,
         txHash: "",
         estimatedTime: "",
-        error: "One side of the bridge must be SolClone",
+        error: "One side of the bridge must be Prism",
       };
     }
 
@@ -124,18 +124,18 @@ export class BridgeClient {
     console.log(`[BridgeClient] Token: ${request.token}, Amount: ${request.amount}`);
 
     // Route to the appropriate bridge handler
-    if (request.sourceChain === "solclone") {
-      return this.bridgeFromSolClone(request, programId);
+    if (request.sourceChain === "prism") {
+      return this.bridgeFromPrism(request, programId);
     } else {
-      return this.bridgeToSolClone(request, programId);
+      return this.bridgeToPrism(request, programId);
     }
   }
 
   /**
-   * Bridge tokens FROM SolClone to another chain.
+   * Bridge tokens FROM Prism to another chain.
    * This calls the appropriate program's lock/burn instruction.
    */
-  private async bridgeFromSolClone(
+  private async bridgeFromPrism(
     request: BridgeRequest,
     programId: string
   ): Promise<BridgeResult> {
@@ -143,7 +143,7 @@ export class BridgeClient {
       ethereum: "~15 minutes",
       bitcoin: "~60 minutes",
       solana: "~30 seconds",
-      solclone: "instant",
+      prism: "instant",
     };
 
     try {
@@ -152,7 +152,7 @@ export class BridgeClient {
       // For Bitcoin bridge: call RequestWithdrawal (burn scBTC)
       // For Solana bridge: call BurnAndRelease or LockToken
 
-      console.log(`[BridgeClient] Initiating ${request.destChain} bridge-out from SolClone`);
+      console.log(`[BridgeClient] Initiating ${request.destChain} bridge-out from Prism`);
 
       // Mock successful result
       const mockNonce = Math.floor(Math.random() * 100000);
@@ -176,10 +176,10 @@ export class BridgeClient {
   }
 
   /**
-   * Bridge tokens TO SolClone from another chain.
+   * Bridge tokens TO Prism from another chain.
    * The user initiates on the source chain, then relayers handle the rest.
    */
-  private async bridgeToSolClone(
+  private async bridgeToPrism(
     request: BridgeRequest,
     programId: string
   ): Promise<BridgeResult> {
@@ -187,7 +187,7 @@ export class BridgeClient {
       ethereum: "~15 minutes",
       bitcoin: "~60 minutes",
       solana: "~30 seconds",
-      solclone: "instant",
+      prism: "instant",
     };
 
     try {
@@ -196,7 +196,7 @@ export class BridgeClient {
       // For Bitcoin: user sends BTC to the bridge multisig with OP_RETURN
       // For Solana: user calls lock on the Solana-side program
 
-      console.log(`[BridgeClient] Initiating ${request.sourceChain} bridge-in to SolClone`);
+      console.log(`[BridgeClient] Initiating ${request.sourceChain} bridge-in to Prism`);
 
       const mockNonce = Math.floor(Math.random() * 100000);
       const mockTxHash = generateMockTxHash(request.sourceChain);
@@ -224,7 +224,7 @@ export class BridgeClient {
   async getStatus(nonce: number, sourceChain: ChainId, destChain: ChainId): Promise<BridgeStatus> {
     const programId = this.resolveBridgeProgram(sourceChain, destChain);
 
-    // In production: read the TransferRecord/BridgeTransaction PDA on SolClone
+    // In production: read the TransferRecord/BridgeTransaction PDA on Prism
     console.log(`[BridgeClient] Checking status for nonce ${nonce} on program ${programId}`);
 
     // Mock status
@@ -247,12 +247,12 @@ export class BridgeClient {
    */
   getSupportedTokens(source: ChainId, dest: ChainId): string[] {
     const tokensByPair: Record<string, string[]> = {
-      "ethereum-solclone": ["ETH", "WBTC", "USDC", "USDT"],
-      "solclone-ethereum": ["scETH", "WBTC", "USDC", "USDT"],
-      "bitcoin-solclone": ["BTC"],
-      "solclone-bitcoin": ["scBTC"],
-      "solana-solclone": ["SOL", "USDC", "USDT"],
-      "solclone-solana": ["SOL", "USDC", "USDT"],
+      "ethereum-prism": ["ETH", "WBTC", "USDC", "USDT"],
+      "prism-ethereum": ["scETH", "WBTC", "USDC", "USDT"],
+      "bitcoin-prism": ["BTC"],
+      "prism-bitcoin": ["scBTC"],
+      "solana-prism": ["SOL", "USDC", "USDT"],
+      "prism-solana": ["SOL", "USDC", "USDT"],
     };
 
     return tokensByPair[`${source}-${dest}`] || [];
@@ -272,7 +272,7 @@ function generateMockTxHash(chain: ChainId): string {
 
   if (chain === "ethereum") return `0x${hash}`;
   if (chain === "bitcoin") return hash;
-  // Solana/SolClone use base58, but hex is fine for mock
+  // Solana/Prism use base58, but hex is fine for mock
   return hash;
 }
 

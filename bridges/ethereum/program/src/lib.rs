@@ -29,7 +29,7 @@ pub struct BridgeState {
     pub admin: Pubkey,
     /// Address of the bridge contract on Ethereum (20-byte hex stored as [u8; 20])
     pub ethereum_contract_address: [u8; 20],
-    /// Total token-lamports locked on SolClone side
+    /// Total token-lamports locked on Prism side
     pub total_locked: u64,
     /// Total token-lamports minted as wrapped tokens
     pub total_minted: u64,
@@ -48,7 +48,7 @@ pub struct WrappedToken {
     pub original_chain: u8,
     /// Original token address on the source chain (e.g. ERC-20 contract address)
     pub original_address: [u8; 32],
-    /// SPL Token mint on SolClone that represents this wrapped asset
+    /// SPL Token mint on Prism that represents this wrapped asset
     pub mint: Pubkey,
     pub name: [u8; 32],
     pub symbol: [u8; 8],
@@ -66,10 +66,10 @@ pub enum TransactionStatus {
 #[derive(BorshSerialize, BorshDeserialize, Debug, Clone)]
 pub struct BridgeTransaction {
     pub nonce: u64,
-    /// 1 = Ethereum, 2 = Bitcoin, 3 = Solana, 4 = SolClone
+    /// 1 = Ethereum, 2 = Bitcoin, 3 = Solana, 4 = Prism
     pub from_chain: u8,
     pub to_chain: u8,
-    /// Wrapped token mint on SolClone
+    /// Wrapped token mint on Prism
     pub token: Pubkey,
     pub amount: u64,
     /// Sender address on source chain (padded to 32 bytes)
@@ -117,7 +117,7 @@ pub enum BridgeInstruction {
         decimals: u8,
     },
 
-    /// Lock tokens on SolClone side (when user wants to bridge OUT to Ethereum).
+    /// Lock tokens on Prism side (when user wants to bridge OUT to Ethereum).
     ///
     /// Accounts:
     ///   0. `[signer]`          User
@@ -158,7 +158,7 @@ pub enum BridgeInstruction {
     ///   6. `[]`                SPL Token program
     CompleteTransfer { nonce: u64 },
 
-    /// Burn wrapped tokens on SolClone and emit an event so the Ethereum-side
+    /// Burn wrapped tokens on Prism and emit an event so the Ethereum-side
     /// relayer can release the original ERC-20 tokens.
     ///
     /// Accounts:
@@ -478,7 +478,7 @@ fn process_lock_and_mint(
 
     let bridge_tx = BridgeTransaction {
         nonce,
-        from_chain: 4, // SolClone
+        from_chain: 4, // Prism
         to_chain: 1,   // Ethereum
         token: *vault_token_account.key, // Simplified — in production use the mint
         amount,
@@ -563,7 +563,7 @@ fn process_submit_vaa(
         BridgeTransaction {
             nonce,
             from_chain: 1, // Ethereum
-            to_chain: 4,   // SolClone
+            to_chain: 4,   // Prism
             token: Pubkey::new_from_array(token_original_address),
             amount,
             sender: sender_padded,
@@ -739,7 +739,7 @@ fn process_redeem(
 
     let bridge_tx = BridgeTransaction {
         nonce,
-        from_chain: 4, // SolClone
+        from_chain: 4, // Prism
         to_chain: 1,   // Ethereum
         token: *mint_account.key,
         amount,

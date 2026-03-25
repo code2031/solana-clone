@@ -1,8 +1,8 @@
-# SolClone Developer Guide
+# Prism Developer Guide
 
 ## Introduction
 
-This guide covers everything you need to build, deploy, and test programs on the SolClone network. SolClone is architecturally compatible with Solana, so programs written in Rust (using the SolClone SDK) compile to BPF bytecode and run on the SolClone runtime.
+This guide covers everything you need to build, deploy, and test programs on the Prism network. Prism is architecturally compatible with Solana, so programs written in Rust (using the Prism SDK) compile to BPF bytecode and run on the Prism runtime.
 
 ---
 
@@ -14,18 +14,18 @@ This guide covers everything you need to build, deploy, and test programs on the
 - **Node.js** (18 LTS or later) for the JavaScript SDK
 - **Git**
 
-### Install the SolClone CLI Tools
+### Install the Prism CLI Tools
 
 ```bash
-sh -c "$(curl -sSfL https://release.solclone.io/stable/install)"
-export PATH="$HOME/.local/share/solclone/install/active_release/bin:$PATH"
+sh -c "$(curl -sSfL https://release.prism.io/stable/install)"
+export PATH="$HOME/.local/share/prism/install/active_release/bin:$PATH"
 ```
 
 Verify installation:
 
 ```bash
-solclone --version
-solclone-keygen --version
+prism --version
+prism-keygen --version
 ```
 
 ### Install the Rust Toolchain
@@ -45,7 +45,7 @@ cargo install cargo-build-bpf
 ### Start a Local Validator
 
 ```bash
-solclone-test-validator
+prism-test-validator
 ```
 
 This starts a local single-node cluster at `http://localhost:8899`. It comes pre-funded and resets on restart.
@@ -53,15 +53,15 @@ This starts a local single-node cluster at `http://localhost:8899`. It comes pre
 In another terminal, configure the CLI to use localhost:
 
 ```bash
-solclone config set --url http://localhost:8899
+prism config set --url http://localhost:8899
 ```
 
 Create and fund a development keypair:
 
 ```bash
-solclone-keygen new --outfile ~/.config/solclone/dev-keypair.json --no-bip39-passphrase
-solclone config set --keypair ~/.config/solclone/dev-keypair.json
-solclone airdrop 100
+prism-keygen new --outfile ~/.config/prism/dev-keypair.json --no-bip39-passphrase
+prism config set --keypair ~/.config/prism/dev-keypair.json
+prism airdrop 100
 ```
 
 ---
@@ -89,13 +89,13 @@ edition = "2021"
 crate-type = ["cdylib", "lib"]
 
 [dependencies]
-solclone-program = "1.18"
+prism-program = "1.18"
 borsh = "1.3"
 borsh-derive = "1.3"
 
 [dev-dependencies]
-solclone-sdk = "1.18"
-solclone-program-test = "1.18"
+prism-sdk = "1.18"
+prism-program-test = "1.18"
 tokio = { version = "1", features = ["full"] }
 ```
 
@@ -105,7 +105,7 @@ tokio = { version = "1", features = ["full"] }
 
 ```rust
 use borsh::{BorshDeserialize, BorshSerialize};
-use solclone_program::{
+use prism_program::{
     account_info::{next_account_info, AccountInfo},
     entrypoint,
     entrypoint::ProgramResult,
@@ -190,7 +190,7 @@ pub fn process_instruction(
 PDAs allow programs to deterministically derive addresses and sign on behalf of those addresses:
 
 ```rust
-use solclone_program::pubkey::Pubkey;
+use prism_program::pubkey::Pubkey;
 
 let (pda, bump_seed) = Pubkey::find_program_address(
     &[b"counter", user_pubkey.as_ref()],
@@ -203,8 +203,8 @@ let (pda, bump_seed) = Pubkey::find_program_address(
 Call another program from within your program:
 
 ```rust
-use solclone_program::program::invoke;
-use solclone_program::system_instruction;
+use prism_program::program::invoke;
+use prism_program::system_instruction;
 
 // Transfer lamports via the System Program
 invoke(
@@ -228,7 +228,7 @@ This produces a `.so` file in `target/deploy/`.
 ### Deploy to Local Validator
 
 ```bash
-solclone program deploy target/deploy/my_program.so
+prism program deploy target/deploy/my_program.so
 ```
 
 The CLI outputs the program ID:
@@ -240,17 +240,17 @@ Program Id: 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU
 ### Deploy to Testnet
 
 ```bash
-solclone config set --url https://api.testnet.solclone.io
-solclone airdrop 10  # Fund your account for deployment
-solclone program deploy target/deploy/my_program.so
+prism config set --url https://api.testnet.prism.io
+prism airdrop 10  # Fund your account for deployment
+prism program deploy target/deploy/my_program.so
 ```
 
 ### Deploy to Mainnet
 
 ```bash
-solclone config set --url https://api.mainnet.solclone.io
-# Ensure your account has enough SCLONE for rent-exempt deployment
-solclone program deploy target/deploy/my_program.so
+prism config set --url https://api.mainnet.prism.io
+# Ensure your account has enough PRISM for rent-exempt deployment
+prism program deploy target/deploy/my_program.so
 ```
 
 ### Program Upgrade Authority
@@ -258,13 +258,13 @@ solclone program deploy target/deploy/my_program.so
 By default, the deployer is the upgrade authority. To make a program immutable:
 
 ```bash
-solclone program set-upgrade-authority <PROGRAM_ID> --final
+prism program set-upgrade-authority <PROGRAM_ID> --final
 ```
 
 To transfer upgrade authority:
 
 ```bash
-solclone program set-upgrade-authority <PROGRAM_ID> --new-upgrade-authority <NEW_AUTHORITY>
+prism program set-upgrade-authority <PROGRAM_ID> --new-upgrade-authority <NEW_AUTHORITY>
 ```
 
 ---
@@ -276,13 +276,13 @@ solclone program set-upgrade-authority <PROGRAM_ID> --new-upgrade-authority <NEW
 Install:
 
 ```bash
-npm install @solclone/web3.js
+npm install @prism/web3.js
 ```
 
 #### Connect to the Network
 
 ```typescript
-import { Connection, clusterApiUrl } from '@solclone/web3.js';
+import { Connection, clusterApiUrl } from '@prism/web3.js';
 
 // Local
 const connection = new Connection('http://localhost:8899', 'confirmed');
@@ -297,13 +297,13 @@ const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');
 #### Create a Keypair and Check Balance
 
 ```typescript
-import { Keypair, LAMPORTS_PER_SCLONE } from '@solclone/web3.js';
+import { Keypair, LAMPORTS_PER_PRISM } from '@prism/web3.js';
 
 const keypair = Keypair.generate();
 console.log('Public key:', keypair.publicKey.toBase58());
 
 const balance = await connection.getBalance(keypair.publicKey);
-console.log('Balance:', balance / LAMPORTS_PER_SCLONE, 'SCLONE');
+console.log('Balance:', balance / LAMPORTS_PER_PRISM, 'PRISM');
 ```
 
 #### Send a Transaction
@@ -315,8 +315,8 @@ import {
   SystemProgram,
   Transaction,
   sendAndConfirmTransaction,
-  LAMPORTS_PER_SCLONE,
-} from '@solclone/web3.js';
+  LAMPORTS_PER_PRISM,
+} from '@prism/web3.js';
 
 const from = Keypair.generate();
 const to = Keypair.generate();
@@ -324,7 +324,7 @@ const to = Keypair.generate();
 // Request airdrop (devnet/testnet only)
 const airdropSig = await connection.requestAirdrop(
   from.publicKey,
-  2 * LAMPORTS_PER_SCLONE
+  2 * LAMPORTS_PER_PRISM
 );
 await connection.confirmTransaction(airdropSig);
 
@@ -333,7 +333,7 @@ const transaction = new Transaction().add(
   SystemProgram.transfer({
     fromPubkey: from.publicKey,
     toPubkey: to.publicKey,
-    lamports: LAMPORTS_PER_SCLONE / 2,
+    lamports: LAMPORTS_PER_PRISM / 2,
   })
 );
 
@@ -350,7 +350,7 @@ import {
   TransactionInstruction,
   Transaction,
   sendAndConfirmTransaction,
-} from '@solclone/web3.js';
+} from '@prism/web3.js';
 import * as borsh from 'borsh';
 
 const programId = new PublicKey('7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU');
@@ -373,13 +373,13 @@ const sig = await sendAndConfirmTransaction(connection, tx, [payer]);
 
 ```toml
 [dependencies]
-solclone-client = "1.18"
-solclone-sdk = "1.18"
+prism-client = "1.18"
+prism-sdk = "1.18"
 ```
 
 ```rust
-use solclone_client::rpc_client::RpcClient;
-use solclone_sdk::{
+use prism_client::rpc_client::RpcClient;
+use prism_sdk::{
     commitment_config::CommitmentConfig,
     signature::Keypair,
     signer::Signer,
@@ -401,7 +401,7 @@ fn main() {
 
 ## Token Creation Walkthrough
 
-Create a custom SPL token on SolClone.
+Create a custom SPL token on Prism.
 
 ### 1. Install the SPL Token CLI
 
@@ -456,14 +456,14 @@ spl-token authorize 4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU mint --disable
 ### Programmatic Token Creation (TypeScript)
 
 ```typescript
-import { createMint, getOrCreateAssociatedTokenAccount, mintTo } from '@solclone/spl-token';
-import { Connection, Keypair, LAMPORTS_PER_SCLONE } from '@solclone/web3.js';
+import { createMint, getOrCreateAssociatedTokenAccount, mintTo } from '@prism/spl-token';
+import { Connection, Keypair, LAMPORTS_PER_PRISM } from '@prism/web3.js';
 
 const connection = new Connection('http://localhost:8899', 'confirmed');
 const payer = Keypair.generate();
 
 // Fund payer
-await connection.requestAirdrop(payer.publicKey, 2 * LAMPORTS_PER_SCLONE);
+await connection.requestAirdrop(payer.publicKey, 2 * LAMPORTS_PER_PRISM);
 
 // Create mint with 9 decimals
 const mint = await createMint(
@@ -503,14 +503,14 @@ await mintTo(
 ```
 +---------------------------------------------+
 |              Frontend (React/Next.js)        |
-|  - @solclone/web3.js                         |
-|  - @solclone/wallet-adapter                  |
+|  - @prism/web3.js                         |
+|  - @prism/wallet-adapter                  |
 +---------------------+-----------------------+
                       |
                       | JSON-RPC
                       v
 +---------------------------------------------+
-|            SolClone RPC Node                 |
+|            Prism RPC Node                 |
 |  - getAccountInfo, sendTransaction, etc.     |
 +---------------------+-----------------------+
                       |
@@ -525,8 +525,8 @@ await mintTo(
 ### Wallet Integration
 
 ```typescript
-import { useWallet } from '@solclone/wallet-adapter-react';
-import { WalletMultiButton } from '@solclone/wallet-adapter-react-ui';
+import { useWallet } from '@prism/wallet-adapter-react';
+import { WalletMultiButton } from '@prism/wallet-adapter-react-ui';
 
 function App() {
   const { publicKey, sendTransaction } = useWallet();
@@ -567,8 +567,8 @@ On-chain accounts are the source of truth. Typical pattern:
 #[cfg(test)]
 mod tests {
     use super::*;
-    use solclone_program::clock::Epoch;
-    use solclone_sdk::account::Account;
+    use prism_program::clock::Epoch;
+    use prism_sdk::account::Account;
 
     #[test]
     fn test_initialize_counter() {
@@ -605,13 +605,13 @@ Run unit tests:
 cargo test
 ```
 
-### Integration Tests (solclone-program-test)
+### Integration Tests (prism-program-test)
 
 ```rust
 #[cfg(test)]
 mod integration_tests {
-    use solclone_program_test::*;
-    use solclone_sdk::{
+    use prism_program_test::*;
+    use prism_sdk::{
         instruction::{AccountMeta, Instruction},
         pubkey::Pubkey,
         signature::Signer,
@@ -629,14 +629,14 @@ mod integration_tests {
         );
 
         // Add a counter account
-        let counter_keypair = solclone_sdk::signature::Keypair::new();
+        let counter_keypair = prism_sdk::signature::Keypair::new();
         program_test.add_account(
             counter_keypair.pubkey(),
-            solclone_sdk::account::Account {
+            prism_sdk::account::Account {
                 lamports: 1_000_000,
                 data: vec![0u8; 8],
                 owner: program_id,
-                ..solclone_sdk::account::Account::default()
+                ..prism_sdk::account::Account::default()
             },
         );
 
@@ -687,7 +687,7 @@ mod integration_tests {
 ### JavaScript/TypeScript Tests
 
 ```typescript
-import { Connection, Keypair, LAMPORTS_PER_SCLONE } from '@solclone/web3.js';
+import { Connection, Keypair, LAMPORTS_PER_PRISM } from '@prism/web3.js';
 import { expect } from 'chai';
 
 describe('Counter Program', () => {
@@ -698,7 +698,7 @@ describe('Counter Program', () => {
     payer = Keypair.generate();
     const sig = await connection.requestAirdrop(
       payer.publicKey,
-      10 * LAMPORTS_PER_SCLONE
+      10 * LAMPORTS_PER_PRISM
     );
     await connection.confirmTransaction(sig);
   });
@@ -720,7 +720,7 @@ Run with:
 
 ```bash
 # Start local validator in one terminal
-solclone-test-validator
+prism-test-validator
 
 # Run tests in another terminal
 npx mocha --timeout 30000 tests/**/*.ts
@@ -731,8 +731,8 @@ npx mocha --timeout 30000 tests/**/*.ts
 | Test Type       | Tool                        | What It Covers                          |
 |-----------------|-----------------------------|-----------------------------------------|
 | Unit tests      | `cargo test`                | Individual function logic                |
-| Integration     | `solclone-program-test`     | Full instruction processing              |
-| E2E             | `solclone-test-validator`   | Real transactions against a local node   |
+| Integration     | `prism-program-test`     | Full instruction processing              |
+| E2E             | `prism-test-validator`   | Real transactions against a local node   |
 | Fuzzing         | `cargo fuzz`                | Edge cases and input validation          |
 | Security audit  | Manual / third-party        | Access control, overflow, reentrancy     |
 
@@ -745,7 +745,7 @@ npx mocha --timeout 30000 tests/**/*.ts
 Define custom errors for your program:
 
 ```rust
-use solclone_program::program_error::ProgramError;
+use prism_program::program_error::ProgramError;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -798,11 +798,11 @@ if counter_account.key != &expected_pda {
 
 | Resource               | URL                                      |
 |------------------------|------------------------------------------|
-| SolClone Docs          | https://docs.solclone.io                  |
-| API Reference          | https://docs.solclone.io/api              |
-| SDK (npm)              | https://www.npmjs.com/package/@solclone/web3.js |
-| Rust Crates            | https://crates.io/crates/solclone-program |
-| Explorer               | https://explorer.solclone.io              |
-| Faucet (testnet)       | https://faucet.solclone.io                |
-| Discord                | https://discord.gg/solclone               |
-| GitHub                 | https://github.com/solclone-labs          |
+| Prism Docs          | https://docs.prism.io                  |
+| API Reference          | https://docs.prism.io/api              |
+| SDK (npm)              | https://www.npmjs.com/package/@prism/web3.js |
+| Rust Crates            | https://crates.io/crates/prism-program |
+| Explorer               | https://explorer.prism.io              |
+| Faucet (testnet)       | https://faucet.prism.io                |
+| Discord                | https://discord.gg/prism               |
+| GitHub                 | https://github.com/prism-labs          |

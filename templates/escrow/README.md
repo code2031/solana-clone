@@ -1,6 +1,6 @@
-# SolClone Escrow Template
+# Prism Escrow Template
 
-A trustless token escrow program built with the Anchor framework for the SolClone blockchain. Enables atomic swaps between two token types.
+A trustless token escrow program built with the Anchor framework for the Prism blockchain. Enables atomic swaps between two token types.
 
 ## Features
 
@@ -12,7 +12,7 @@ A trustless token escrow program built with the Anchor framework for the SolClon
 
 ```bash
 # Initialize from template
-solclone init my-escrow --template escrow
+prism init my-escrow --template escrow
 
 # Build
 anchor build

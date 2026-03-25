@@ -67,7 +67,7 @@ export default function FaucetForm() {
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            placeholder="Enter your SolClone wallet address"
+            placeholder="Enter your Prism wallet address"
             required
             className="flex-1 rounded-lg border border-gray-700 bg-[#1A1640] px-4 py-3 text-sm text-white placeholder-gray-500 outline-none transition-colors focus:border-[#9945FF] focus:ring-1 focus:ring-[#9945FF]"
           />
@@ -97,7 +97,7 @@ export default function FaucetForm() {
 
       {/* Amount Selection */}
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-300">Amount (SCLONE)</label>
+        <label className="block text-sm font-medium text-gray-300">Amount (PRISM)</label>
         <div className="flex gap-3">
           {[1, 2, 5].map((val) => (
             <label
@@ -116,7 +116,7 @@ export default function FaucetForm() {
                 onChange={() => setAmount(val)}
                 className="sr-only"
               />
-              {val} SCLONE
+              {val} PRISM
             </label>
           ))}
         </div>
@@ -213,7 +213,7 @@ export default function FaucetForm() {
                 Airdrop Successful!
               </div>
               <p className="text-gray-300">
-                {result.amount} SCLONE sent on {result.network}
+                {result.amount} PRISM sent on {result.network}
               </p>
               {result.signature && (
                 <div className="mt-2">

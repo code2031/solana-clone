@@ -1,6 +1,6 @@
 // ─── Configuration ──────────────────────────────────────────────────────────
 
-export interface SolCloneConfig {
+export interface PrismConfig {
   rpc_url: string;
   keypair_path: string;
   commitment: Commitment;

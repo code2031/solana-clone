@@ -45,19 +45,19 @@ void main() {
   final walletService = WalletService();
   final priceService = PriceService();
 
-  runApp(SolCloneWallet(
+  runApp(PrismWallet(
     rpcService: rpcService,
     walletService: walletService,
     priceService: priceService,
   ));
 }
 
-class SolCloneWallet extends StatelessWidget {
+class PrismWallet extends StatelessWidget {
   final RpcService rpcService;
   final WalletService walletService;
   final PriceService priceService;
 
-  const SolCloneWallet({
+  const PrismWallet({
     super.key,
     required this.rpcService,
     required this.walletService,
@@ -82,7 +82,7 @@ class SolCloneWallet extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'SolClone Wallet',
+        title: 'Prism Wallet',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.darkTheme(),
         home: const SplashScreen(),

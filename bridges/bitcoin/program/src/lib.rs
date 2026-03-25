@@ -32,7 +32,7 @@ pub struct BtcBridgeState {
     pub threshold: u8,
     /// Total satoshis locked in the bridge (represented on-chain)
     pub total_locked_sats: u64,
-    /// SPL Token mint for scBTC (wrapped Bitcoin on SolClone)
+    /// SPL Token mint for scBTC (wrapped Bitcoin on Prism)
     pub scbtc_mint: Pubkey,
     /// List of attestor public keys
     pub attestors: Vec<Pubkey>,
@@ -56,7 +56,7 @@ pub struct DepositProof {
     pub vout: u32,
     /// Amount in satoshis
     pub amount_sats: u64,
-    /// Recipient's SolClone public key
+    /// Recipient's Prism public key
     pub recipient_pubkey: Pubkey,
     /// Number of Bitcoin confirmations observed by the submitting attestor
     pub confirmations: u32,
@@ -82,7 +82,7 @@ pub struct WithdrawalRequest {
     pub nonce: u64,
     /// Amount in satoshis to withdraw
     pub amount_sats: u64,
-    /// SolClone user who initiated the withdrawal
+    /// Prism user who initiated the withdrawal
     pub requester: Pubkey,
     /// Bitcoin destination address (up to 62 bytes for bech32m)
     pub btc_destination: [u8; 62],

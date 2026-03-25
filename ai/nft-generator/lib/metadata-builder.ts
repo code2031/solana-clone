@@ -85,13 +85,13 @@ export function buildMetadata(
   const metadata: NFTMetadata = {
     name,
     symbol: "SCLNFT",
-    description: `AI-generated NFT created with SolClone NFT Studio. Prompt: "${prompt}"${negativePrompt ? `. Negative: "${negativePrompt}"` : ""}`,
+    description: `AI-generated NFT created with Prism NFT Studio. Prompt: "${prompt}"${negativePrompt ? `. Negative: "${negativePrompt}"` : ""}`,
     image: imageUrl,
-    external_url: "https://solclone.ai/nft-studio",
+    external_url: "https://prism.ai/nft-studio",
     attributes: [
       { trait_type: "Style", value: style },
       { trait_type: "Prompt", value: prompt },
-      { trait_type: "Generator", value: "SolClone NFT Studio" },
+      { trait_type: "Generator", value: "Prism NFT Studio" },
       { trait_type: "Model", value: "Mock v1.0 (Placeholder)" },
       ...(negativePrompt ? [{ trait_type: "Negative Prompt", value: negativePrompt }] : []),
     ],

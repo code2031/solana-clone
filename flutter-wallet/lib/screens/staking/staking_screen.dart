@@ -24,7 +24,7 @@ class _StakingScreenState extends State<StakingScreen>
   // Mock validators
   final List<Map<String, dynamic>> _validators = [
     {
-      'name': 'SolClone Validator #1',
+      'name': 'Prism Validator #1',
       'address': 'Val1...abc123',
       'apy': 6.8,
       'commission': 5,

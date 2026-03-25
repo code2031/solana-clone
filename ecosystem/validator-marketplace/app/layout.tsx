@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone Validators",
-  description: "Explore, compare, and delegate stake to validators on the SolClone network",
+  title: "Prism Validators",
+  description: "Explore, compare, and delegate stake to validators on the Prism network",
 };
 
 export default function RootLayout({
@@ -32,7 +32,7 @@ export default function RootLayout({
                 SV
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                SolClone Validators
+                Prism Validators
               </span>
             </div>
             <div className="flex items-center gap-6">
@@ -47,7 +47,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <footer className="border-t border-[#2a2a4a] py-8 mt-16">
           <div className="max-w-7xl mx-auto px-6 text-center text-sm text-[#666688]">
-            SolClone Validators &mdash; Secure the network, earn rewards
+            Prism Validators &mdash; Secure the network, earn rewards
           </div>
         </footer>
       </body>

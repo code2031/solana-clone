@@ -1,7 +1,7 @@
 {
-  "name": "solclone-benchmarks",
+  "name": "prism-benchmarks",
   "version": "1.0.0",
-  "description": "Performance benchmark suite for the SolClone blockchain",
+  "description": "Performance benchmark suite for the Prism blockchain",
   "private": true,
   "type": "module",
   "scripts": {

@@ -1,14 +1,14 @@
 # SolLend -- Lending and Borrowing Protocol
 
-> Supply assets to earn interest or borrow against collateral on SolClone.
+> Supply assets to earn interest or borrow against collateral on Prism.
 
-Part of the [SolClone DeFi Suite](../README.md) | [SolClone](https://github.com/code2031/solana-clone)
+Part of the [Prism DeFi Suite](../README.md) | [Prism](https://github.com/code2031/solana-clone)
 
 ---
 
 ## Overview
 
-SolLend is a decentralized lending protocol on SolClone. Users deposit supported
+SolLend is a decentralized lending protocol on Prism. Users deposit supported
 tokens to earn variable interest, or borrow tokens by posting collateral. The
 interest rate follows a kinked curve model that incentivizes optimal utilization.
 Positions that exceed 85% loan-to-value are eligible for liquidation.
@@ -20,7 +20,7 @@ Positions that exceed 85% loan-to-value are eligible for liquidation.
 - **Kinked Interest Rate Curve** -- Low rates at low utilization, steep increase above the kink
 - **Liquidation Engine** -- Positions at or above 85% LTV can be liquidated by any caller
 - **Liquidation Bonus** -- Liquidators receive a 5% bonus on repaid collateral
-- **Oracle Integration** -- Collateral values sourced from SolClone Price Oracle
+- **Oracle Integration** -- Collateral values sourced from Prism Price Oracle
 - **Health Factor Display** -- UI shows real-time position health
 
 ## Interest Rate Model
@@ -73,9 +73,9 @@ The SolLend interface will be available at `http://localhost:3001`.
 
 ## Tech Stack
 
-- **On-Chain**: Rust, SolClone BPF program framework
+- **On-Chain**: Rust, Prism BPF program framework
 - **Frontend**: Next.js 14, Tailwind CSS, Recharts, wallet-adapter
-- **Price Data**: SolClone Price Oracle for collateral valuation
+- **Price Data**: Prism Price Oracle for collateral valuation
 
 ## License
 

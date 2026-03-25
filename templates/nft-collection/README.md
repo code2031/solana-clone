@@ -1,6 +1,6 @@
-# SolClone NFT Collection Template
+# Prism NFT Collection Template
 
-An Anchor-based NFT collection program for the SolClone blockchain. Supports creating collections, minting NFTs with metadata and royalties, and transferring ownership.
+An Anchor-based NFT collection program for the Prism blockchain. Supports creating collections, minting NFTs with metadata and royalties, and transferring ownership.
 
 ## Features
 
@@ -12,7 +12,7 @@ An Anchor-based NFT collection program for the SolClone blockchain. Supports cre
 
 ```bash
 # Initialize from template
-solclone init my-nft-project --template nft
+prism init my-nft-project --template nft
 
 # Build
 anchor build

@@ -1,5 +1,5 @@
 /**
- * TPS Benchmark for SolClone
+ * TPS Benchmark for Prism
  *
  * Generates 500 pre-signed transfer transactions, submits them in parallel
  * batches of 50, and measures confirmed transactions / elapsed time = TPS.
@@ -43,7 +43,7 @@ async function rpcCall(url: string, method: string, params: unknown[] = []): Pro
 }
 
 async function main() {
-  console.log("=== SolClone TPS Benchmark ===\n");
+  console.log("=== Prism TPS Benchmark ===\n");
   console.log(`RPC URL: ${RPC_URL}`);
   console.log(`Total transactions: ${TOTAL_TRANSACTIONS}`);
   console.log(`Batch size: ${BATCH_SIZE}\n`);

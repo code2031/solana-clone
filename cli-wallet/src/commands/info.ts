@@ -235,7 +235,7 @@ export function registerInfoCommand(program: Command): void {
           spinner.stop();
 
           printKeyValue('RPC URL', colors.primary(rpc.getUrl()));
-          printKeyValue('SolClone core', colors.primary(version['solana-core']));
+          printKeyValue('Prism core', colors.primary(version['solana-core']));
           printKeyValue('Feature set', version['feature-set'].toString());
           println();
         } catch (err: any) {

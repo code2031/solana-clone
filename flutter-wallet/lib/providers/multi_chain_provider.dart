@@ -8,7 +8,7 @@ import '../services/chains/ethereum_service.dart';
 import '../services/chains/solana_service.dart';
 import '../services/chains/polygon_service.dart';
 import '../services/chains/bnb_service.dart';
-import '../services/chains/solclone_service.dart';
+import '../services/chains/prism_service.dart';
 import '../services/rpc_service.dart';
 
 /// Manages multi-chain wallet state across all supported blockchains.
@@ -19,7 +19,7 @@ class MultiChainProvider extends ChangeNotifier {
   final RpcService _rpcService;
 
   // Chain service instances
-  late final SolCloneService _solcloneService;
+  late final PrismService _prismService;
   late final SolanaService _solanaService;
   late final BitcoinService _bitcoinService;
   late final EthereumService _ethereumService;
@@ -84,7 +84,7 @@ class MultiChainProvider extends ChangeNotifier {
   // -- Initialization --
 
   void _initServices() {
-    _solcloneService = SolCloneService(_rpcService);
+    _prismService = PrismService(_rpcService);
     _solanaService = SolanaService();
     _bitcoinService = BitcoinService();
     _ethereumService = EthereumService();
@@ -92,7 +92,7 @@ class MultiChainProvider extends ChangeNotifier {
     _bnbService = BnbService();
 
     _services = {
-      ChainType.solclone: _solcloneService,
+      ChainType.prism: _prismService,
       ChainType.solana: _solanaService,
       ChainType.bitcoin: _bitcoinService,
       ChainType.ethereum: _ethereumService,
@@ -134,15 +134,15 @@ class MultiChainProvider extends ChangeNotifier {
   }
 
   /// Generate chain-specific addresses from the wallet seed.
-  void _generateAddresses(String solcloneAddress, List<int> seed) {
+  void _generateAddresses(String prismAddress, List<int> seed) {
     for (final type in ChainType.values) {
       String address;
-      if (type == ChainType.solclone) {
-        // SolClone uses the existing wallet address
-        address = solcloneAddress;
+      if (type == ChainType.prism) {
+        // Prism uses the existing wallet address
+        address = prismAddress;
       } else {
         address = _services[type]!.generateAddress(
-          seed.isNotEmpty ? seed : solcloneAddress.codeUnits,
+          seed.isNotEmpty ? seed : prismAddress.codeUnits,
         );
       }
 

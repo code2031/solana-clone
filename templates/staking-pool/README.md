@@ -1,6 +1,6 @@
-# SolClone Staking Pool Template
+# Prism Staking Pool Template
 
-A DeFi staking pool program built with the Anchor framework for the SolClone blockchain. Users stake tokens and earn rewards over time based on a configurable reward rate.
+A DeFi staking pool program built with the Anchor framework for the Prism blockchain. Users stake tokens and earn rewards over time based on a configurable reward rate.
 
 ## Features
 
@@ -13,7 +13,7 @@ A DeFi staking pool program built with the Anchor framework for the SolClone blo
 
 ```bash
 # Initialize from template
-solclone init my-staking --template staking
+prism init my-staking --template staking
 
 # Build
 anchor build

@@ -75,7 +75,7 @@ export function ApplicationForm({ grantTitle }: { grantTitle: string }) {
             onChange={(e) => setDescription(e.target.value)}
             required
             rows={6}
-            placeholder="Describe your project, its goals, and how it benefits the SolClone ecosystem..."
+            placeholder="Describe your project, its goals, and how it benefits the Prism ecosystem..."
             className="w-full bg-[#0a0a0f] border border-[#2a2a4a] rounded-lg px-4 py-3 text-white placeholder-[#666688] focus:outline-none focus:border-amber-500"
           />
         </div>
@@ -102,7 +102,7 @@ export function ApplicationForm({ grantTitle }: { grantTitle: string }) {
         <h3 className="font-semibold text-white">Funding &amp; Timeline</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm text-[#9999bb] mb-2">Requested Amount (SCLONE)</label>
+            <label className="block text-sm text-[#9999bb] mb-2">Requested Amount (PRISM)</label>
             <input
               type="number"
               value={requestedAmount}

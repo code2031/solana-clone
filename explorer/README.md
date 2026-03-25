@@ -1,9 +1,9 @@
-# SolClone Explorer
+# Prism Explorer
 
-Web-based block explorer for the SolClone blockchain, forked from [solana-foundation/explorer](https://github.com/solana-foundation/explorer).
+Web-based block explorer for the Prism blockchain, forked from [solana-foundation/explorer](https://github.com/solana-foundation/explorer).
 
 **Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
-**Split repo:** [https://github.com/code2031/solclone-explorer](https://github.com/code2031/solclone-explorer)
+**Split repo:** [https://github.com/code2031/prism-explorer](https://github.com/code2031/prism-explorer)
 
 ## Prerequisites
 
@@ -13,8 +13,8 @@ Web-based block explorer for the SolClone blockchain, forked from [solana-founda
 ## Build
 
 ```bash
-git clone https://github.com/code2031/solclone-explorer.git
-cd solclone-explorer
+git clone https://github.com/code2031/prism-explorer.git
+cd prism-explorer
 
 pnpm install
 pnpm build
@@ -26,7 +26,7 @@ pnpm build
 pnpm dev          # Start dev server on http://localhost:3000
 ```
 
-Set the `NEXT_PUBLIC_RPC_URL` environment variable to point to your SolClone validator.
+Set the `NEXT_PUBLIC_RPC_URL` environment variable to point to your Prism validator.
 
 ## Testing
 
@@ -55,9 +55,9 @@ pnpm lint         # Lint check
 
 ## Related Components
 
-- [Validator](https://github.com/code2031/solclone-validator)
-- [Web3.js SDK](https://github.com/code2031/solclone-web3js)
-- [DApp Scaffold](https://github.com/code2031/solclone-dapp-scaffold)
+- [Validator](https://github.com/code2031/prism-validator)
+- [Web3.js SDK](https://github.com/code2031/prism-web3js)
+- [DApp Scaffold](https://github.com/code2031/prism-dapp-scaffold)
 
 ## License
 

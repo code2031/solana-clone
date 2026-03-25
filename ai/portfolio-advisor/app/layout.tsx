@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone AI Advisor",
+  title: "Prism AI Advisor",
   description: "AI-powered portfolio analysis and rebalancing suggestions for Solana wallets",
 };
 
@@ -35,7 +35,7 @@ export default function RootLayout({
                   </svg>
                 </div>
                 <span className="text-lg font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                  SolClone AI Advisor
+                  Prism AI Advisor
                 </span>
               </div>
               <div className="flex items-center gap-4 text-sm text-[#64748b]">

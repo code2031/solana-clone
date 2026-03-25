@@ -1,7 +1,7 @@
 {
-  "name": "@solclone/wallet-standard",
+  "name": "@prism/wallet-standard",
   "version": "1.0.0",
-  "description": "Solana Wallet Standard implementation for SolClone — enables third-party wallet interoperability",
+  "description": "Solana Wallet Standard implementation for Prism — enables third-party wallet interoperability",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -20,7 +20,7 @@
     "typescript": "^5.3.0"
   },
   "keywords": [
-    "solclone",
+    "prism",
     "solana",
     "wallet",
     "wallet-standard",

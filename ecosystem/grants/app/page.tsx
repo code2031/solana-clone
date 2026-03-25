@@ -32,7 +32,7 @@ const MOCK_GRANTS: Grant[] = [
   {
     id: "g1",
     title: "Cross-Chain DEX Aggregator",
-    description: "Build a DEX aggregator that sources liquidity from multiple SolClone AMMs and cross-chain bridges to provide optimal swap routing for users.",
+    description: "Build a DEX aggregator that sources liquidity from multiple Prism AMMs and cross-chain bridges to provide optimal swap routing for users.",
     category: "DeFi",
     fundingAmount: 50000,
     deadline: Date.now() + 86400000 * 30,
@@ -48,7 +48,7 @@ const MOCK_GRANTS: Grant[] = [
   {
     id: "g2",
     title: "Developer SDK & CLI Tools",
-    description: "Create a comprehensive SDK and CLI toolkit for SolClone developers including project scaffolding, contract deployment, testing frameworks, and monitoring tools.",
+    description: "Create a comprehensive SDK and CLI toolkit for Prism developers including project scaffolding, contract deployment, testing frameworks, and monitoring tools.",
     category: "Tooling",
     fundingAmount: 35000,
     deadline: Date.now() + 86400000 * 45,
@@ -63,8 +63,8 @@ const MOCK_GRANTS: Grant[] = [
   },
   {
     id: "g3",
-    title: "SolClone Academy",
-    description: "Develop a comprehensive educational platform with interactive courses covering SolClone development, from beginner blockchain concepts to advanced program development.",
+    title: "Prism Academy",
+    description: "Develop a comprehensive educational platform with interactive courses covering Prism development, from beginner blockchain concepts to advanced program development.",
     category: "Education",
     fundingAmount: 25000,
     deadline: Date.now() + 86400000 * 60,
@@ -80,7 +80,7 @@ const MOCK_GRANTS: Grant[] = [
   {
     id: "g4",
     title: "High-Performance RPC Infrastructure",
-    description: "Deploy and maintain geo-distributed RPC nodes with load balancing, caching, and WebSocket support for the SolClone network.",
+    description: "Deploy and maintain geo-distributed RPC nodes with load balancing, caching, and WebSocket support for the Prism network.",
     category: "Infrastructure",
     fundingAmount: 75000,
     deadline: Date.now() + 86400000 * 20,
@@ -96,7 +96,7 @@ const MOCK_GRANTS: Grant[] = [
   {
     id: "g5",
     title: "Yield Farming Protocol",
-    description: "Design and implement a yield aggregation protocol that automatically compounds rewards across SolClone DeFi protocols.",
+    description: "Design and implement a yield aggregation protocol that automatically compounds rewards across Prism DeFi protocols.",
     category: "DeFi",
     fundingAmount: 40000,
     deadline: Date.now() - 86400000 * 5,
@@ -114,27 +114,27 @@ const MOCK_GRANTS: Grant[] = [
 const MOCK_FUNDED: FundedProjectData[] = [
   {
     id: "fp1",
-    name: "SolClone Block Explorer",
+    name: "Prism Block Explorer",
     team: "ExplorerDAO",
     amountFunded: 30000,
     totalMilestones: 5,
     completedMilestones: 4,
     links: [
       { label: "GitHub", url: "https://github.com/example/explorer" },
-      { label: "Live App", url: "https://explorer.solclone.io" },
+      { label: "Live App", url: "https://explorer.prism.io" },
     ],
     grantTitle: "Block Explorer & Analytics",
   },
   {
     id: "fp2",
-    name: "SolClone Wallet SDK",
+    name: "Prism Wallet SDK",
     team: "WalletWorks",
     amountFunded: 20000,
     totalMilestones: 4,
     completedMilestones: 4,
     links: [
       { label: "GitHub", url: "https://github.com/example/wallet-sdk" },
-      { label: "npm", url: "https://npmjs.com/package/solclone-wallet" },
+      { label: "npm", url: "https://npmjs.com/package/prism-wallet" },
     ],
     grantTitle: "Wallet Integration Toolkit",
   },
@@ -178,17 +178,17 @@ export default function GrantsHome() {
     <div className="max-w-7xl mx-auto px-6 py-8">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-          SolClone Grants Program
+          Prism Grants Program
         </h1>
         <p className="text-[#9999bb] text-lg max-w-2xl mx-auto">
-          Apply for funding to build tools, infrastructure, and applications that grow the SolClone ecosystem.
+          Apply for funding to build tools, infrastructure, and applications that grow the Prism ecosystem.
         </p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
         {[
-          { label: "Total Funded", value: `${totalFunded.toLocaleString()} SCLONE` },
+          { label: "Total Funded", value: `${totalFunded.toLocaleString()} PRISM` },
           { label: "Active Grants", value: openGrants.length.toString() },
           { label: "Total Applications", value: MOCK_GRANTS.reduce((s, g) => s + g.applicants, 0).toString() },
         ].map((stat) => (

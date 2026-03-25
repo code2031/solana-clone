@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 # ============================================================================
-# Create an NFT on SolClone
+# Create an NFT on Prism
 # NFTs are SPL tokens with: supply=1, decimals=0, no further minting
 # Usage: ./examples/create-nft.sh [nft-name]
 # ============================================================================
 
 set -euo pipefail
 
-NFT_NAME="${1:-MySolCloneNFT}"
+NFT_NAME="${1:-MyPrismNFT}"
 RPC_URL="${RPC_URL:-http://localhost:8899}"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CLI="$ROOT/validator/target/release/solana"
 SPL_TOKEN="$ROOT/validator/target/release/spl-token"
 
-echo "=== Create NFT on SolClone ==="
+echo "=== Create NFT on Prism ==="
 echo ""
 echo "  Name: $NFT_NAME"
 echo "  RPC:  $RPC_URL"

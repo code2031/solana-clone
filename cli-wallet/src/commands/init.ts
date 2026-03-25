@@ -62,14 +62,14 @@ function findTemplatesDir(): string {
   }
 
   throw new Error(
-    'Could not find templates directory. Ensure SolClone is properly installed.'
+    'Could not find templates directory. Ensure Prism is properly installed.'
   );
 }
 
 export function registerInitCommand(program: Command): void {
   program
     .command('init <name>')
-    .description('Initialize a new SolClone project from a template')
+    .description('Initialize a new Prism project from a template')
     .option(
       '-t, --template <template>',
       `Template to use: ${VALID_TEMPLATES.join(', ')}`,
@@ -116,7 +116,7 @@ export function registerInitCommand(program: Command): void {
           }
         }
 
-        console.log(chalk.cyan('\n  Initializing SolClone project...\n'));
+        console.log(chalk.cyan('\n  Initializing Prism project...\n'));
         console.log(chalk.gray(`  Template:  ${chalk.white(templateKey)} (${templateDirName})`));
         console.log(chalk.gray(`  Project:   ${chalk.white(name)}`));
         console.log(chalk.gray(`  Directory: ${chalk.white(targetDir)}\n`));

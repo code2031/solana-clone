@@ -119,8 +119,8 @@ class ReceiveScreen extends StatelessWidget {
                     child: OutlinedButton.icon(
                       onPressed: () {
                         Share.share(
-                          'My SolClone wallet address:\n$address',
-                          subject: 'SolClone Wallet Address',
+                          'My Prism wallet address:\n$address',
+                          subject: 'Prism Wallet Address',
                         );
                       },
                       icon: const Icon(Icons.share_rounded, size: 20),

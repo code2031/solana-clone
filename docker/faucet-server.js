@@ -1,5 +1,5 @@
 /**
- * SolClone Faucet Server
+ * Prism Faucet Server
  * Provides SOL airdrops for devnet and testnet
  */
 
@@ -153,7 +153,7 @@ app.get("/balance/:address", async (req, res) => {
 });
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`SolClone Faucet (${CLUSTER}) running on port ${PORT}`);
+  console.log(`Prism Faucet (${CLUSTER}) running on port ${PORT}`);
   console.log(`RPC: ${RPC_URL}`);
   console.log(`Max airdrop: ${LIMITS[CLUSTER]?.maxAmount || 0} SOL`);
 });

@@ -1,22 +1,22 @@
-# SolClone DAO Governance
+# Prism DAO Governance
 
-> On-chain proposals, token-weighted voting, and treasury management for the SolClone ecosystem.
+> On-chain proposals, token-weighted voting, and treasury management for the Prism ecosystem.
 
-Part of the [SolClone](https://github.com/code2031/solana-clone) ecosystem.
+Part of the [Prism](https://github.com/code2031/solana-clone) ecosystem.
 
 ---
 
 ## Overview
 
-The SolClone Governance program enables decentralized decision-making for the protocol.
-SCLONE token holders can create proposals, vote with token-weighted ballots, and execute
+The Prism Governance program enables decentralized decision-making for the protocol.
+PRISM token holders can create proposals, vote with token-weighted ballots, and execute
 approved actions through a timelock. The system also manages the DAO treasury, allowing
 the community to allocate funds for development, grants, and ecosystem growth.
 
 ## Features
 
 - **Proposal Creation** -- Any token holder meeting the threshold can submit proposals
-- **Token-Weighted Voting** -- Vote weight equals SCLONE token balance at snapshot slot
+- **Token-Weighted Voting** -- Vote weight equals PRISM token balance at snapshot slot
 - **Quorum Enforcement** -- Proposals require minimum participation to pass
 - **Timelock Execution** -- Approved proposals enter a delay period before execution
 - **Treasury Management** -- DAO-controlled treasury for grants and protocol spending
@@ -28,7 +28,7 @@ the community to allocate funds for development, grants, and ecosystem growth.
 
 | Parameter | Value |
 |---|---|
-| Proposal Threshold | 100,000 SCLONE |
+| Proposal Threshold | 100,000 PRISM |
 | Quorum | 4% of total supply |
 | Voting Period | 3 days (approx. 259,200 slots) |
 | Timelock Delay | 2 days (approx. 172,800 slots) |
@@ -76,7 +76,7 @@ The governance dashboard will be available at `http://localhost:3000`.
 
 ## Tech Stack
 
-- **On-Chain**: Rust, SolClone BPF program framework
+- **On-Chain**: Rust, Prism BPF program framework
 - **Frontend**: Next.js 14, Tailwind CSS, Recharts, wallet-adapter
 - **Snapshots**: Token balances captured at proposal creation slot
 

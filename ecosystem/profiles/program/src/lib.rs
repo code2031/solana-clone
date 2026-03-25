@@ -329,7 +329,7 @@ mod tests {
         let create = ProfileInstruction::CreateProfile {
             display_name: "Alice".to_string(),
             avatar_url: "https://example.com/avatar.png".to_string(),
-            bio: "Builder on SolClone".to_string(),
+            bio: "Builder on Prism".to_string(),
         };
         let serialized = create.try_to_vec().unwrap();
         let deserialized = ProfileInstruction::try_from_slice(&serialized).unwrap();
@@ -342,7 +342,7 @@ mod tests {
         {
             assert_eq!(display_name, "Alice");
             assert_eq!(avatar_url, "https://example.com/avatar.png");
-            assert_eq!(bio, "Builder on SolClone");
+            assert_eq!(bio, "Builder on Prism");
         } else {
             panic!("Deserialization failed");
         }

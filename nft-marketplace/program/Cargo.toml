@@ -2,7 +2,7 @@
 name = "solmart-nft-marketplace"
 version = "0.1.0"
 edition = "2021"
-description = "SolMart — NFT Marketplace on SolClone"
+description = "SolMart — NFT Marketplace on Prism"
 license = "MIT"
 
 [dependencies]

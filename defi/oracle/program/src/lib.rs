@@ -39,7 +39,7 @@ const SUBMISSION_SEED: &[u8] = b"submission";
 
 /// Well-known asset identifiers
 pub mod assets {
-    pub const SCLONE_USD: &str = "SCLONE/USD";
+    pub const PRISM_USD: &str = "PRISM/USD";
     pub const SCUSD_USD: &str = "SCUSD/USD";
     pub const BTC_USD: &str = "BTC/USD";
     pub const ETH_USD: &str = "ETH/USD";
@@ -51,7 +51,7 @@ pub mod assets {
 
 #[derive(BorshSerialize, BorshDeserialize, Debug, Clone)]
 pub struct PriceFeed {
-    /// Human-readable asset pair identifier (e.g. "SCLONE/USD")
+    /// Human-readable asset pair identifier (e.g. "PRISM/USD")
     pub asset: String,
     /// Aggregated price with 8 decimal places of precision
     pub price: u64,

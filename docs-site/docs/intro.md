@@ -3,13 +3,13 @@ sidebar_position: 1
 slug: /intro
 ---
 
-# What is SolClone?
+# What is Prism?
 
-SolClone is a **Solana-compatible Layer 1 blockchain** built from scratch for learning, experimentation, and development. It implements the core Solana architecture -- a custom validator, transaction processing pipeline, RPC interface, and program runtime -- while remaining approachable for developers who want to understand blockchain internals.
+Prism is a **Solana-compatible Layer 1 blockchain** built from scratch for learning, experimentation, and development. It implements the core Solana architecture -- a custom validator, transaction processing pipeline, RPC interface, and program runtime -- while remaining approachable for developers who want to understand blockchain internals.
 
 ## Architecture Overview
 
-SolClone is composed of several interconnected systems:
+Prism is composed of several interconnected systems:
 
 ```
                     +------------------+
@@ -39,7 +39,7 @@ SolClone is composed of several interconnected systems:
 |-----------|-------------|----------|
 | **Validator** | Rust-based node with Proof of History + Proof of Stake consensus | `validator/` |
 | **Web3.js SDK** | TypeScript SDK compatible with `@solana/web3.js` patterns | `web3js-sdk/` |
-| **CLI Wallet** | Full-featured command-line wallet (`solclone` command) | `cli-wallet/` |
+| **CLI Wallet** | Full-featured command-line wallet (`prism` command) | `cli-wallet/` |
 | **Program Library** | SPL-compatible token, NFT, and governance programs | `program-library/` |
 | **Explorer** | Real-time blockchain explorer web app | `explorer/` |
 | **DeFi Suite** | SolSwap DEX, SolLend lending, SCUSD stablecoin | `defi/` |
@@ -52,7 +52,7 @@ SolClone is composed of several interconnected systems:
 - **Full Solana RPC compatibility** -- same JSON-RPC methods you already know
 - **Built-in faucet** for testnet SOL
 - **Docker support** -- spin up a full network with `docker-compose up`
-- **Anchor templates** -- scaffold projects with `solclone init`
+- **Anchor templates** -- scaffold projects with `prism init`
 - **DeFi primitives** -- AMM, lending, stablecoin out of the box
 - **Interactive playground** -- test SDK calls in the browser
 
@@ -66,10 +66,10 @@ cd validator && cargo build --release
 ./scripts/start-testnet.sh
 
 # Get some test SOL
-solclone airdrop 10
+prism airdrop 10
 
 # Check your balance
-solclone balance
+prism balance
 ```
 
 See the [Getting Started](./getting-started) guide for full setup instructions.

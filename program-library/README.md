@@ -1,9 +1,9 @@
-# SolClone Program Library
+# Prism Program Library
 
-Collection of on-chain Rust programs for the SolClone blockchain, forked from [solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library).
+Collection of on-chain Rust programs for the Prism blockchain, forked from [solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library).
 
 **Monorepo:** [https://github.com/code2031/solana-clone](https://github.com/code2031/solana-clone)
-**Split repo:** [https://github.com/code2031/solclone-programs](https://github.com/code2031/solclone-programs)
+**Split repo:** [https://github.com/code2031/prism-programs](https://github.com/code2031/prism-programs)
 
 ## Prerequisites
 
@@ -14,8 +14,8 @@ Collection of on-chain Rust programs for the SolClone blockchain, forked from [s
 ## Build
 
 ```bash
-git clone https://github.com/code2031/solclone-programs.git
-cd solclone-programs
+git clone https://github.com/code2031/prism-programs.git
+cd prism-programs
 
 # Build all on-chain programs
 cargo build-sbf
@@ -56,9 +56,9 @@ Most programs include both unit tests and integration tests using `solana-progra
 
 ## Related Components
 
-- [Validator](https://github.com/code2031/solclone-validator)
-- [Web3.js SDK](https://github.com/code2031/solclone-web3js)
-- [Explorer](https://github.com/code2031/solclone-explorer)
+- [Validator](https://github.com/code2031/prism-validator)
+- [Web3.js SDK](https://github.com/code2031/prism-web3js)
+- [Explorer](https://github.com/code2031/prism-explorer)
 
 ## License
 

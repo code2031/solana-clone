@@ -1,19 +1,19 @@
 /**
- * SolClone Chain Definitions for WalletConnect
+ * Prism Chain Definitions for WalletConnect
  *
  * WalletConnect v2 uses CAIP-2 chain identifiers. This module defines
- * the SolClone chains and their associated metadata so that sessions
+ * the Prism chains and their associated metadata so that sessions
  * can be established with the correct network parameters.
  */
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
 export interface ChainDefinition {
-  /** CAIP-2 chain identifier (e.g., "solclone:mainnet"). */
+  /** CAIP-2 chain identifier (e.g., "prism:mainnet"). */
   id: string;
   /** Human-readable name. */
   name: string;
-  /** WalletConnect namespace (e.g., "solclone"). */
+  /** WalletConnect namespace (e.g., "prism"). */
   namespace: string;
   /** Network reference within the namespace. */
   reference: string;
@@ -35,49 +35,49 @@ export interface ChainDefinition {
 
 // ── Chain Definitions ───────────────────────────────────────────────────────
 
-export const SOLCLONE_MAINNET: ChainDefinition = {
-  id: "solclone:mainnet",
-  name: "SolClone Mainnet",
-  namespace: "solclone",
+export const PRISM_MAINNET: ChainDefinition = {
+  id: "prism:mainnet",
+  name: "Prism Mainnet",
+  namespace: "prism",
   reference: "mainnet",
-  rpcUrl: "https://rpc.solclone.io",
-  wsUrl: "wss://rpc.solclone.io",
-  explorerUrl: "https://explorer.solclone.io",
+  rpcUrl: "https://rpc.prism.io",
+  wsUrl: "wss://rpc.prism.io",
+  explorerUrl: "https://explorer.prism.io",
   nativeToken: {
-    name: "SolClone",
-    symbol: "SCLONE",
+    name: "Prism",
+    symbol: "PRISM",
     decimals: 9,
   },
   isTestnet: false,
 };
 
-export const SOLCLONE_TESTNET: ChainDefinition = {
-  id: "solclone:testnet",
-  name: "SolClone Testnet",
-  namespace: "solclone",
+export const PRISM_TESTNET: ChainDefinition = {
+  id: "prism:testnet",
+  name: "Prism Testnet",
+  namespace: "prism",
   reference: "testnet",
-  rpcUrl: "https://testnet.rpc.solclone.io",
-  wsUrl: "wss://testnet.rpc.solclone.io",
-  explorerUrl: "https://testnet.explorer.solclone.io",
+  rpcUrl: "https://testnet.rpc.prism.io",
+  wsUrl: "wss://testnet.rpc.prism.io",
+  explorerUrl: "https://testnet.explorer.prism.io",
   nativeToken: {
-    name: "SolClone",
-    symbol: "SCLONE",
+    name: "Prism",
+    symbol: "PRISM",
     decimals: 9,
   },
   isTestnet: true,
 };
 
-export const SOLCLONE_DEVNET: ChainDefinition = {
-  id: "solclone:devnet",
-  name: "SolClone Devnet",
-  namespace: "solclone",
+export const PRISM_DEVNET: ChainDefinition = {
+  id: "prism:devnet",
+  name: "Prism Devnet",
+  namespace: "prism",
   reference: "devnet",
-  rpcUrl: "https://devnet.rpc.solclone.io",
-  wsUrl: "wss://devnet.rpc.solclone.io",
-  explorerUrl: "https://devnet.explorer.solclone.io",
+  rpcUrl: "https://devnet.rpc.prism.io",
+  wsUrl: "wss://devnet.rpc.prism.io",
+  explorerUrl: "https://devnet.explorer.prism.io",
   nativeToken: {
-    name: "SolClone",
-    symbol: "SCLONE",
+    name: "Prism",
+    symbol: "PRISM",
     decimals: 9,
   },
   isTestnet: true,
@@ -137,9 +137,9 @@ export const SOLANA_DEVNET: ChainDefinition = {
 
 /** All supported chains. */
 export const ALL_CHAINS: ChainDefinition[] = [
-  SOLCLONE_MAINNET,
-  SOLCLONE_TESTNET,
-  SOLCLONE_DEVNET,
+  PRISM_MAINNET,
+  PRISM_TESTNET,
+  PRISM_DEVNET,
   SOLANA_MAINNET,
   SOLANA_TESTNET,
   SOLANA_DEVNET,
@@ -163,7 +163,7 @@ export function getChain(chainId: string): ChainDefinition | undefined {
  * ```ts
  * getNamespaces()
  * // {
- * //   solclone: { chains: ["solclone:mainnet", ...], methods: [...], events: [...] },
+ * //   prism: { chains: ["prism:mainnet", ...], methods: [...], events: [...] },
  * //   solana:   { chains: ["solana:mainnet", ...],   methods: [...], events: [...] }
  * // }
  * ```
@@ -179,8 +179,8 @@ export function getNamespaces(): Record<
   ];
   const events = ["accountsChanged", "chainChanged"];
 
-  const solcloneChains = ALL_CHAINS.filter(
-    (c) => c.namespace === "solclone",
+  const prismChains = ALL_CHAINS.filter(
+    (c) => c.namespace === "prism",
   ).map((c) => c.id);
 
   const solanaChains = ALL_CHAINS.filter(
@@ -188,7 +188,7 @@ export function getNamespaces(): Record<
   ).map((c) => c.id);
 
   return {
-    solclone: { chains: solcloneChains, methods, events },
+    prism: { chains: prismChains, methods, events },
     solana: { chains: solanaChains, methods, events },
   };
 }

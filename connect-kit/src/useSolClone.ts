@@ -1,7 +1,7 @@
 /**
- * useSolClone — Hook for SolClone-specific features.
+ * usePrism — Hook for Prism-specific features.
  *
- * Wraps SolClone RPC calls and network management into a convenient
+ * Wraps Prism RPC calls and network management into a convenient
  * React hook for DApp developers.
  */
 
@@ -9,7 +9,7 @@ import { useState, useCallback } from "react";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
-export type SolCloneNetwork = "devnet" | "testnet" | "mainnet";
+export type PrismNetwork = "devnet" | "testnet" | "mainnet";
 
 export interface TokenAccount {
   mint: string;
@@ -19,11 +19,11 @@ export interface TokenAccount {
   uiAmount: number;
 }
 
-export interface UseSolCloneReturn {
+export interface UsePrismReturn {
   /** Current network. */
-  network: SolCloneNetwork;
+  network: PrismNetwork;
   /** Switch to a different network. */
-  switchNetwork: (network: SolCloneNetwork) => void;
+  switchNetwork: (network: PrismNetwork) => void;
   /** Request an airdrop of test tokens (devnet/testnet only). */
   requestAirdrop: (address: string, lamports?: number) => Promise<string>;
   /** Get the balance for an address (in lamports). */
@@ -34,16 +34,16 @@ export interface UseSolCloneReturn {
 
 // ── RPC URLs ────────────────────────────────────────────────────────────────
 
-const RPC_URLS: Record<SolCloneNetwork, string> = {
-  mainnet: "https://rpc.solclone.io",
-  testnet: "https://testnet.rpc.solclone.io",
-  devnet: "https://devnet.rpc.solclone.io",
+const RPC_URLS: Record<PrismNetwork, string> = {
+  mainnet: "https://rpc.prism.io",
+  testnet: "https://testnet.rpc.prism.io",
+  devnet: "https://devnet.rpc.prism.io",
 };
 
 // ── RPC Helper ──────────────────────────────────────────────────────────────
 
 async function rpcCall(
-  network: SolCloneNetwork,
+  network: PrismNetwork,
   method: string,
   params: any[],
 ): Promise<any> {
@@ -73,14 +73,14 @@ async function rpcCall(
 
 // ── Hook ────────────────────────────────────────────────────────────────────
 
-export function useSolClone(
-  initialNetwork: SolCloneNetwork = "devnet",
-): UseSolCloneReturn {
-  const [network, setNetwork] = useState<SolCloneNetwork>(initialNetwork);
+export function usePrism(
+  initialNetwork: PrismNetwork = "devnet",
+): UsePrismReturn {
+  const [network, setNetwork] = useState<PrismNetwork>(initialNetwork);
 
   // ── Switch Network ──────────────────────────────────────────────────
 
-  const switchNetwork = useCallback((newNetwork: SolCloneNetwork) => {
+  const switchNetwork = useCallback((newNetwork: PrismNetwork) => {
     if (!RPC_URLS[newNetwork]) {
       throw new Error(`Unknown network: ${newNetwork}`);
     }
@@ -92,7 +92,7 @@ export function useSolClone(
   const requestAirdrop = useCallback(
     async (
       address: string,
-      lamports: number = 1_000_000_000, // 1 SCLONE by default
+      lamports: number = 1_000_000_000, // 1 PRISM by default
     ): Promise<string> => {
       if (network === "mainnet") {
         throw new Error("Airdrops are not available on mainnet.");

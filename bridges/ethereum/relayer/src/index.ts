@@ -1,10 +1,10 @@
 /**
- * SolClone <-> Ethereum Bridge Relayer
+ * Prism <-> Ethereum Bridge Relayer
  *
- * This relayer service watches for events on both Ethereum and SolClone,
+ * This relayer service watches for events on both Ethereum and Prism,
  * and submits cross-chain attestations / release transactions.
  *
- * In production this would use real Ethereum JSON-RPC and SolClone RPC.
+ * In production this would use real Ethereum JSON-RPC and Prism RPC.
  * Here we define the full interface and mock the Ethereum side.
  */
 
@@ -17,9 +17,9 @@ import { Connection, Keypair, PublicKey, Transaction, TransactionInstruction } f
 interface RelayerConfig {
   /** Ethereum JSON-RPC endpoint */
   ethereum_rpc: string;
-  /** SolClone validator RPC endpoint */
-  solclone_rpc: string;
-  /** Bridge program ID on SolClone */
+  /** Prism validator RPC endpoint */
+  prism_rpc: string;
+  /** Bridge program ID on Prism */
   bridge_program_id: string;
   /** Path to the guardian keypair JSON file */
   guardian_keypair: string;
@@ -33,7 +33,7 @@ interface RelayerConfig {
 
 const DEFAULT_CONFIG: RelayerConfig = {
   ethereum_rpc: "https://eth-mainnet.example.com",
-  solclone_rpc: "http://localhost:8899",
+  prism_rpc: "http://localhost:8899",
   bridge_program_id: "EthBrdg11111111111111111111111111111111111",
   guardian_keypair: "./guardian-keypair.json",
   ethereum_bridge_contract: "0x0000000000000000000000000000000000000000",
@@ -51,7 +51,7 @@ interface EthDepositEvent {
   logIndex: number;
   token: string;        // ERC-20 contract address
   sender: string;       // Ethereum address (0x...)
-  recipient: string;    // SolClone public key (base58)
+  recipient: string;    // Prism public key (base58)
   amount: bigint;
   nonce: bigint;
 }
@@ -64,14 +64,14 @@ interface EthReleaseRequest {
 }
 
 // ---------------------------------------------------------------------------
-// SolClone Event Types
+// Prism Event Types
 // ---------------------------------------------------------------------------
 
-interface SolCloneRedemptionEvent {
+interface PrismRedemptionEvent {
   nonce: number;
   token: string;       // Mint pubkey
   amount: number;
-  sender: string;      // SolClone pubkey
+  sender: string;      // Prism pubkey
   recipientEthAddress: string;
 }
 
@@ -150,16 +150,16 @@ class EthereumWatcher {
 }
 
 // ---------------------------------------------------------------------------
-// SolClone Watcher
+// Prism Watcher
 // ---------------------------------------------------------------------------
 
-class SolCloneWatcher {
+class PrismWatcher {
   private connection: Connection;
   private programId: PublicKey;
   private lastSignature: string | undefined;
 
   constructor(config: RelayerConfig) {
-    this.connection = new Connection(config.solclone_rpc, "confirmed");
+    this.connection = new Connection(config.prism_rpc, "confirmed");
     this.programId = new PublicKey(config.bridge_program_id);
   }
 
@@ -169,9 +169,9 @@ class SolCloneWatcher {
    * parses logs for "Redeemed" messages.
    */
   async watchRedemptions(
-    handler: (event: SolCloneRedemptionEvent) => Promise<void>
+    handler: (event: PrismRedemptionEvent) => Promise<void>
   ): Promise<void> {
-    console.log(`[SolCloneWatcher] Watching program ${this.programId.toBase58()}`);
+    console.log(`[PrismWatcher] Watching program ${this.programId.toBase58()}`);
 
     while (true) {
       try {
@@ -201,7 +201,7 @@ class SolCloneWatcher {
           this.lastSignature = sigInfo.signature;
         }
       } catch (err) {
-        console.error("[SolCloneWatcher] Error:", err);
+        console.error("[PrismWatcher] Error:", err);
       }
 
       await sleep(5_000);
@@ -211,7 +211,7 @@ class SolCloneWatcher {
   private parseRedemptionLog(
     log: string,
     _signature: string
-  ): SolCloneRedemptionEvent | null {
+  ): PrismRedemptionEvent | null {
     // Parse: "Redeemed {amount} tokens for Ethereum release, nonce {nonce}"
     const match = log.match(/Redeemed (\d+) tokens.*nonce (\d+)/);
     if (!match) return null;
@@ -227,7 +227,7 @@ class SolCloneWatcher {
 }
 
 // ---------------------------------------------------------------------------
-// VAA Submitter — submits attestations to the SolClone bridge program
+// VAA Submitter — submits attestations to the Prism bridge program
 // ---------------------------------------------------------------------------
 
 class VAASubmitter {
@@ -236,7 +236,7 @@ class VAASubmitter {
   private guardianKeypair: Keypair;
 
   constructor(config: RelayerConfig) {
-    this.connection = new Connection(config.solclone_rpc, "confirmed");
+    this.connection = new Connection(config.prism_rpc, "confirmed");
     this.programId = new PublicKey(config.bridge_program_id);
 
     // In production: load from file
@@ -247,7 +247,7 @@ class VAASubmitter {
   }
 
   /**
-   * Submit a VAA (Verified Action Approval) to the SolClone bridge program
+   * Submit a VAA (Verified Action Approval) to the Prism bridge program
    * attesting that a deposit was observed on Ethereum.
    */
   async submitVAA(event: EthDepositEvent): Promise<string> {
@@ -322,26 +322,26 @@ class VAASubmitter {
 class EthereumBridgeRelayer {
   private config: RelayerConfig;
   private ethWatcher: EthereumWatcher;
-  private solCloneWatcher: SolCloneWatcher;
+  private solCloneWatcher: PrismWatcher;
   private vaaSubmitter: VAASubmitter;
 
   constructor(config: RelayerConfig) {
     this.config = config;
     this.ethWatcher = new EthereumWatcher(config);
-    this.solCloneWatcher = new SolCloneWatcher(config);
+    this.solCloneWatcher = new PrismWatcher(config);
     this.vaaSubmitter = new VAASubmitter(config);
   }
 
   async start(): Promise<void> {
     console.log("===========================================");
-    console.log(" SolClone <-> Ethereum Bridge Relayer");
+    console.log(" Prism <-> Ethereum Bridge Relayer");
     console.log("===========================================");
     console.log(`Bridge Program: ${this.config.bridge_program_id}`);
     console.log(`Ethereum RPC:   ${this.config.ethereum_rpc}`);
-    console.log(`SolClone RPC:   ${this.config.solclone_rpc}`);
+    console.log(`Prism RPC:   ${this.config.prism_rpc}`);
     console.log();
 
-    // 1. Watch Ethereum for deposits and submit VAAs to SolClone
+    // 1. Watch Ethereum for deposits and submit VAAs to Prism
     this.ethWatcher.onDeposit(async (event) => {
       console.log(`[Relayer] Ethereum deposit detected: nonce=${event.nonce}`);
       try {
@@ -353,9 +353,9 @@ class EthereumBridgeRelayer {
     });
     this.ethWatcher.start();
 
-    // 2. Watch SolClone for redemptions and submit releases to Ethereum
+    // 2. Watch Prism for redemptions and submit releases to Ethereum
     this.solCloneWatcher.watchRedemptions(async (event) => {
-      console.log(`[Relayer] SolClone redemption detected: nonce=${event.nonce}`);
+      console.log(`[Relayer] Prism redemption detected: nonce=${event.nonce}`);
       try {
         const txHash = await this.ethWatcher.submitRelease({
           nonce: BigInt(event.nonce),
@@ -365,7 +365,7 @@ class EthereumBridgeRelayer {
         });
         console.log(`[Relayer] Ethereum release submitted: ${txHash}`);
       } catch (err) {
-        console.error(`[Relayer] Failed to process SolClone redemption:`, err);
+        console.error(`[Relayer] Failed to process Prism redemption:`, err);
       }
     });
 
@@ -386,7 +386,7 @@ function loadConfig(): RelayerConfig {
   return {
     ...DEFAULT_CONFIG,
     ethereum_rpc: process.env.ETHEREUM_RPC || DEFAULT_CONFIG.ethereum_rpc,
-    solclone_rpc: process.env.SOLCLONE_RPC || DEFAULT_CONFIG.solclone_rpc,
+    prism_rpc: process.env.PRISM_RPC || DEFAULT_CONFIG.prism_rpc,
     bridge_program_id:
       process.env.BRIDGE_PROGRAM_ID || DEFAULT_CONFIG.bridge_program_id,
     guardian_keypair:
@@ -414,9 +414,9 @@ main().catch((err) => {
 export {
   EthereumBridgeRelayer,
   EthereumWatcher,
-  SolCloneWatcher,
+  PrismWatcher,
   VAASubmitter,
   RelayerConfig,
   EthDepositEvent,
-  SolCloneRedemptionEvent,
+  PrismRedemptionEvent,
 };

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolClone Auditor",
+  title: "Prism Auditor",
   description: "AI-powered smart contract security auditor for Solana programs",
 };
 
@@ -35,7 +35,7 @@ export default function RootLayout({
                   </svg>
                 </div>
                 <span className="text-lg font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                  SolClone Auditor
+                  Prism Auditor
                 </span>
               </div>
               <div className="flex items-center gap-4 text-sm text-[#64748b]">

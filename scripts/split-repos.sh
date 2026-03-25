@@ -5,13 +5,13 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GITHUB_USER="code2031"
 
 declare -A REPOS=(
-  ["validator"]="solclone-validator"
-  ["web3js-sdk"]="solclone-web3js"
-  ["program-library"]="solclone-programs"
-  ["explorer"]="solclone-explorer"
-  ["wallet-adapter"]="solclone-wallet-adapter"
-  ["wallet-gui"]="solclone-backpack"
-  ["dapp-scaffold"]="solclone-dapp-scaffold"
+  ["validator"]="prism-validator"
+  ["web3js-sdk"]="prism-web3js"
+  ["program-library"]="prism-programs"
+  ["explorer"]="prism-explorer"
+  ["wallet-adapter"]="prism-wallet-adapter"
+  ["wallet-gui"]="prism-backpack"
+  ["dapp-scaffold"]="prism-dapp-scaffold"
 )
 
 for dir in "${!REPOS[@]}"; do

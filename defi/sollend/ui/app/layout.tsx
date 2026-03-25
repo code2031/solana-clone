@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SolLend — Decentralized Lending on SolClone",
+  title: "SolLend — Decentralized Lending on Prism",
   description:
     "Supply, borrow, and earn interest on crypto assets with the SolLend lending protocol.",
 };

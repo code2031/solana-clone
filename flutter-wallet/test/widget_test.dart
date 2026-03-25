@@ -10,14 +10,14 @@ void main() {
     final walletService = WalletService();
     final priceService = PriceService();
 
-    await tester.pumpWidget(SolCloneWallet(
+    await tester.pumpWidget(PrismWallet(
       rpcService: rpcService,
       walletService: walletService,
       priceService: priceService,
     ));
 
     // Verify the splash screen shows the app name
-    expect(find.text('SolClone'), findsOneWidget);
+    expect(find.text('Prism'), findsOneWidget);
     expect(find.text('Wallet'), findsOneWidget);
   });
 }

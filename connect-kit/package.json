@@ -1,7 +1,7 @@
 {
-  "name": "@solclone/connect-kit",
+  "name": "@prism/connect-kit",
   "version": "1.0.0",
-  "description": "React component library for adding wallet connections to SolClone DApps",
+  "description": "React component library for adding wallet connections to Prism DApps",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -12,8 +12,8 @@
   "dependencies": {
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
-    "@solclone/wallet-standard": "^1.0.0",
-    "@solclone/wallet-connect": "^1.0.0"
+    "@prism/wallet-standard": "^1.0.0",
+    "@prism/wallet-connect": "^1.0.0"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -24,7 +24,7 @@
     "@types/react": "^18.2.0"
   },
   "keywords": [
-    "solclone",
+    "prism",
     "solana",
     "wallet",
     "react",

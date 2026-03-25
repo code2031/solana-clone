@@ -33,7 +33,7 @@ function getExplorerUrl(chain: string, txHash: string): string {
     ethereum: `https://etherscan.io/tx/${txHash}`,
     bitcoin: `https://mempool.space/tx/${txHash}`,
     solana: `https://solscan.io/tx/${txHash}`,
-    solclone: `https://explorer.solclone.io/tx/${txHash}`,
+    prism: `https://explorer.prism.io/tx/${txHash}`,
   };
   return explorers[chain] || `#${txHash}`;
 }

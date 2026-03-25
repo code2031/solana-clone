@@ -33,7 +33,7 @@ class _MultiChainSendScreenState extends State<MultiChainSendScreen> {
   @override
   void initState() {
     super.initState();
-    _selectedChain = widget.initialChain ?? ChainType.solclone;
+    _selectedChain = widget.initialChain ?? ChainType.prism;
     _updateFeeEstimate();
   }
 
@@ -498,7 +498,7 @@ class _MultiChainSendScreenState extends State<MultiChainSendScreen> {
       case ChainType.bnb:
         return '0x...';
       case ChainType.solana:
-      case ChainType.solclone:
+      case ChainType.prism:
         return 'Base58 address...';
     }
   }

@@ -1,12 +1,12 @@
 /**
- * useWallet — Custom hook wrapping the wallet adapter for SolClone DApps.
+ * useWallet — Custom hook wrapping the wallet adapter for Prism DApps.
  *
  * Provides a simplified, unified interface for wallet interactions
  * regardless of which wallet the user connected with.
  */
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import type { DetectedWallet } from "@solclone/wallet-standard";
+import type { DetectedWallet } from "@prism/wallet-standard";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -21,7 +21,7 @@ export interface UseWalletReturn {
   address: string | null;
   /** The wallet's balance in lamports, or null if not fetched. */
   balance: number | null;
-  /** Name of the connected wallet (e.g., "Phantom", "SolClone"). */
+  /** Name of the connected wallet (e.g., "Phantom", "Prism"). */
   walletName: string | null;
   /** Icon of the connected wallet as a data URI. */
   walletIcon: string | null;
@@ -200,8 +200,8 @@ export function useWallet(): UseWalletReturn {
 
     const fetchBalance = async () => {
       try {
-        // Use the SolClone RPC to fetch balance.
-        const response = await fetch("https://rpc.solclone.io", {
+        // Use the Prism RPC to fetch balance.
+        const response = await fetch("https://rpc.prism.io", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

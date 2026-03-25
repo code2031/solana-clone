@@ -2,7 +2,7 @@
 name = "solswap"
 version = "0.1.0"
 edition = "2021"
-description = "SolSwap AMM DEX - Automated Market Maker for SolClone"
+description = "SolSwap AMM DEX - Automated Market Maker for Prism"
 license = "MIT"
 
 [lib]

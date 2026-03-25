@@ -52,7 +52,7 @@ export default function PlaygroundPage() {
       <header className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
         <div className="flex items-center gap-4">
           <h1 className="text-lg font-bold text-[var(--foreground)]">
-            <span className="text-[var(--accent)]">SolClone</span> Playground
+            <span className="text-[var(--accent)]">Prism</span> Playground
           </h1>
           <ExampleSelector onSelect={handleExampleSelect} />
         </div>
@@ -110,8 +110,8 @@ export default function PlaygroundPage() {
 
       {/* Footer */}
       <footer className="border-t border-[var(--border)] px-4 py-2 text-center text-xs text-[var(--muted)]">
-        SolClone SDK Playground - Code executes client-side via the{" "}
-        <code className="text-[var(--accent)]">solclone</code> helper object
+        Prism SDK Playground - Code executes client-side via the{" "}
+        <code className="text-[var(--accent)]">prism</code> helper object
       </footer>
     </div>
   );

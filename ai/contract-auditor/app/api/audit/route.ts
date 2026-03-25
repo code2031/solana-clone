@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       success: true,
       data: result,
       timestamp: new Date().toISOString(),
-      engine: "SolClone Static Analysis v1.0",
+      engine: "Prism Static Analysis v1.0",
     });
   } catch (error) {
     console.error("Audit error:", error);
